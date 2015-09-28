@@ -92,6 +92,7 @@
 (depends-on "smartparens")
 (depends-on "smex")
 (depends-on "sos")
+(depends-on "toml-mode")
 ;(depends-on "scala-mode2")
 ;(depends-on "sbt-mode")
 (depends-on "undo-tree")
