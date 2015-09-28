@@ -6,7 +6,7 @@
 (require 'rust-mode)
 (require 'racer)
 (require 'company-racer)
-;(require 'flycheck-rust)
+(require 'flycheck-rust)
 
 
 ; Set path to racer binary
@@ -25,11 +25,13 @@
         ;; Enable racer
         (racer-activate)
 
+         (add-hook 'rust-mode-hook 'turn-on-eldoc-mode)
+
 	 ;; Hook in racer with eldoc to provide documentation
         (racer-turn-on-eldoc)
 
 	 ;; Use flycheck-rust in rust-mode
-        ;(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+        (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
 	 ;; Use company-racer in rust mode
         (set (make-local-variable 'company-backends) '(company-racer))

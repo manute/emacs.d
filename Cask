@@ -31,10 +31,12 @@
 (depends-on "exec-path-from-shell")
 (depends-on "f")
 (depends-on "faceup")
+
 (depends-on "flycheck")
 (depends-on "flycheck-color-mode-line")
 ;(depends-on "flycheck-haskell")
-;(depends-on "flycheck-rust")
+(depends-on "flycheck-rust")
+
 ;(depends-on "ghc")
 ;(depends-on "groovy-mode")
 (depends-on "go-mode")
