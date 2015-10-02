@@ -38,7 +38,7 @@
 ;; Display incremental search stats in modeline.
 (require 'anzu)
 (global-anzu-mode 1)
-(global-set-key (kbd "M-%") 'anzu-query-replace)
+(global-set-key (kbd "C-x a") 'anzu-query-replace)
 (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
 
 (provide 'general)

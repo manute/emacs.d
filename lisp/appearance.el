@@ -9,17 +9,13 @@
 (require 'color-theme-tomorrow)
 (color-theme-tomorrow--define-theme night)
 
-;; (require 'linum)
-;; (unless window-system
-;;   (set-face-attribute 'linum nil :height 0.5 :background "color-235"))
-
-(global-linum-mode 0)
+;(global-linum-mode 0)
 
 (setq frame-title-format '(buffer-file-name "%f" ("%b")))
 
-(if (eq system-type 'darwin)
- (set-face-attribute 'default nil :height 155 :family "consolas")
- (set-face-attribute 'default nil :family "inconsolata"))
+;; (if (eq system-type 'darwin)
+;;  (set-face-attribute 'default nil :height 155 :family "consolas")
+;;  (set-face-attribute 'default nil :family "inconsolata"))
 
 ;; http://www.masteringemacs.org/articles/2012/09/10/hiding-replacing-modeline-strings/
 (defvar mode-line-cleaner-alist
