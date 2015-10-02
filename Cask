@@ -60,6 +60,7 @@
 (depends-on "load-theme-buffer-local")
 (depends-on "markdown-mode")
 (depends-on "multi")
+(depends-on "magit")
 (depends-on "multi-term")
 (depends-on "nose")
 (depends-on "org")

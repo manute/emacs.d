@@ -41,4 +41,8 @@
 (global-set-key (kbd "C-x a") 'anzu-query-replace)
 (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
 
+
+(require 'magit)
+(global-set-key (kbd "C-x g") 'magit-status)
+
 (provide 'general)
