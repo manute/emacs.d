@@ -13,9 +13,8 @@
 
 (setq frame-title-format '(buffer-file-name "%f" ("%b")))
 
-;; (if (eq system-type 'darwin)
-;;  (set-face-attribute 'default nil :height 155 :family "consolas")
-;;  (set-face-attribute 'default nil :family "inconsolata"))
+(when (eq system-type 'darwin)
+  (set-face-attribute 'default nil :height 150 :family "consolas"))
 
 ;; http://www.masteringemacs.org/articles/2012/09/10/hiding-replacing-modeline-strings/
 (defvar mode-line-cleaner-alist
