@@ -43,7 +43,7 @@
 ;;Init config PLs
 (require 'init-js)
 (require 'init-clojure)
-;(require 'init-python)
+(require 'init-python)
 ;(require 'init-scala)
 ;(require 'init-racket)
 ;(require 'init-haskell)
