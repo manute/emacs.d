@@ -11,7 +11,10 @@
 
 ;; MODE LINE
 (require 'spaceline-config)
-(spaceline-spacemacs-theme)
+(if window-system
+    (spaceline-emacs-theme)
+    (spaceline-spacemacs-theme))
+
 
 (setq frame-title-format '(buffer-file-name "%f" ("%b")))
 
