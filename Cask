@@ -54,6 +54,7 @@
 (depends-on "popup")
 (depends-on "popwin")
 (depends-on "highlight-indentation")
+(depends-on "spaceline")
 
 
 ;; COMPANY (Autocomplete)

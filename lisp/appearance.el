@@ -9,7 +9,9 @@
 (require 'color-theme-tomorrow)
 (color-theme-tomorrow--define-theme night)
 
-;(global-linum-mode 0)
+;; MODE LINE
+(require 'spaceline-config)
+(spaceline-spacemacs-theme)
 
 (setq frame-title-format '(buffer-file-name "%f" ("%b")))
 
@@ -18,10 +20,9 @@
 
 ;; http://www.masteringemacs.org/articles/2012/09/10/hiding-replacing-modeline-strings/
 (defvar mode-line-cleaner-alist
-  `((paredit-mode . " ()")
+  `((smartparens-mode . " ()")
     (eldoc-mode . "")
     (abbrev-mode . "")
-    (undo-tree-mode " ⎌")
     ;; Major modes
     (help-mode . "？")
     (fundamental-mode . "∅")

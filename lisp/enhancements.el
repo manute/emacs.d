@@ -47,8 +47,8 @@
 (fringe-mode '(4 . 0))
 
 ;; Show line numbers in buffers.
-(global-linum-mode t)
-(setq linum-format (if (not window-system) "%2d" "%4d"))
+;;(global-linum-mode t)
+;;(setq linum-format (if (not window-system) "%2d" "%4d"))
 
 ;; Show column numbers in modeline.
 (setq column-number-mode t)
