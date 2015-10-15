@@ -1,4 +1,5 @@
 
+
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/themes"))
 
 ;; SOLARIZED THEME
@@ -9,14 +10,12 @@
 (require 'color-theme-tomorrow)
 (color-theme-tomorrow--define-theme night)
 
-;; MODE LINE
-(require 'spaceline-config)
-(if window-system
-    (spaceline-emacs-theme)
-    (spaceline-spacemacs-theme))
+;; SMART LINE
+(setq sml/no-confirm-load-theme t)
+(sml/setup)
+(setq sml/theme 'respectful)
 
 
-(setq frame-title-format '(buffer-file-name "%f" ("%b")))
 
 (when (eq system-type 'darwin)
   (set-face-attribute 'default nil :height 150 :family "consolas"))
