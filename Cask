@@ -3,63 +3,57 @@
 (source gnu)
 (source org)
 
-;; CASK (Dependencies)
-;;------------------------
-(depends-on "cask")
-
-(depends-on "ag")
-(depends-on "anzu")
-(depends-on "centered-window-mode")
-(depends-on "color-theme")
-(depends-on "dash")
-(depends-on "discover-my-major")
-(depends-on "dired+")
-(depends-on "diminish")
-(depends-on "elein")
-(depends-on "undo-tree")
-(depends-on "yasnippet")
-(depends-on "web-mode")
-(depends-on "whole-line-or-region")
-(depends-on "rinari")
-(depends-on "s")
-(depends-on "shm")
-(depends-on "smart-mode-line")
-(depends-on "smartparens")
-(depends-on "smex")
-(depends-on "sos")
-(depends-on "rainbow-blocks")
-(depends-on "rainbow-delimiters")
-(depends-on "request")
-(depends-on "know-your-http-well")
-(depends-on "load-theme-buffer-local")
-(depends-on "markdown-mode")
-(depends-on "multi")
-(depends-on "magit")
-(depends-on "multi-term")
-(depends-on "nose")
-(depends-on "org")
+;; DEPS - PAKAGES
+;; -----------------------
+(depends-on "cask") ;; FIRST
 (depends-on "package-build")
 (depends-on "pallet")
-(depends-on "pg")
 (depends-on "pkg-info")
-(depends-on "popup")
-(depends-on "popwin")
-(depends-on "pretty-mode")
-(depends-on "projectile")
 (depends-on "epl")
-(depends-on "erc-colorize")
-(depends-on "erc-hl-nicks")
-(depends-on "exec-path-from-shell")
-(depends-on "f")
-(depends-on "faceup")
+(depends-on "diminish")
+
+
+;; SEARCH - ENHANCEMENTS
+;; -----------------------
+(depends-on "ag")
+(depends-on "anzu")
+(depends-on "discover-my-major")
 (depends-on "helm")
-(depends-on "highlight-indentation")
+(depends-on "smex")
 (depends-on "ido-ubiquitous")
 (depends-on "ido-vertical-mode")
 (depends-on "idomenu")
-(depends-on "iedit")
 (depends-on "info+")
-(depends-on "irfc")
+
+
+;; UTILITIES - FUNCTIONS
+;; -----------------------
+(depends-on "s")
+(depends-on "dash")
+(depends-on "undo-tree")
+(depends-on "whole-line-or-region")
+(depends-on "exec-path-from-shell")
+(depends-on "f")
+
+
+;; PROJECTS - FOLDERS
+;; ---------------------
+(depends-on "dired+")
+(depends-on "magit")
+(depends-on "projectile")
+
+
+;; OTHERS
+;; ---------------------
+(depends-on "smartparens")
+(depends-on "request")
+(depends-on "know-your-http-well")
+(depends-on "markdown-mode")
+(depends-on "org")
+(depends-on "pg")
+(depends-on "popup")
+(depends-on "popwin")
+(depends-on "highlight-indentation")
 
 
 ;; COMPANY (Autocomplete)
@@ -70,12 +64,16 @@
 (depends-on "company-racer")
 
 
-;;CLOJURE
-;;-------------------------
+;; LISPS - CLOJURE
+;; ------------------------
 (depends-on "cider")
 (depends-on "clj-refactor")
 (depends-on "clojure-cheatsheet")
 (depends-on "clojure-mode")
+(depends-on "elein")
+(depends-on "rainbow-blocks")
+(depends-on "rainbow-delimiters")
+
 
 ;;ELM
 ;;---------------------
@@ -104,10 +102,13 @@
 (depends-on "go-autocomplete")
 (depends-on "go-eldoc")
 
-;; JS
+
+;; WEB - JS
 ;;---------------------
 (depends-on "js2-mode")
 (depends-on "jsx-mode")
+(depends-on "web-mode")
+
 
 ;; PYTHON
 ;;--------------------------
@@ -115,9 +116,11 @@
 (depends-on "pyvenv")
 (depends-on "virtualenvwrapper")
 
+
 ;; RACKET
 ;;--------------------------
 ;(depends-on "racket-mode")
+
 
 ;; RUBY
 ;;----------------------
@@ -127,6 +130,8 @@
 ;;(depends-on "ruby-compilation")
 ;;(depends-on "ruby-end")
 ;;(depends-on "inf-ruby")
+(depends-on "rinari")
+
 
 ;; RUST
 ;;------------------------
