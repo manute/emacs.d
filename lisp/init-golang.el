@@ -21,6 +21,8 @@
   (set (make-local-variable 'company-backends) '(company-go))
   (setq compile-command "go build -v && go test -v && go vet")
   (define-key (current-local-map) "\C-c\C-c" 'compile)
+   ;; Key binding to jump to method definition
+  (local-set-key (kbd "M-.") #'godef-jump-other-window)
   (go-eldoc-setup)
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save))

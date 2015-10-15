@@ -10,7 +10,7 @@
 
 
 ; Set path to racer binary
-(setq racer-cmd "/usr/local/bin/racer")
+(setq racer-cmd "~/.racer/target/release/racer")
 
 ;; Set path to rust src directory
 (setq racer-rust-src-path "~/.rust/src/")
@@ -33,5 +33,8 @@
 
              ;; Key binding to jump to method definition
              (local-set-key (kbd "M-.") #'racer-find-definition)))
+
+             ;; Rustfmt befor save
+;;           (add-hook 'before-save-hook #'rustfmt-format-buffer)))
 
 (provide 'init-rust)
