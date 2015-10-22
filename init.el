@@ -52,4 +52,7 @@
 (require 'init-golang)
 (require 'init-rust)
 
+;; MYPACKAGES
+(require 'gorepl)
+
 (require 'init-load-server)
