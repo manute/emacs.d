@@ -61,9 +61,4 @@
       '(term-mode slime-repl-mode magit-status-mode help-mode nrepl-mode))
 
 
-;;unset C-z for stopped in console
-(unless window-system
-  (global-unset-key (kbd "C-z")))
-
-
 (provide 'enhancements)

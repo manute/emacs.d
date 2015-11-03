@@ -6,6 +6,7 @@
 (package-initialize)
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
+(add-to-list 'load-path "~/projects/gorepl-mode")
 
 ;;Load Cask packages first
 (require 'packages)
@@ -53,6 +54,6 @@
 (require 'init-rust)
 
 ;; MYPACKAGES
-(require 'gorepl)
+;;(require 'gorepl-mode)
 
 (require 'init-load-server)

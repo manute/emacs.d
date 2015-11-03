@@ -1,4 +1,5 @@
 (require 'go-mode)
+(require 'gorepl-mode)
 
 (defun go-run-buffer()
   (interactive)
@@ -27,7 +28,9 @@
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save))
 
+
 (add-hook 'go-mode-hook 'go-mode-setup)
+
 (add-hook 'go-mode-hook 'gorepl-mode)
 
 (provide 'init-golang)

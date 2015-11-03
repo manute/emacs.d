@@ -1,8 +1,3 @@
-
-;; Init Rust
-;; -----------------------------------
-;; http://bassam.co/emacs/2015/08/24/rust-with-emacs/
-
 (require 'rust-mode)
 (require 'racer)
 (require 'company-racer)
@@ -10,31 +5,38 @@
 
 
 ; Set path to racer binary
-(setq racer-cmd "~/.racer/target/release/racer")
+(setq racer-cmd "/usr/local/bin/racer")
 
 ;; Set path to rust src directory
-(setq racer-rust-src-path "~/.rust/src/")
+(setq racer-rust-src-path "/usr/local/src/rust/src")
 
-;; Setting up configurations when you load rust-mode
-(add-hook 'rust-mode-hook
+(add-hook 'rust-mode-hook #'racer-mode)
 
-          '(lambda ()
-             ;; Enable racer
-             (racer-activate)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
 
-             ;; Hook in racer with eldoc to provide documentation
-             (racer-turn-on-eldoc)
 
-             ;; Use flycheck-rust in rust-mode
-             (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+(setq company-tooltip-align-annotations t)
 
-             ;; Use company-racer in rust mode
-             (set (make-local-variable 'company-backends) '(company-racer))
 
-             ;; Key binding to jump to method definition
-             (local-set-key (kbd "M-.") #'racer-find-definition)))
+(defun font-lock-replace-symbol (mode reg sym)
+  (font-lock-add-keywords
+   mode `((,reg
+           (0 (progn (compose-region (match-beginning 1) (match-end 1)
+                                     ,sym 'decompose-region)))))))
 
-             ;; Rustfmt befor save
-;;           (add-hook 'before-save-hook #'rustfmt-format-buffer)))
+
+;; Use Unicode arrows in place of ugly ASCII arrows
+(defun manu/setup-rust-arrows (mode mode-map)
+  (font-lock-replace-symbol mode "\\(->\\)" "→")
+  (font-lock-replace-symbol mode "\\(<-\\)" "←")
+  (font-lock-replace-symbol mode "\\(=>\\)" "⇒")
+
+  (define-key mode-map (kbd "→") (lambda () (interactive) (insert "->")))
+  (define-key mode-map (kbd "←") (lambda () (interactive) (insert "<-")))
+  (define-key mode-map (kbd "⇒") (lambda () (interactive) (insert "=>"))))
+
+(eval-after-load "rust-mode"
+  '(manu/setup-rust-arrows 'rust-mode rust-mode-map))
 
 (provide 'init-rust)
