@@ -89,7 +89,7 @@
 ;;-----------------------
 (depends-on "flycheck")
 (depends-on "flycheck-color-mode-line")
-;(depends-on "flycheck-haskell")
+;;(depends-on "flycheck-haskell")
 
 
 ;;HASKELL
@@ -102,6 +102,7 @@
 (depends-on "go-mode")
 (depends-on "go-autocomplete")
 (depends-on "go-eldoc")
+(depends-on "gorepl-mode")
 
 
 ;; WEB - JS

@@ -1,12 +1,8 @@
 
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
 (package-initialize)
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
-(add-to-list 'load-path "~/projects/gorepl-mode")
+;; (add-to-list 'load-path "~/projects/gorepl-mode")
 
 ;;Load Cask packages first
 (require 'packages)
@@ -53,7 +49,5 @@
 (require 'init-golang)
 (require 'init-rust)
 
-;; MYPACKAGES
-;;(require 'gorepl-mode)
-
+;;Load server for emacsclient
 (require 'init-load-server)
