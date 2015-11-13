@@ -10,6 +10,7 @@
 ;; Set path to rust src directory
 (setq racer-rust-src-path "/usr/local/src/rust/src")
 
+
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
 (add-hook 'rust-mode-hook #'racer-mode)
@@ -41,5 +42,6 @@
 
 (eval-after-load "rust-mode"
   '(manu/setup-rust-arrows 'rust-mode rust-mode-map))
+
 
 (provide 'init-rust)
