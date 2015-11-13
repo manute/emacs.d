@@ -91,6 +91,8 @@
 (depends-on "flycheck-color-mode-line")
 ;(depends-on "flycheck-haskell")
 (depends-on "flycheck-rust")
+(depends-on "rustfmt")
+
 
 ;;HASKELL
 ;;-----------------------

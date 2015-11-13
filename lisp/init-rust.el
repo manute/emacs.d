@@ -2,6 +2,7 @@
 (require 'racer)
 (require 'company-racer)
 (require 'flycheck-rust)
+(require 'rustfmt)
 
 
 ; Set path to racer binary
@@ -14,7 +15,7 @@
 
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'racer-mode-hook #'company-mode)
-
+(add-hook 'rust-mode-hook #'rustfmt-enable-on-save)
 
 (setq company-tooltip-align-annotations t)
 
