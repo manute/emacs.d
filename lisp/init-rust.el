@@ -4,18 +4,20 @@
 (require 'flycheck-rust)
 (require 'rustfmt)
 
-
 ; Set path to racer binary
 (setq racer-cmd "/usr/local/bin/racer")
 
 ;; Set path to rust src directory
 (setq racer-rust-src-path "/usr/local/src/rust/src")
 
+(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+
 (add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'rust-mode-hook #'rustfmt-enable-on-save)
 
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'racer-mode-hook #'company-mode)
-(add-hook 'rust-mode-hook #'rustfmt-enable-on-save)
+
 
 (setq company-tooltip-align-annotations t)
 

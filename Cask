@@ -90,8 +90,6 @@
 (depends-on "flycheck")
 (depends-on "flycheck-color-mode-line")
 ;(depends-on "flycheck-haskell")
-(depends-on "flycheck-rust")
-(depends-on "rustfmt")
 
 
 ;;HASKELL
@@ -140,8 +138,9 @@
 ;;------------------------
 (depends-on "rust-mode")
 (depends-on "racer")
-;;(depends-on "rustfmt")
 (depends-on "toml-mode")
+(depends-on "flycheck-rust")
+(depends-on "rustfmt")
 
 
 ;;SCALA
