@@ -510,6 +510,18 @@ names to which it refers are bound."
      (custom-variable-tag ((,class (:foreground ,blue))))
      (custom-group-tag ((,class (:foreground ,blue))))
      (custom-state ((,class (:foreground ,green))))
+
+     ;;company
+     (company-tooltip ((t :background "lightgray" :foreground "black")))
+     (company-tooltip-selection ((t :background "steelblue" :foreground "white")))
+     (company-tooltip-mouse ((t :background "blue" :foreground "white")))
+     (company-tooltip-common ((t :background "lightgray" :foreground "black")))
+     (company-tooltip-common-selection ((t t :background "lightgray" :foreground "black")))
+     ;; (company-tooltip-annotation ((t :background "" :foreground "")))
+     (company-scrollbar-fg ((t :background "black")))
+     (company-scrollbar-bg ((t :background "gray")))
+     (company-preview ((t :background nil :foreround "darkgray")))
+     (company-preview-common ((t :background nil :foreground "darkgray")))
      )))
 
 (defmacro color-theme-tomorrow--frame-parameter-specs ()
