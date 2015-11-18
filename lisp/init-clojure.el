@@ -2,6 +2,7 @@
 (require 'cider)
 (require 'elein)
 (require 'clojure-mode)
+(require 'clj-refactor)
 
 (setq org-babel-clojure-backend 'cider)
 
@@ -17,7 +18,8 @@
 (define-key clojure-mode-map (kbd "C-o J") 'cider-restart)
 
 ; Cider mode hooks
-(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+(add-hook 'cider-mode-hook #'cider-turn-on-eldoc-mode)
+(add-hook 'cider-mode-hook #'rainbow-delimiters-mode)
 
 ;Change lambda chars
 (defun change-symbol-specials-chars()
@@ -39,7 +41,13 @@
 
 (add-hook 'after-init-hook 'change-symbol-specials-chars)
 
-(add-hook 'cider-mode-hook #'rainbow-delimiters-mode)
 
+(defun manu/clojure-mode-hook ()
+    (clj-refactor-mode 1)
+    (yas-minor-mode 1) ; for adding require/use/import
+    (cljr-add-keybindings-with-prefix "C-c C-n"))
+
+
+(add-hook 'clojure-mode-hook #'manu/clojure-mode-hook)
 
 (provide 'init-clojure)
