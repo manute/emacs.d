@@ -45,7 +45,6 @@
 
 ;; OTHERS
 ;; ---------------------
-(depends-on "smartparens")
 (depends-on "request")
 (depends-on "know-your-http-well")
 (depends-on "markdown-mode")
@@ -74,7 +73,7 @@
 (depends-on "elein")
 (depends-on "rainbow-blocks")
 (depends-on "rainbow-delimiters")
-
+(depends-on "smartparens")
 
 ;;ELM
 ;;---------------------

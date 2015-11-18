@@ -31,7 +31,7 @@
     (lisp-interaction-mode . "λ")
     (python-mode . "Py")
     (clojure-mode . "λ")
-    (emacs-lisp-mode . "EL")))
+    (emacs-lisp-mode . "λ")))
 
 
 (defun clean-mode-line ()
