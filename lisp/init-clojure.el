@@ -50,4 +50,7 @@
 
 (add-hook 'clojure-mode-hook #'manu/clojure-mode-hook)
 
+;; INDENTATION ALWAYS 2 SPACES
+(setq clojure-defun-style-default-indent t)
+
 (provide 'init-clojure)
