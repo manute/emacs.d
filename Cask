@@ -54,6 +54,7 @@
 (depends-on "popwin")
 (depends-on "highlight-indentation")
 (depends-on "smart-mode-line")
+(depends-on "spacegray-theme")
 
 
 ;; COMPANY (Autocomplete)

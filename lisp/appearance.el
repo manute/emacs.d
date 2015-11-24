@@ -9,8 +9,9 @@
 ;;TOMORROW THEME
 (require 'color-theme-tomorrow)
 (if window-system
-    (color-theme-tomorrow--define-theme night-bright)
-    (color-theme-tomorrow--define-theme night))
+    (load-theme 'spacegray t)
+  (color-theme-tomorrow--define-theme night))
+
 
 ;; SMART LINE
 (setq sml/no-confirm-load-theme t)
