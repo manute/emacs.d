@@ -21,8 +21,7 @@
   (set-face-attribute 'default nil :height 150 :family "consolas")
   (setq mac-allow-anti-aliasing t))  ;; nice fonts in OS X
 
-
-(set-face-attribute 'default nil :height 138)
+;; (set-face-attribute 'default nil :height 130)
 (setq-default truncate-lines 1)  ;; no word wrap
 (setq-default line-spacing 4)
 
