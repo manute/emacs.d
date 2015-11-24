@@ -7,11 +7,12 @@
 ;; (color-theme-solarized 'dark-mode)
 
 ;;TOMORROW THEME
-(require 'color-theme-tomorrow)
-(if window-system
-    (load-theme 'spacegray t)
-  (color-theme-tomorrow--define-theme night))
+;; (require 'color-theme-tomorrow)
+;; (if window-system
+;;     (load-theme 'spacegray t)
+;;   (color-theme-tomorrow--define-theme night))
 
+(load-theme 'spacemacs-dark t)
 
 ;; SMART LINE
 (setq sml/no-confirm-load-theme t)

@@ -43,6 +43,11 @@
 (depends-on "projectile")
 
 
+;; THEMES
+;; ----------------------
+(depends-on "spacegray-theme")
+(depends-on "spacemacs-theme")
+
 ;; OTHERS
 ;; ---------------------
 (depends-on "request")
@@ -54,7 +59,7 @@
 (depends-on "popwin")
 (depends-on "highlight-indentation")
 (depends-on "smart-mode-line")
-(depends-on "spacegray-theme")
+
 
 
 ;; COMPANY (Autocomplete)
