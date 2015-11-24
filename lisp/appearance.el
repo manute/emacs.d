@@ -1,5 +1,4 @@
 
-
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/themes"))
 
 ;; SOLARIZED THEME
@@ -7,22 +6,26 @@
 ;; (color-theme-solarized 'dark-mode)
 
 ;;TOMORROW THEME
-;; (require 'color-theme-tomorrow)
-;; (if window-system
-;;     (load-theme 'spacegray t)
-;;   (color-theme-tomorrow--define-theme night))
+(require 'color-theme-tomorrow)
+(if window-system
+    (load-theme 'atom-one-dark t)
+  (color-theme-tomorrow--define-theme night))
 
-(load-theme 'spacemacs-dark t)
 
 ;; SMART LINE
 (setq sml/no-confirm-load-theme t)
 (sml/setup)
 (setq sml/theme 'respectful)
 
-
-
 (when (eq system-type 'darwin)
-  (set-face-attribute 'default nil :height 150 :family "consolas"))
+  (set-face-attribute 'default nil :height 150 :family "consolas")
+  (setq mac-allow-anti-aliasing t))  ;; nice fonts in OS X
+
+
+(set-face-attribute 'default nil :height 138)
+(setq-default truncate-lines 1)  ;; no word wrap
+(setq-default line-spacing 4)
+
 
 ;; http://www.masteringemacs.org/articles/2012/09/10/hiding-replacing-modeline-strings/
 (defvar mode-line-cleaner-alist

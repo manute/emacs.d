@@ -46,7 +46,8 @@
 ;; THEMES
 ;; ----------------------
 (depends-on "spacegray-theme")
-(depends-on "spacemacs-theme")
+(depends-on "atom-one-dark-theme")
+
 
 ;; OTHERS
 ;; ---------------------
