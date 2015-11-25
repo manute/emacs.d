@@ -54,7 +54,7 @@
 (setq column-number-mode t)
 
 ;; Show current function in modeline.
-(which-function-mode)
+;;(which-function-mode)
 
 ;; Ensure linum-mode is disabled in certain major modes.
 (setq linum-disabled-modes

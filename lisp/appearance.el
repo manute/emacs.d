@@ -1,15 +1,16 @@
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/themes"))
 
-;; SOLARIZED THEME
-;; (require 'color-theme-solarized)
-;; (color-theme-solarized 'dark-mode)
+;; LOAD THEME ON WINDOW SYSTEM
+(when window-system
+  (load-theme 'atom-one-dark t))
 
-;;TOMORROW THEME
-(require 'color-theme-tomorrow)
-(if window-system
-    (load-theme 'atom-one-dark t)
+;;TOMORROW THEME on CONSOLE MODE
+(when (not window-system)
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d/themes"))
+  (require 'color-theme-tomorrow)
   (color-theme-tomorrow--define-theme night))
+
+
 
 
 ;; SMART LINE
