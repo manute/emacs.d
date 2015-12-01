@@ -24,6 +24,8 @@
 (depends-on "ido-vertical-mode")
 (depends-on "idomenu")
 (depends-on "info+")
+(depends-on "which-key")
+
 
 
 ;; UTILITIES - FUNCTIONS

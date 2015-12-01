@@ -32,6 +32,9 @@
 ;; Always indent after a newline.
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
+;; Which key mode
+(require 'which-key)
+(which-key-mode)
 
 ;;--------------------
 ;THANKS TO BODIL -> https://github.com/bodil/ohai-emacs/blob/master/modules/ohai-appearance.el
