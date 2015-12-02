@@ -46,4 +46,7 @@ there's a region, all lines that region covers will be duplicated."
 (diminish 'whole-line-or-region-mode)
 (make-variable-buffer-local 'whole-line-or-region-mode)
 
+(require 'undo-tree)
+(global-undo-tree-mode 1)
+
 (provide 'init-editing)
