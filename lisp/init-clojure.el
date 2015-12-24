@@ -42,10 +42,26 @@
 
 (add-hook 'after-init-hook 'change-symbol-specials-chars)
 
+(defun manu/indent-buffer ()
+  "Indent whole buffer"
+  (interactive)
+  (indent-region (point-min) (point-max))
+  (message "format successfully"))
+
+(defun manu/indent-file-when-save ()
+  "indent file when save."
+  (make-local-variable 'after-save-hook)
+  (add-hook 'after-save-hook
+			(lambda ()
+			  (if (buffer-file-name)
+				  (manu/indent-buffer))
+			  (save-buffer))))
+
 (defun manu/clojure-mode-hook ()
     (clj-refactor-mode 1)
     (yas-minor-mode 1) ; for adding require/use/import
-    (cljr-add-keybindings-with-prefix "C-c C-n"))
+    (cljr-add-keybindings-with-prefix "C-c C-n")
+    (manu/indent-file-when-save))
 
 
 (add-hook 'clojure-mode-hook #'manu/clojure-mode-hook)
