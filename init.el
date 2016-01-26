@@ -35,17 +35,17 @@
 (require 'init-html)
 (require 'init-dired)
 (require 'init-ido)
-;(require 'init-eshell)
+;; (require 'init-eshell)
 
-;;Init config PLs
+;; Init config PLs
 (require 'init-js)
 (require 'init-clojure)
 (require 'init-python)
-;(require 'init-scala)
-;(require 'init-racket)
-;(require 'init-haskell)
-;(require 'init-groovy)
-;(require 'init-ruby)
+;;(require 'init-scala)
+;;(require 'init-racket)
+;;(require 'init-haskell)
+;;(require 'init-groovy)
+;;(require 'init-ruby)
 (require 'init-golang)
 (require 'init-rust)
 

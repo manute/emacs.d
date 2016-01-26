@@ -12,7 +12,6 @@
 (depends-on "epl")
 (depends-on "diminish")
 
-
 ;; SEARCH - ENHANCEMENTS
 ;; -----------------------
 (depends-on "ag")
@@ -129,7 +128,7 @@
 
 ;; RACKET
 ;;--------------------------
-;(depends-on "racket-mode")
+;; (depends-on "racket-mode")
 
 
 ;; RUBY
@@ -157,3 +156,8 @@
 ;;(depends-on "scala-mode2")
 ;;(depends-on "sbt-mode")
 ;;(depends-on "ensime")
+
+
+;; OCaml
+;; -----------------------
+;; (depends-on "tuareg")
