@@ -4,7 +4,6 @@
 (global-auto-complete-mode -1)
 
 (global-company-mode)
-;;(global-set-key (kbd "C-c a") 'company-complete)
 (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
 
 (setq company-global-modes '(not term-mode))
