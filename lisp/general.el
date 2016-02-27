@@ -16,12 +16,14 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(require 'ag)
-(setq ag-reuse-buffers 't)
+(use-package ag
+  :ensure t
+  :config (setq ag-reuse-buffers 't))
 
-(require 'smex)
-(global-set-key (kbd "C-t") 'smex)
-
+(use-package smex
+  :ensure t
+  :config (global-set-key (kbd "C-t") 'smex))
+ 
 ;;MAC OS keys -> cmd is meta
 (when (eq system-type 'darwin)
   (setq mac-option-key-is-meta nil
@@ -33,19 +35,20 @@
 (setq column-number-mode t)
 (setq create-lockfiles nil)
 
+(use-package discover-my-major
+  :ensure t
+  :config (global-set-key (kbd "C-h C-m") 'discover-my-major))
 
-(require 'discover-my-major)
-(global-set-key (kbd "C-h C-m") 'discover-my-major)
+(use-package anzu
+  :ensure t
+  :diminish anzu-mode
+  :config
+  (global-anzu-mode 1)
+  (global-set-key (kbd "C-x a") 'anzu-query-replace)
+  (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp))
 
-
-;; Display incremental search stats in modeline.
-(require 'anzu)
-(global-anzu-mode 1)
-(global-set-key (kbd "C-x a") 'anzu-query-replace)
-(global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
-
-
-(require 'magit)
-(global-set-key (kbd "C-x g") 'magit-status)
+(use-package magit
+  :ensure t
+  :config (global-set-key (kbd "C-x g") 'magit-status))
 
 (provide 'general)
