@@ -1,11 +1,3 @@
-(require 'paren)
-(require 'rainbow-delimiters)
-(require 'smartparens-config)
-(require 'smartparens)
-
-(add-to-list 'auto-mode-alist '("Cask\\'" . emacs-lisp-mode))
-
-
 (defvar mode-hooks '(clojure-mode-hook
 		     emacs-lisp-mode-hook
 		     scheme-mode-hook
@@ -13,15 +5,30 @@
                      racket-mode-hook
                      clojurescript-mode-hook))
 
-(dolist (mode-hook mode-hooks)
-  (add-hook mode-hook
-            (lambda ()
-              (smartparens-mode)
-              (rainbow-delimiters-mode)
-              (electric-pair-mode t)
-              (show-paren-mode)
-              (setq show-paren-style 'expression))))
 
+(use-package paren
+  :ensure t
+  :config
+  (dolist (mode-hook mode-hooks)
+    (add-hook mode-hook
+              (lambda ()
+                (show-paren-mode)
+                (setq show-paren-style 'expression)
+                (electric-pair-mode t)))))
+
+
+(use-package rainbow-delimiters
+  :ensure t
+  :config
+  (dolist (mode-hook mode-hooks)
+    (add-hook mode-hook rainbow-delimiters-mode)))
+
+
+(use-package smartparens
+  :ensure t
+  :config
+  (dolist (mode-hook mode-hooks)
+    (add-hook mode-hook smartparens-mode)))
 
 
 (provide 'lisps-parenthesis-enhancements)

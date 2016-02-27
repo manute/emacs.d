@@ -70,19 +70,19 @@
 
 (use-package discover-my-major
   :ensure t
-  :config (global-set-key (kbd "C-h C-m") 'discover-my-major))
+  :bind ("C-h C-m" . discover-my-major))
 
 (use-package anzu
   :ensure t
   :diminish anzu-mode
+  :bind (("C-x a" . anzu-query-replace)
+         ("C-M-%" . anzu-query-replace-regexp))
   :config
-  (global-anzu-mode 1)
-  (global-set-key (kbd "C-x a") 'anzu-query-replace)
-  (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp))
+  (global-anzu-mode 1))
 
 (use-package magit
   :ensure t
-  :config (global-set-key (kbd "C-x g") 'magit-status))
+  :bind ("C-x g" . magit-status))
 
 (use-package popwin
   :ensure t
@@ -90,9 +90,8 @@
 
 (use-package projectile
   :ensure t
-  :config
-  (projectile-global-mode)
-  (global-set-key (kbd "C-c C-f") 'projectile-find-file))
+  :bind  ("C-c C-f" . projectile-find-file)
+  :config (projectile-global-mode))
 
 (use-package warnings
   :ensure t

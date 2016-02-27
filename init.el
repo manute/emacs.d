@@ -24,28 +24,36 @@
 
 (setq use-package-verbose t)
 
-(use-package exec-path-from-shell
-  :if (memq window-system '(mac ns))
-  :ensure t
-  :config  (exec-path-from-shell-initialize)
-           (exec-path-from-shell-copy-env "GOPATH")
-           (exec-path-from-shell-copy-env "GOROOT"))
+;; SO SLOW!!! TO FIX
+;;(use-package exec-path-from-shell
+;;  :if (memq window-system '(mac ns))
+;;  :ensure t
+;;  :config  (exec-path-from-shell-initialize)
+;;           (exec-path-from-shell-copy-env "GOPATH")
+;;           (exec-path-from-shell-copy-env "GOROOT"))
 
 (use-package general
   :load-path "lisp/")
 
+(use-package tools-edit
+  :load-path "lisp/"
+  :bind (("C-x c" . manu/comment-or-uncomment-region-or-line)
+         ("C-c d" . manu/duplicate-current-line-or-region)))
+
 (use-package appearance
   :load-path "lisp/")
 
-;; (require 'init-autocomplete)
-;; (require 'custom-org)
-;; (require 'init-flycheck)
-;; (require 'lisps-parenthesis-enhancements)
+(use-package init-autocomplete
+  :load-path "lisp/")
 
-;; (require 'documentation)
-;; (require 'custom-md)
+(use-package init-flycheck
+  :load-path "lisp/")
 
-;; (require 'init-editing)
+(use-package custom-org
+  :load-path "lisp/")
+
+
+
 ;; (require 'init-html)
 ;; (require 'init-dired)
 ;; (require 'init-ido)
@@ -63,5 +71,18 @@
 ;; (require 'init-golang)
 ;; (require 'init-rust)
 
+;; (use-package lisps-parenthesis-enhancements
+;;   :load-path "lisp/")
+
 ;;Load server for emacsclient
 ;; (require 'init-load-server)
+
+(use-package adoc-mode
+  :ensure t
+  :mode ("\\.asciidoc\\'" . adoc-mode))
+
+(use-package markdown-mode
+  :ensure t
+  :mode (("\\.md\\'" . markdown-mode)
+         ("\\.text\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode)))
