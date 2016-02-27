@@ -24,12 +24,13 @@
 
 (setq use-package-verbose t)
 
-(use-package exec-path-from-shell
-  :if (memq window-system '(mac ns))
-  :ensure t
-  :config  (exec-path-from-shell-initialize)
-           (exec-path-from-shell-copy-env "GOPATH")
-           (exec-path-from-shell-copy-env "GOROOT"))
+;; SO SLOW!!! TO FIX
+;;(use-package exec-path-from-shell
+;;  :if (memq window-system '(mac ns))
+;;  :ensure t
+;;  :config  (exec-path-from-shell-initialize)
+;;           (exec-path-from-shell-copy-env "GOPATH")
+;;           (exec-path-from-shell-copy-env "GOROOT"))
 
 (use-package general
   :load-path "lisp/")
@@ -37,7 +38,9 @@
 (use-package appearance
   :load-path "lisp/")
 
-;; (require 'init-autocomplete)
+(use-package init-autocomplete
+  :load-path "lisp/")
+
 ;; (require 'custom-org)
 ;; (require 'init-flycheck)
 ;; (require 'lisps-parenthesis-enhancements)
