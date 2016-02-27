@@ -10,7 +10,6 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-
 ;; (add-to-list 'load-path "~/.emacs.d/lisp")
 ;; (add-to-list 'load-path "~/projects/gorepl-mode")
 
@@ -37,7 +36,6 @@
 
 (use-package appearance
   :load-path "lisp/")
-;; (require) 'enhancements)
 
 ;; (require 'init-autocomplete)
 ;; (require 'custom-org)
