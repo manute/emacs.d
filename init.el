@@ -22,14 +22,6 @@
 
 (setq use-package-verbose t)
 
-;; SO SLOW!!! TO FIX
-;;(use-package exec-path-from-shell
-;;  :if (memq window-system '(mac ns))
-;;  :ensure t
-;;  :config  (exec-path-from-shell-initialize)
-;;           (exec-path-from-shell-copy-env "GOPATH")
-;;           (exec-path-from-shell-copy-env "GOROOT"))
-
 (use-package general
   :load-path "lisp/")
 
@@ -78,9 +70,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Init config PLs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package init-lisp
+  :load-path "lisp/")
+
 (use-package js2-mode
   :ensure t
-  :disabled t
   :mode ("\\.js\\'" . js2-mode))
 
 (use-package init-python
@@ -88,7 +82,6 @@
   :load-path "lisp/")
 
 (use-package init-golang
-  :defer t
   :load-path "lisp/")
 
 (use-package init-scala
@@ -101,10 +94,6 @@
 
 (use-package init-racket
   :disabled t
-  :load-path "lisp/")
-
-(use-package init-lisp
-  :defer t
   :load-path "lisp/")
 
 (use-package init-haskell
