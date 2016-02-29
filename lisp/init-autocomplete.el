@@ -1,7 +1,10 @@
 (use-package company
   :ensure t
   :config
+
   (global-company-mode)
+  (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+
   (setq company-global-modes '(not term-mode))
   (setq company-tooltip-limit 20)                    ; bigger popup window
   (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
