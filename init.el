@@ -53,7 +53,29 @@
   :load-path "lisp/")
 
 
-;; (require 'init-html)
+(use-package web-mode
+  :ensure t
+  :mode (("\\.phtml\\'" . web-mode)
+         ("\\.erb\\'" . web-mode)
+         ("\\.mustache\\'" . web-mode)
+         ("\\.djhtml\\'" . web-mode)
+         ("\\.html\\'" . web-mode))
+  :config
+  (setq web-mode-markup-indent-offset 4)
+  (setq web-mode-enable-current-column-highlight t)
+  (setq web-mode-enable-current-element-highlight t))
+
+
+(use-package dired+
+  :ensure t
+  :defer t
+  :config
+  (setq diredp-hide-details-initially-flag nil)
+  (set-face-foreground 'diredp-file-name nil)
+  ;; Keep dired buffers updated when the file system changes.
+  (setq global-auto-revert-non-file-buffers t)
+  (setq auto-revert-verbose nil))
+
 ;; (require 'init-dired)
 ;; (require 'init-ido)
 ;(require 'init-eshell)
