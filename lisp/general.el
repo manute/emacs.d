@@ -90,8 +90,9 @@
 
 (use-package projectile
   :ensure t
-  :bind  ("C-c C-f" . projectile-find-file)
-  :config (projectile-global-mode))
+  :bind  (("C-c C-f" . projectile-find-file)
+          ("C-c p p" . projectile-switch-project))
+  :config (projectile-global-mode t))
 
 (use-package warnings
   :ensure t

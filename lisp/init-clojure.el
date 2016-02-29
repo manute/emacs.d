@@ -1,70 +1,56 @@
-(require 'ob-clojure)
-(require 'cider)
-(require 'elein)
-(require 'clojure-mode)
-(require 'clj-refactor)
-
-(setq org-babel-clojure-backend 'cider)
-
-;; Cider
-(setq nrepl-hide-special-buffers t
-      cider-repl-pop-to-buffer-on-connect nil
-      cider-popup-stacktraces nil
-      cider-repl-popup-stacktraces nil
-      cider-show-error-buffer nil)
-
-(define-key clojure-mode-map (kbd "C-x t") 'elein-test)
-(define-key clojure-mode-map (kbd "C-o j") 'cider-jack-in )
-(define-key clojure-mode-map (kbd "C-o l") 'cider-jack-in-clojurescript)
-(define-key clojure-mode-map (kbd "C-o J") 'cider-restart)
-
-;; Cider mode hooks
-(add-hook 'cider-mode-hook #'cider-turn-on-eldoc-mode)
-(add-hook 'cider-mode-hook #'rainbow-delimiters-mode)
-
 ;Change lambda chars
-(defun change-symbol-specials-chars()
- (dolist (mode '(clojure-mode clojurescript-mode cider-mode))
-  (eval-after-load mode
-    (font-lock-add-keywords
-     mode '(("(\\(fn\\)[\[[:space:]]"  ; anon funcs 1
-             (0 (progn (compose-region (match-beginning 1)
-                                       (match-end 1) "λ")
-                       nil)))
-            ("\\(#\\)("                ; anon funcs 2
-             (0 (progn (compose-region (match-beginning 1)
-                                       (match-end 1) "ƒ")
-                       nil)))
-            ("\\(#\\){"                 ; sets
-             (0 (progn (compose-region (match-beginning 1)
-                                       (match-end 1) "∈")
-                       nil))))))))
+(defun manu/change-symbol-specials-chars()
+  (font-lock-add-keywords
+   mode '(("(\\(fn\\)[\[[:space:]]"  ; anon funcs 1
+           (0 (progn (compose-region (match-beginning 1)
+                                     (match-end 1) "λ")
+                     nil)))
+          ("\\(#\\)("                ; anon funcs 2
+           (0 (progn (compose-region (match-beginning 1)
+                                     (match-end 1) "ƒ")
+                     nil)))
+          ("\\(#\\){"                 ; sets
+           (0 (progn (compose-region (match-beginning 1)
+                                     (match-end 1) "∈")
+                     nil))))))
 
-(add-hook 'after-init-hook 'change-symbol-specials-chars)
+(use-package clojure-mode
+  :ensure t
+  :mode  (("\\.clj\\'" . clojure-mode)
+          ("\\.cljs\\'" . clojure-mode)
+          ("\\.cljc\\'" . clojure-mode))
+  :config
+  (setq org-babel-clojure-backend 'cider)
+  ;; Cider
+  (setq nrepl-hide-special-buffers t
+        cider-repl-pop-to-buffer-on-connect nil
+        cider-popup-stacktraces nil
+        cider-repl-popup-stacktraces nil
+        cider-show-error-buffer nil)
 
-(defun manu/indent-buffer ()
-  "Indent whole buffer"
-  (interactive)
-  (indent-region (point-min) (point-max))
-  (message "format successfully"))
+  (add-hook 'clojure-mode-hook #'manu/change-symbol-specials-chars)
 
-(defun manu/indent-file-when-save ()
-  "indent file when save."
-  (make-local-variable 'after-save-hook)
-  (add-hook 'after-save-hook
-			(lambda ()
-			  (if (buffer-file-name)
-				  (manu/indent-buffer))
-			  (save-buffer))))
+  (use-package elein
+    :ensure t
+    :bind ("C-x t" . elein-test))
 
-(defun manu/clojure-mode-hook ()
-    (clj-refactor-mode 1)
-    (yas-minor-mode 1) ; for adding require/use/import
-    (cljr-add-keybindings-with-prefix "C-c C-n")
-    (manu/indent-file-when-save))
+  (use-package cider
+    :ensure t
+    :bind (("C-x j" . cider-jack-in)
+           ("C-c j" . cider-jack-in-clojurescript)
+           ("C-c r" . cider-restart))
+    :config
+    ;; Cider mode hooks
+    (add-hook 'cider-mode-hook #'cider-turn-on-eldoc-mode)
+    (add-hook 'cider-mode-hook #'rainbow-delimiters-mode))
 
+  (use-package clj-refactor
+    :ensure t
+    :diminish clj-refactor-mode
+    :config
+    (yas-minor-mode 1)
+    (clj-refactor-mode 1)))
 
-(add-hook 'clojure-mode-hook #'manu/clojure-mode-hook)
 
 ;; INDENTATION ALWAYS 2 SPACES
 ;; (setq clojure-defun-style-default-indent t)
