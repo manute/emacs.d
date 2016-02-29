@@ -10,10 +10,6 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; (add-to-list 'load-path "~/.emacs.d/lisp")
-;; (add-to-list 'load-path "~/projects/gorepl-mode")
-
-
 ;; ACTIVATE BENCHMARKS
 ;; (require 'benchmark-init)
 ;; (benchmark-init/activate)
@@ -52,7 +48,6 @@
 (use-package custom-org
   :load-path "lisp/")
 
-
 (use-package web-mode
   :ensure t
   :mode (("\\.phtml\\'" . web-mode)
@@ -76,27 +71,57 @@
   (setq global-auto-revert-non-file-buffers t)
   (setq auto-revert-verbose nil))
 
-;; (require 'init-dired)
-;; (require 'init-ido)
-;(require 'init-eshell)
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Init config PLs
-;; (require 'init-js)
-;; (require 'init-clojure)
-;; (require 'init-python)
-;(require 'init-scala)
-;(require 'init-racket)
-;(require 'init-haskell)
-;(require 'init-groovy)
-;(require 'init-ruby)
-;; (require 'init-golang)
-;; (require 'init-rust)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package js2-mode
+  :ensure t
+  :disabled t
+  :mode ("\\.js\\'" . js2-mode))
 
-;; (use-package lisps-parenthesis-enhancements
-;;   :load-path "lisp/")
+(use-package init-python
+  :disabled t
+  :load-path "lisp/")
 
-;;Load server for emacsclient
-;; (require 'init-load-server)
+(use-package init-golang
+  :load-path "lisp/")
+
+(use-package init-scala
+  :disabled t
+  :load-path "lisp/")
+
+(use-package init-clojure
+  :disabled t
+  :load-path "lisp/")
+
+(use-package init-racket
+  :disabled t
+  :load-path "lisp/")
+
+(use-package init-lisp
+  :load-path "lisp/")
+
+(use-package init-haskell
+  :disabled t
+  :load-path "lisp/")
+
+(use-package init-groovy
+  :disabled t
+  :load-path "lisp/")
+
+(use-package init-ruby
+  :disabled t
+  :load-path "lisp/")
+
+(use-package init-rust
+  :load-path "lisp/")
+
+
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
 (use-package adoc-mode
   :ensure t
