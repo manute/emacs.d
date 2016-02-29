@@ -46,6 +46,7 @@
   :load-path "lisp/")
 
 (use-package custom-org
+  :defer t
   :load-path "lisp/")
 
 (use-package web-mode
@@ -72,7 +73,6 @@
   (setq auto-revert-verbose nil))
 
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Init config PLs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -86,6 +86,7 @@
   :load-path "lisp/")
 
 (use-package init-golang
+  :defer t
   :load-path "lisp/")
 
 (use-package init-scala
@@ -101,6 +102,7 @@
   :load-path "lisp/")
 
 (use-package init-lisp
+  :defer t
   :load-path "lisp/")
 
 (use-package init-haskell
@@ -116,6 +118,7 @@
   :load-path "lisp/")
 
 (use-package init-rust
+  :defer t
   :load-path "lisp/")
 
 

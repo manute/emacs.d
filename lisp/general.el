@@ -22,8 +22,9 @@
 
 (use-package smex
   :ensure t
+  :defer t
   :config
-  (global-set-key (kbd "C-t") 'smex)
+  (global-set-key (kd b"C-t") 'smex)
   (global-set-key (kbd "M-x") (lambda ()
 			      (interactive)
 			      (or (boundp 'smex-cache)
@@ -86,6 +87,7 @@
 
 (use-package popwin
   :ensure t
+  :defer t
   :config (popwin-mode 1))
 
 (use-package projectile
@@ -96,10 +98,12 @@
 
 (use-package warnings
   :ensure t
+  :defer t
   :config (setq warning-suppress-types '(undo discard-info)))
 
 (use-package rainbow-delimiters
   :ensure t
+  :defer t
   :config (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 ; Show empty lines
@@ -119,6 +123,7 @@
 
 (use-package which-key
   :ensure t
+  :defer t
   :diminish which-key-mode
   :config (which-key-mode))
 
