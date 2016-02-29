@@ -4,12 +4,12 @@
 (require 'flycheck-rust)
 (require 'rustfmt)
 
+
 ; Set path to racer binary
-(setq racer-cmd "/usr/local/bin/racer")
+(setq racer-cmd "~/.cargo/bin/racer")
 
 ;; Set path to rust src directory
-(setq racer-rust-src-path "/usr/local/src/rust/src")
-
+(setq racer-rust-src-path "~/rust/1.6/src")
 
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
