@@ -1,7 +1,5 @@
 (use-package flycheck
   :ensure t
-  :bind (("M-n" . next-error)
-         ("M-p" . previous-error))
   :config
   ;;THANKS BODIL -> https://github.com/bodil/ohai-emacs/blob/73e1ab0c4fd3dc11a1717d311ae8858d084fd581/modules/ohai-flycheck.el
   ;; Start it automatically for all modes except ELisp mode,
@@ -11,6 +9,9 @@
               (when (not (equal 'emacs-lisp-mode major-mode))
                 (flycheck-mode))))
 
+ ;; Jump between current errors with M-n and M-p.
+  (global-set-key (kbd "M-n") 'next-error)
+  (global-set-key (kbd "M-p") 'previous-error)
 
   (use-package flycheck-color-mode-line
     :ensure t

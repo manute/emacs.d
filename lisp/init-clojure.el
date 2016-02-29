@@ -49,7 +49,26 @@
     :diminish clj-refactor-mode
     :config
     (yas-minor-mode 1)
-    (clj-refactor-mode 1)))
+    (clj-refactor-mode 1))
+
+  (use-package paren
+    :ensure t
+    :config
+    (show-paren-mode)
+    (setq show-paren-style 'expression)
+    (electric-pair-mode t))
+
+  (use-package rainbow-delimiters
+    :ensure t
+    :config
+    (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
+    (add-hook 'clojurescript-mode-hook #'rainbow-delimiters-mode))
+
+  (use-package smartparens
+    :ensure t
+    :config
+    (add-hook 'clojure-mode-hook #'smartparens-mode)
+    (add-hook 'clojurescript-mode-hook #'smartparens-mode)))
 
 
 ;; INDENTATION ALWAYS 2 SPACES
