@@ -2,8 +2,6 @@ emacs.d
 =======
 
 - clone this repo into ~/.emacs.d
-- install [Cask](https://github.com/cask/cask)
-- on shell , inside the dir ~/.emacs.d  :  ``` cask install ```
 
 
 Mac OSX
@@ -56,8 +54,6 @@ Modes dependencies
    * [Path of workspace](http://golang.org/doc/code.html#GOPATH)
    * [Autocompletion](https://github.com/nsf/gocode)
    * [goimports](https://godoc.org/golang.org/x/tools/cmd/goimports)
-   * [goflymake](https://github.com/dougm/goflymake)
-
 
  * racket-mode
 

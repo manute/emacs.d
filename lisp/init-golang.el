@@ -1,35 +1,32 @@
-(require 'go-mode)
-(require 'gorepl-mode)
+(use-package go-mode
+  :ensure t
+  :mode ("\\.go\\'" . go-mode)
+  :config
 
-(defun go-run-buffer()
-  (interactive)
-  (shell-command (concat "go run " (buffer-name))))
+  (when (memq window-system '(mac ns))
+    (setenv "PATH" (concat (getenv "PATH") (getenv "GOPATH")))
+    (setenv "PATH" (concat (getenv "PATH") (getenv "GOROOT"))))
 
-(defun go-kill()
-  (interactive)
-  (if (go-mode-in-string)
-      (paredit-kill-line-in-string)
-    (paredit-kill)))
-
-(defun go-backward-delete()
-  (interactive)
-  (if (go-mode-in-string)
-      (paredit-backward-delete-in-string)
-    (paredit-backward-delete)))
-
-
-(defun go-mode-setup ()
-  (set (make-local-variable 'company-backends) '(company-go))
   (setq compile-command "go build -v && go test -v && go vet")
-  (define-key (current-local-map) "\C-c\C-c" 'compile)
    ;; Key binding to jump to method definition
   (local-set-key (kbd "M-.") #'godef-jump-other-window)
-  (go-eldoc-setup)
   (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook 'gofmt-before-save))
+  (add-hook 'before-save-hook 'gofmt-before-save)
 
+  (use-package company-go
+    :ensure t
+    :defer t
+    :config
+    (set (make-local-variable 'company-backends) '(company-go)))
 
-(add-hook 'go-mode-hook 'go-mode-setup)
-(add-hook 'go-mode-hook 'gorepl-mode)
+  (use-package go-eldoc
+    :ensure t
+    :defer t
+    :config (go-eldoc-setup))
+
+  (use-package gorepl-mode
+    :ensure t
+    :defer t
+    :config (add-hook 'go-mode-hook 'gorepl-mode)))
 
 (provide 'init-golang)
