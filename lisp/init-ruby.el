@@ -1,20 +1,20 @@
-(require 'ruby-mode)
+(use-package ruby-mode
+  :mode (("Rakefile\\'" . ruby-mode)
+         (".rake\\'" . ruby-mode)
+         ("\\.rb\\'" . ruby-mode)
+         ("\\.builder\\'" . ruby-mode)
+         ("\\.ru\\'" . ruby-mode)
+         ("\\.gemspec\\'" . ruby-mode)
+         ("Gemfile\\'" . ruby-mode))
+  :config
+  (setq ruby-use-encoding-map nil)
 
-(add-to-list 'auto-mode-alist
-             '("Rakefile\\'" "\\.rake\\'" "\\.rxml\\'"
-               "\\.rjs\\'" "\\.irbrc\\'" "\\.pryrc\\'"
-               "\\.builder\\'" "\\.ru\\'" "\\.gemspec\\'"
-               "Gemfile\\'"
-               . ruby-mode))
+  (use-package robe
+    :ensure t
+    :config  (add-hook 'ruby-mode-hook 'robe-mode))
 
-(setq ruby-use-encoding-map nil)
-
-(use-package robe
-  :ensure t
-  :config  (add-hook 'ruby-mode-hook 'robe-mode))
-
-(use-package rbenv
-  :ensure t
-  :config   (setq rbenv-installation-dir "~/rbenv"))
+  (use-package rbenv
+    :ensure t
+    :config   (setq rbenv-installation-dir "~/rbenv")))
 
 (provide 'init-ruby)

@@ -1,58 +1,20 @@
-(use-package scheme-mode
+
+(add-hook 'emacs-lisp-mode-hook #'turn-on-eldoc-mode)
+(add-hook 'lisp-interaction-mode-hook #'turn-on-eldoc-mode)
+(show-paren-mode 1)
+
+(use-package rainbow-delimiters
+  :ensure t
+  :diminish rainbow-delimiters-mode
   :config
-  (use-package paren
-    :ensure t
-    :config
-    (show-paren-mode)
-    (setq show-paren-style 'expression)
-    (electric-pair-mode t))
+  (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'lisp-interaction-mode-hook #'rainbow-delimiters-mode))
 
-  (use-package rainbow-delimiters
-    :ensure t
-    :config
-    (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode))
-
-  (use-package smartparens
-    :ensure t
-    :config
-    (add-hook 'scheme-mode-hook #'smartparens-mode)))
-
-(use-package emacs-lisp-mode
+(use-package smartparens
+  :ensure t
+  :diminish smartparens-mode
   :config
-  (use-package paren
-    :ensure t
-    :config
-    (show-paren-mode)
-    (setq show-paren-style 'expression)
-    (electric-pair-mode t))
-
-  (use-package rainbow-delimiters
-    :ensure t
-    :config
-    (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode))
-
-  (use-package smartparens
-    :ensure t
-    :config
-    (add-hook 'emacs-lisp--mode-hook #'smartparens-mode)))
-
-(use-package lisp-mode
-  :config
-  (use-package paren
-    :ensure t
-    :config
-    (show-paren-mode)
-    (setq show-paren-style 'expression)
-    (electric-pair-mode t))
-
-  (use-package rainbow-delimiters
-    :ensure t
-    :config
-    (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode))
-
-  (use-package smartparens
-    :ensure t
-    :config
-    (add-hook 'lisp--mode-hook #'smartparens-mode)))
+  (add-hook 'emacs-lisp-mode-hook #'smartparens-mode)
+  (add-hook 'lisp-interaction-mode-hook #'smartparens-mode))
 
 (provide 'init-lisp)

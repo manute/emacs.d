@@ -19,8 +19,9 @@
 
   (use-package go-eldoc
     :ensure t
-    :diminish go-eldoc-mode
-    :config (go-eldoc-setup))
+    :diminish eldoc-mode
+    :config
+    (add-hook 'go-mode-hook 'go-eldoc-setup))
 
   (use-package gorepl-mode
     :ensure t
