@@ -123,7 +123,6 @@
 
 (use-package which-key
   :ensure t
-  :defer t
   :diminish which-key-mode
   :config (which-key-mode))
 
