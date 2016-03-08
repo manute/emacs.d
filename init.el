@@ -12,6 +12,13 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(use-package auto-package-update
+  :ensure t
+  :bind ("C-x P" . auto-package-update-now)
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (auto-package-update-at-time "03:00"))
+
 ;; ACTIVATE BENCHMARKS
 ;; (require 'benchmark-init)
 ;; (benchmark-init/activate)

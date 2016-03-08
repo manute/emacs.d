@@ -1,5 +1,5 @@
 (use-package racket-mode
-  :disabled t
+  :ensure t
   :mode ("\\.rkt\\'" . racket-mode)
   :config
   ;;(setq racket-racket-program /usr/local/bin/racket)
@@ -7,13 +7,6 @@
   (add-hook 'racket-mode-hook
             (lambda ()
               (define-key racket-mode-map (kbd "C-c r") 'racket-run)))
-
- (use-package paren
-    :ensure t
-    :config
-    (show-paren-mode)
-    (setq show-paren-style 'expression)
-    (electric-pair-mode t))
 
   (use-package rainbow-delimiters
     :ensure t
