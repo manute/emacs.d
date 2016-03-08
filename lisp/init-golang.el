@@ -15,7 +15,11 @@
   (use-package company-go
     :ensure t
     :config
-    (set (make-local-variable 'company-backends) '(company-go)))
+    (add-hook 'go-mode-hook 'company-mode)
+    (add-hook 'go-mode-hook (lambda ()
+                              (set (make-local-variable 'company-backends) '(company-go))
+                              (company-mode))))
+
 
   (use-package go-eldoc
     :ensure t
