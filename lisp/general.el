@@ -16,10 +16,6 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(use-package ag
-  :ensure t
-  :config (setq ag-reuse-buffers 't))
-
 (use-package smex
   :ensure t
   :defer t
@@ -41,13 +37,13 @@
 (use-package ido
   :ensure t
   :config
-  (ido-mode)
-  (ido-everywhere)
-  (setq ido-enable-flex-matching t))
+  (setq ido-enable-flex-matching t)
+  (setq ido-everywhere t)
+  (ido-mode 1))
 
-(use-package ido-ubiquitous
-  :ensure t
-  :config (ido-ubiquitous-mode))
+;; (use-package ido-ubiquitous
+;;   :ensure t
+;;   :config (ido-ubiquitous-mode 1))
 
 (use-package ido-vertical-mode
   :ensure t
@@ -68,10 +64,6 @@
 (setq make-backup-files nil)
 (setq column-number-mode t)
 (setq create-lockfiles nil)
-
-(use-package discover-my-major
-  :ensure t
-  :bind ("C-h C-m" . discover-my-major))
 
 (use-package anzu
   :ensure t
