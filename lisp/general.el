@@ -93,10 +93,6 @@
   :defer t
   :config (setq warning-suppress-types '(undo discard-info)))
 
-(use-package rainbow-delimiters
-  :ensure t
-  :defer t
-  :config (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 ; Show empty lines
 (toggle-indicate-empty-lines)
@@ -137,6 +133,8 @@
 
 ;; Show column numbers in modeline.
 (setq column-number-mode t)
+
+(show-paren-mode 1)
 
 
 (provide 'general)
