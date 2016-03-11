@@ -1,13 +1,7 @@
 (use-package flycheck
   :ensure t
+  :defer t
   :config
-  ;;THANKS BODIL -> https://github.com/bodil/ohai-emacs/blob/73e1ab0c4fd3dc11a1717d311ae8858d084fd581/modules/ohai-flycheck.el
-  ;; Start it automatically for all modes except ELisp mode,
-  ;; where the linter is just designed to make you mad.
-  (add-hook 'find-file-hook
-            (lambda ()
-              (when (not (equal 'emacs-lisp-mode major-mode))
-                (flycheck-mode))))
 
  ;; Jump between current errors with M-n and M-p.
   (global-set-key (kbd "M-n") 'next-error)

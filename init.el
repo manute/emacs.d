@@ -79,15 +79,18 @@
 (use-package init-lisp
   :load-path "lisp/")
 
+(use-package init-golang
+  :load-path "lisp/")
+
+(use-package init-rust
+  :load-path "lisp/")
+
 (use-package js2-mode
   :ensure t
   :mode ("\\.js\\'" . js2-mode))
 
 (use-package init-python
   :disabled t
-  :load-path "lisp/")
-
-(use-package init-golang
   :load-path "lisp/")
 
 (use-package init-scala
@@ -114,15 +117,9 @@
   :disabled t
   :load-path "lisp/")
 
-(use-package init-rust
-  :defer t
-  :load-path "lisp/")
 
 
-(require 'server)
-(unless (server-running-p)
-  (server-start))
-
+;; FILES MODES
 (use-package adoc-mode
   :ensure t
   :mode ("\\.asciidoc\\'" . adoc-mode))
@@ -132,3 +129,12 @@
   :mode (("\\.md\\'" . markdown-mode)
          ("\\.text\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode)))
+
+(use-package toml-mode
+  :ensure t
+  :mode ("\\.toml\\'" . toml-mode))
+
+;; INIT DAEMON SERVER
+(require 'server)
+(unless (server-running-p)
+  (server-start))

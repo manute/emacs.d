@@ -1,7 +1,7 @@
 (use-package company
   :ensure t
+  :bind ("TAB" . company-indent-or-complete-common)
   :config
-
   (global-company-mode)
   (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
 
@@ -20,9 +20,6 @@
     :ensure t
     :config
     (setq company-quickhelp-delay 1)
-    (company-quickhelp-mode 1))
-
-  :bind ("TAB" . company-indent-or-complete-common)
-  :defer t)
+    (company-quickhelp-mode 1)))
 
 (provide 'init-autocomplete)

@@ -18,9 +18,9 @@
 
 (use-package rust-mode
   :ensure t
+  :mode ("\\.rs\\'" . rust-mode)
   :diminish eldoc-mode
   :config
-
   (setq company-tooltip-align-annotations t)
   '(manu/setup-rust-arrows 'rust-mode rust-mode-map)
 
@@ -38,16 +38,15 @@
   (use-package flycheck-rust
     :ensure t
     :config
+    (add-hook 'rust-mode-hook #'flycheck-mode)
     (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
   (use-package rustfmt
     :ensure t
-    :config
-    (add-hook 'rust-mode-hook #'rustfmt-enable-on-save))
+    :config (add-hook 'rust-mode-hook #'rustfmt-enable-on-save))
 
   (use-package company-racer
     :ensure t
-    :config
-    (add-to-list 'company-backends 'company-racer)))
+    :config (add-to-list 'company-backends 'company-racer)))
 
 (provide 'init-rust)
