@@ -1,3 +1,8 @@
+;; Install these tools:
+;; - https://github.com/nsf/gocode
+;; - https://github.com/bradfitz/goimports
+;; - https://github.com/buaazp/Godef
+
 (use-package go-mode
   :ensure t
   :bind ( "M-." . godef-jump-other-window)
