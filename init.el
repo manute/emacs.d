@@ -71,6 +71,12 @@
   (setq global-auto-revert-non-file-buffers t)
   (setq auto-revert-verbose nil))
 
+(use-package key-chord
+  :ensure t
+  :config
+  (key-chord-mode 1)
+  (key-chord-define-global "--" "_"))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Init config PLs

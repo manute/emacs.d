@@ -114,6 +114,7 @@
   :diminish which-key-mode
   :config (which-key-mode))
 
+
 ;;--------------------
 ;THANKS TO BODIL -> https://github.com/bodil/ohai-emacs/blob/master/modules/ohai-appearance.el
 ;;--------------------

@@ -37,7 +37,7 @@
   :config
   ;; Ignored Python bytecode in dired
   (add-to-list 'dired-omit-extensions ".pyc")
-  (add-hook 'python-mode-hook #'my:configure-python-venv)
+  (add-hook 'python-mode-hook #'manu/configure-python-venv)
   (define-key python-mode-map (kbd "C-c C-b") 'python-add-breakpoint)
 
   (use-package virtualenvwrapper
