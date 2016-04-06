@@ -123,8 +123,14 @@
   :load-path "lisp/")
 
 
+(use-package init-elixir
+  :disabled t
+  :load-path "lisp/")
+
+
 
 ;; FILES MODES
+
 (use-package adoc-mode
   :ensure t
   :mode ("\\.asciidoc\\'" . adoc-mode))
