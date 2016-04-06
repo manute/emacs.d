@@ -1,5 +1,6 @@
 (use-package org
   :ensure t
+  :mode (("\\.org\\'" . org-mode))
   :config
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -37,7 +38,13 @@
 
   (setq org-use-fast-todo-selection t)
 
-  (setq org-log-done 'time))
+  (setq org-log-done 'time)
+
+
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
 
 
 (provide 'custom-org)
