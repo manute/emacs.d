@@ -122,7 +122,6 @@
   :disabled t
   :load-path "lisp/")
 
-
 (use-package init-elixir
   :disabled t
   :load-path "lisp/")
