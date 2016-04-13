@@ -143,6 +143,17 @@
   :ensure t
   :mode ("\\.toml\\'" . toml-mode))
 
+
+(use-package javascript-mode
+  :mode (("\\.json\\'" . javascript-mode)
+         ("\\.tmpl\\'" . javascript-mode))
+  :config
+
+  (use-package json-reformat
+    :ensure t
+    :bind (("C-c r" . json-reformat-region))))
+
+
 ;; INIT DAEMON SERVER
 (require 'server)
 (unless (server-running-p)
