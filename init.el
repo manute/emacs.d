@@ -90,9 +90,8 @@
 (use-package init-rust
   :load-path "lisp/")
 
-(use-package js2-mode
-  :ensure t
-  :mode ("\\.js\\'" . js2-mode))
+(use-package init-js
+  :load-path "lisp/")
 
 (use-package init-python
   :disabled t
