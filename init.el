@@ -94,7 +94,6 @@
   :load-path "lisp/")
 
 (use-package init-python
-  :disabled t
   :load-path "lisp/")
 
 (use-package init-scala

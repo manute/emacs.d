@@ -39,6 +39,9 @@
   (add-to-list 'dired-omit-extensions ".pyc")
   (add-hook 'python-mode-hook #'manu/configure-python-venv)
   (define-key python-mode-map (kbd "C-c C-b") 'python-add-breakpoint)
+  (add-hook 'python-mode-hook #'company-mode)
+  (add-hook 'python-mode-hook #'flycheck-mode)
+
 
   (use-package virtualenvwrapper
     :ensure t
