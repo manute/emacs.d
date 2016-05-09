@@ -11,10 +11,9 @@
   :mode (("\\.ex[s]\\'" . elixir-mode)
          ("\\.elixir[2]\\'" . elixir-mode))
   :config
-
   (add-hook 'elixir-mode-hook #'company-mode)
 
-  ;; NO FLYCHECK YET
+  ;; NOT YET FLYCHECK
   ;; (add-hook 'elixir-mode-hook #'flycheck-mode)
 
   (use-package smartparens

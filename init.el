@@ -46,7 +46,6 @@
   :load-path "lisp/")
 
 (use-package custom-org
-  :defer t
   :load-path "lisp/")
 
 (use-package web-mode
@@ -121,7 +120,6 @@
   :load-path "lisp/")
 
 (use-package init-elixir
-  :disabled t
   :load-path "lisp/")
 
 
