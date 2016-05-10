@@ -1,3 +1,5 @@
+;; http://www.brool.com/post/using-org-mode-with-gtd/
+
 (use-package org
   :ensure t
   :mode (("\\.org\\'" . org-mode))
@@ -13,6 +15,12 @@
      (ruby . t)
      (js . t)
      (java . t)))
+
+  (define-key global-map "\C-cl" 'org-store-link)
+  (define-key global-map "\C-ca" 'org-agenda)
+
+  (setq org-agenda-files
+        (list "~/org/gtd.org" "~/org/work.org" "~/org/personal.org"))
 
   ;; TODO keywords
   (setq org-todo-keywords
