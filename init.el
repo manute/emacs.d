@@ -133,7 +133,14 @@
   :ensure t
   :mode (("\\.md\\'" . markdown-mode)
          ("\\.text\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode)))
+         ("\\.markdown\\'" . markdown-mode))
+  :config
+
+  (use-package markdown-preview-mode
+    :ensure t
+    :bind (("C-c m p" . markdown-preview-mode)
+           ("C-c m o" . markdown-preview-open-browser))))
+
 
 (use-package toml-mode
   :ensure t
