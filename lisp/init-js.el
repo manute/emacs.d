@@ -1,6 +1,6 @@
 
 ;; npm install -g eslint babel-eslint eslint-plugin-react
-;; file ~/.eslintrc with rules for this url -> ;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
+;; file ~/.eslintrc with these rules -> ;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
 
 (use-package js2-mode
   :ensure t
@@ -8,7 +8,6 @@
   :config
 
   (add-hook 'js2-mode-hook   #'company-mode)
-
   (add-hook 'js2-mode-hook   #'flycheck-mode)
   (setq flycheck-disable-checker '(javascript-jshint))
 
