@@ -35,6 +35,10 @@
   (use-package gorepl-mode
     :ensure t
     :diminish gorepl-mode
-    :config (add-hook 'go-mode-hook #'gorepl-mode)))
+    :config (add-hook 'go-mode-hook #'gorepl-mode))
+
+  (use-package smartparens
+    :ensure t
+    :config  (add-hook 'go-mode-hook #'smartparens-mode)))
 
 (provide 'init-golang)
