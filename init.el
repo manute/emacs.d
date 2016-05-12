@@ -45,6 +45,11 @@
 (use-package init-flycheck
   :load-path "lisp/")
 
+(use-package smartparens
+  :ensure t
+  :defer t
+  :diminish smartparens-mode)
+
 (use-package custom-org
   :load-path "lisp/")
 

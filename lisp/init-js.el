@@ -10,10 +10,6 @@
   (add-hook 'js2-mode-hook   #'company-mode)
   (add-hook 'js2-mode-hook   #'flycheck-mode)
   (setq flycheck-disable-checker '(javascript-jshint))
-
-  (use-package smartparens
-    :ensure t
-    :config  (add-hook 'js2-mode-hook #'smartparens-mode)))
-
+  (add-hook 'js2-mode-hook #'smartparens-mode))
 
 (provide 'init-js)

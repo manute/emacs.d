@@ -20,6 +20,9 @@
                                      (match-end 1) "∈")
                      nil)))))
 
+  (add-hook 'clojure-mode-hook #'smartparens-mode)
+  (add-hook 'clojurescript-mode-hook #'smartparens-mode)
+
   (use-package cider
     :ensure t
     :bind (("C-x j" . cider-jack-in)
@@ -28,7 +31,8 @@
     :config
     (setq org-babel-clojure-backend 'cider)
     (add-hook 'cider-mode-hook #'cider-turn-on-eldoc-mode)
-    ;; Cider
+    (add-hook 'cider-mode-hook #'smartparens-mode)
+
     (setq nrepl-hide-special-buffers t
           cider-repl-pop-to-buffer-on-connect nil
           cider-popup-stacktraces nil
@@ -48,17 +52,7 @@
     :config
     (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
     (add-hook 'clojurescript-mode-hook #'rainbow-delimiters-mode)
-    (add-hook 'cider-mode-hook #'rainbow-delimiters-mode))
-
-  (use-package smartparens
-    :ensure t
-    :diminish smartparens-mode
-    :config
-    (add-hook 'clojure-mode-hook #'smartparens-mode)
-    (add-hook 'clojurescript-mode-hook #'smartparens-mode)
     (add-hook 'cider-mode-hook #'rainbow-delimiters-mode)))
-
-
 
 ;; INDENTATION ALWAYS 2 SPACES
 ;; (setq clojure-defun-style-default-indent t)
