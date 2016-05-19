@@ -22,43 +22,27 @@
         (list "~/org/gtd.org" "~/org/work.org" "~/org/personal.org"))
 
   (setq org-todo-keywords
-        (quote ((sequence "TODO(t)" "INPROGRESS(i)" "NEXT(n)" "|" "DONE(d)" "LOGGED(l)" "CANCELLED(c@/!)")
-                (sequence "WAITING(w@/!)" "HOLD(h@/!)" "PHONE" "MEETING" "APPOINTMENT"))))
-
-  (setq org-todo-state-tags-triggers
-        (quote (("CANCELLED" ("CANCELLED" . t))
-                ("WAITING" ("WAITING" . t))
-                ("HOLD" ("WAITING") ("HOLD" . t))
-                (done ("WAITING") ("HOLD"))
-                ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
-                ("INPROGRESS" ("WAITING") ("CANCELLED") ("HOLD"))
-                ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
-                ("LOGGED" ("DONE") ("WAITING") ("HOLD") ("CANCELLED"))
-                ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
-
+        '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 
   (setq org-src-fontify-natively t
         org-log-done t
         org-return-follows-link t
         org-enforce-todo-dependencies t
+        org-use-fast-todo-selection t
         org-confirm-babel-evaluate nil)
 
   ;; Colors.
   (setq org-todo-keyword-faces
         (quote (("TODO" :foreground "#d33682" :weight bold)
-                ("NEXT" :foreground "#cb4b16" :weight bold)
-                ("INPROGRESS" :foreground "blue" :weight bold)
+                ("INPROGRESS" :foreground "#cb4b16" :weight bold)
                 ("DONE" :foreground "#859900" :weight bold)
                 ("WAITING" :foreground "#b58900" :weight bold)
-                ("HOLD" :foreground "#6c71c4" :weight bold)
-                ("CANCELLED" :foreground "#859900" :weight bold)
-                ("MEETING" :foreground "#859900" :weight bold)
-                ("PHONE" :foreground "#859900" :weight bold))))
-
+                ("CANCELLED" :foreground "#859900" :weight bold))))
 
   ;; Required by code block syntax highlighting.
   (use-package htmlize :ensure t)
 
+  ;;beautify theme special config
   (ignore-errors
     (use-package org-beautify-theme :ensure t
       :config
