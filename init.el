@@ -128,6 +128,16 @@
   :load-path "lisp/")
 
 
+(use-package perl-mode
+  :mode (("\\.pl\\'" . perl-mode)
+         ("\\.perl\\'" . perl-mode)
+         ("\\.pm\\'" . perl-mode))
+  :config
+  (add-hook 'perl-mode-hook #'flycheck-mode)
+  (add-hook 'perl-mode-hook #'smartparens-mode)
+  (add-hook 'perl-mode-hook #'company-mode))
+
+
 ;; FILES MODES
 
 (use-package adoc-mode
