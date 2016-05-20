@@ -172,6 +172,11 @@
     :bind (("C-c r" . json-reformat-region))))
 
 
+(use-package dockerfile-mode
+  :ensure t
+  :mode ("Dockerfile\\'" . dockerfile-mode))
+
+
 ;; INIT DAEMON SERVER
 (require 'server)
 (unless (server-running-p)
