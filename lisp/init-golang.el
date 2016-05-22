@@ -10,9 +10,17 @@
   :mode ("\\.go\\'" . go-mode)
   :config
 
-  (when (memq window-system '(mac ns))
-    (setenv "PATH" (concat (getenv "PATH") (getenv "GOPATH")))
-    (setenv "PATH" (concat (getenv "PATH") (getenv "GOROOT"))))
+  (use-package exec-path-from-shell
+    :ensure t
+    :if (memq window-system '(mac ns))
+    :config
+    (exec-path-from-shell-initialize)
+    (exec-path-from-shell-copy-env "GOROOT")
+    (exec-path-from-shell-copy-env "GOPATH"))
+
+  ;; (when (memq window-system '(mac ns))
+  ;;   (setenv "PATH" (concat (getenv "PATH") (getenv "GOPATH")))
+  ;;   (setenv "PATH" (concat (getenv "PATH") (getenv "GOROOT"))))
 
   (setq compile-command "go build -v && go test -v && go vet")
   (setq gofmt-command "goimports")
