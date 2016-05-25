@@ -105,7 +105,6 @@
   :load-path "lisp/")
 
 (use-package init-clojure
-  :disabled t
   :load-path "lisp/")
 
 (use-package init-racket
