@@ -2,7 +2,7 @@
   :ensure t
   :bind ("TAB" . company-indent-or-complete-common)
   :config
-  (global-company-mode)
+  (global-company-mode 1)
   (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
 
   (setq company-global-modes '(not term-mode))
