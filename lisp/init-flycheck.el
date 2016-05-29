@@ -1,9 +1,11 @@
 (use-package flycheck
   :ensure t
-  :defer t
+  :init (global-flycheck-mode)
   :config
 
- ;; Jump between current errors with M-n and M-p.
+  (setq flycheck-global-modes '(not emacs-lisp-mode lisp-mode))
+
+  ;; Jump between current errors with M-n and M-p.
   (global-set-key (kbd "M-n") 'next-error)
   (global-set-key (kbd "M-p") 'previous-error)
 
