@@ -7,8 +7,7 @@
   :mode ("\\.js\\'" . js2-mode)
   :config
 
-  (add-hook 'js2-mode-hook   #'company-mode)
-  (add-hook 'js2-mode-hook   #'flycheck-mode)
+  (add-hook 'js2-mode-hook #'company-mode)
   (setq flycheck-disable-checker '(javascript-jshint))
   (add-hook 'js2-mode-hook #'smartparens-mode))
 
