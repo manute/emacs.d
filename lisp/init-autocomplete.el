@@ -1,5 +1,4 @@
 ;; THANKS to lunaryorn https://github.com/lunaryorn/.emacs.d/blob/master/init.el
-
 (use-package company
   :ensure t
   :init (global-company-mode)
