@@ -1,25 +1,38 @@
+;; THANKS to lunaryorn https://github.com/lunaryorn/.emacs.d/blob/master/init.el
 (use-package company
   :ensure t
-  :bind ("TAB" . company-indent-or-complete-common)
+  :init (global-company-mode)
   :config
-  (global-company-mode)
   (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+  (setq company-tooltip-align-annotations t
+        company-tooltip-flip-when-above t
+        ;; Easy navigation to candidates with M-<n>
+        company-show-numbers t)
+  :diminish company-mode)
 
-  (setq company-global-modes '(not term-mode))
-  (setq company-tooltip-limit 20)                    ; bigger popup window
-  (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
-  (setq company-echo-delay 0)                          ; remove annoying blinking
-  (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
-  (setq company-tooltip-align-annotations t)
+(use-package company-quickhelp          ; Show help in tooltip
+  :ensure t
+  :after company
+  :init (company-quickhelp-mode))
 
-  ;; Sort completion candidates that already occur in the current
-  ;; buffer at the top of the candidate list.
-  (setq company-transformers '(company-sort-by-occurrence))
+(use-package company-statistics         ; Sort company candidates by statistics
+  :ensure t
+  :after company
+  :init (company-statistics-mode))
 
-  (use-package company-quickhelp
-    :ensure t
-    :config
-    (setq company-quickhelp-delay 1)
-    (company-quickhelp-mode 1)))
+
+(use-package company-math               ; Completion for Math symbols
+  :ensure t
+  :after company
+  :config
+  ;; Add backends for math characters
+  (add-to-list 'company-backends 'company-math-symbols-unicode)
+  (add-to-list 'company-backends 'company-math-symbols-latex))
+
+(use-package company-emoji              ; Emojis completion like Github/Slack
+  :ensure t
+  :after company
+  :config (add-to-list 'company-backends 'company-emoji))
+
 
 (provide 'init-autocomplete)

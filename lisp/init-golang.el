@@ -24,7 +24,6 @@
 
   (setq compile-command "go build -v && go test -v && go vet")
   (setq gofmt-command "goimports")
-  (add-hook 'go-mode-hook #'flycheck-mode)
   (add-hook 'go-mode-hook #'smartparens-mode)
   (add-hook 'before-save-hook #'gofmt-before-save)
 

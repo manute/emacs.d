@@ -38,7 +38,6 @@
   (use-package flycheck-rust
     :ensure t
     :config
-    (add-hook 'rust-mode-hook #'flycheck-mode)
     (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
   (use-package rustfmt

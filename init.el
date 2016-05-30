@@ -132,7 +132,6 @@
          ("\\.perl\\'" . perl-mode)
          ("\\.pm\\'" . perl-mode))
   :config
-  (add-hook 'perl-mode-hook #'flycheck-mode)
   (add-hook 'perl-mode-hook #'smartparens-mode)
   (add-hook 'perl-mode-hook #'company-mode))
 
