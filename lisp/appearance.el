@@ -11,13 +11,14 @@
 (use-package smart-mode-line
    :ensure t
    :config
-  (setq sml/no-confirm-load-theme t)
-  ;; (setq sml/theme 'respectful)
-  (use-package smart-mode-line-powerline-theme
-   :ensure t
-   :config
-   (setq sml/theme 'powerline))
-  (sml/setup))
+   (setq sml/no-confirm-load-theme t)
+   (sml/setup))
+
+(use-package smart-mode-line-powerline-theme
+  :ensure t
+  :after smart-mode-line
+  :config
+  (setq sml/theme 'powerline))
 
 
 (when (eq system-type 'darwin)
