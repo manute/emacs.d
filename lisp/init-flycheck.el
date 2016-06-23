@@ -1,8 +1,7 @@
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode)
+  :bind ("C-," . global-flycheck-mode)
   :config
-
   (setq flycheck-global-modes '(not emacs-lisp-mode lisp-mode))
 
   ;; Jump between current errors with M-n and M-p.
