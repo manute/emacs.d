@@ -1,8 +1,9 @@
 ;; THANKS to lunaryorn https://github.com/lunaryorn/.emacs.d/blob/master/init.el
 (use-package company
   :ensure t
-  :init (global-company-mode)
+  :bind ("TAB" . company-indent-or-complete-common)
   :config
+  (global-company-mode 1)
   (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
   (setq company-tooltip-align-annotations t
         company-tooltip-flip-when-above t
@@ -13,13 +14,12 @@
 (use-package company-quickhelp          ; Show help in tooltip
   :ensure t
   :after company
-  :init (company-quickhelp-mode))
+  :config (company-quickhelp-mode))
 
 (use-package company-statistics         ; Sort company candidates by statistics
   :ensure t
   :after company
-  :init (company-statistics-mode))
-
+  :config (company-statistics-mode))
 
 (use-package company-math               ; Completion for Math symbols
   :ensure t
