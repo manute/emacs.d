@@ -136,7 +136,7 @@
   (add-hook 'perl-mode-hook #'company-mode))
 
 
-;; FILES MODES
+;; FILES MODE
 
 (use-package adoc-mode
   :ensure t
@@ -146,28 +146,27 @@
   :ensure t
   :mode (("\\.md\\'" . markdown-mode)
          ("\\.text\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :config
+         ("\\.markdown\\'" . markdown-mode)))
 
-  (use-package markdown-preview-mode
-    :ensure t
-    :bind (("C-c m p" . markdown-preview-mode)
-           ("C-c m o" . markdown-preview-open-browser))))
-
+(use-package markdown-preview-mode
+  :ensure t
+  :after markdown-mode
+  :bind (("C-c m p" . markdown-preview-mode)
+         ("C-c m o" . markdown-preview-open-browser)))
 
 (use-package toml-mode
   :ensure t
   :mode ("\\.toml\\'" . toml-mode))
 
+(use-package json-mode
+  :ensure t
+  :mode (("\\.json\\'" . json-mode)
+         ("\\.tmpl\\'" . json-mode)))
 
-(use-package javascript-mode
-  :mode (("\\.json\\'" . javascript-mode)
-         ("\\.tmpl\\'" . javascript-mode))
-  :config
-
-  (use-package json-reformat
-    :ensure t
-    :bind (("C-c r" . json-reformat-region))))
+(use-package json-reformat
+  :ensure t
+  :after json-mode
+  :bind (("C-c r" . json-reformat-region)))
 
 
 (use-package dockerfile-mode
