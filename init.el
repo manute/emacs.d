@@ -59,11 +59,13 @@
          ("\\.erb\\'" . web-mode)
          ("\\.mustache\\'" . web-mode)
          ("\\.djhtml\\'" . web-mode)
+         ("\\.jsx\\'" . web-mode)
          ("\\.html\\'" . web-mode))
   :config
   (setq web-mode-markup-indent-offset 4)
   (setq web-mode-enable-current-column-highlight t)
-  (setq web-mode-enable-current-element-highlight t))
+  (setq web-mode-enable-current-element-highlight t)
+  (add-hook 'web-mode-hook #'smartparens-mode))
 
 (use-package dired+
   :ensure t

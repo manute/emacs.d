@@ -11,30 +11,27 @@
   :mode (("\\.ex[s]\\'" . elixir-mode)
          ("\\.elixir[2]\\'" . elixir-mode))
   :config
-  (add-hook 'elixir-mode-hook #'company-mode)
 
+  (add-hook 'elixir-mode-hook #'smartparens-mode)
   ;; NOT YET FLYCHECK
   ;; (add-hook 'elixir-mode-hook #'flycheck-mode)
 
-  (use-package smartparens
-    :ensure t
-    :config
+  (sp-with-modes '(elixir-mode)
+    (sp-local-pair "->" "end"
+                   :when '(("RET"))
+                   :post-handlers '(:add my-elixir-do-end-close-action)
+                   :actions '(insert)))
 
-    (sp-with-modes '(elixir-mode)
-      (sp-local-pair "->" "end"
-                     :when '(("RET"))
-                     :post-handlers '(:add my-elixir-do-end-close-action)
-                     :actions '(insert)))
+  (sp-with-modes '(elixir-mode)
+    (sp-local-pair "do" "end"
+                   :when '(("SPC" "RET"))
+                   :post-handlers '(:add my-elixir-do-end-close-action)
+                   :actions '(insert))))
 
-    (sp-with-modes '(elixir-mode)
-      (sp-local-pair "do" "end"
-                     :when '(("SPC" "RET"))
-                     :post-handlers '(:add my-elixir-do-end-close-action)
-                     :actions '(insert))))
-
-  (use-package alchemist
-    :ensure t
-    :config
-    (add-hook 'elixir-mode-hook #'alchemist-mode)))
+(use-package alchemist
+  :after elixir-mode
+  :ensure t
+  :config
+  (add-hook 'elixir-mode-hook #'alchemist-mode))
 
 (provide 'init-elixir)
