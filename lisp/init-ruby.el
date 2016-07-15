@@ -7,7 +7,8 @@
          ("\\.gemspec\\'" . ruby-mode)
          ("Gemfile\\'" . ruby-mode))
   :config
-  (setq ruby-use-encoding-map nil))
+  (setq ruby-use-encoding-map nil)
+  (add-hook 'ruby-mode-hook #'smartparens-mode))
 
 (use-package robe
   :after ruby-mode
@@ -15,8 +16,8 @@
   :config  (add-hook 'ruby-mode-hook 'robe-mode))
 
 (use-package rbenv
-    :after ruby-mode
-    :ensure t
-    :config   (setq rbenv-installation-dir "~/rbenv"))
+  :after ruby-mode
+  :ensure t
+  :config   (setq rbenv-installation-dir "~/rbenv"))
 
 (provide 'init-ruby)
