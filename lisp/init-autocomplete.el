@@ -1,15 +1,17 @@
 ;; THANKS to lunaryorn https://github.com/lunaryorn/.emacs.d/blob/master/init.el
 (use-package company
   :ensure t
-  :bind ("TAB" . company-indent-or-complete-common)
+  :defer t
+  :diminish company-mode
+  :init
+  (setq completion-at-point-functions '(company-complete-common))
+  (add-hook 'after-init-hook 'global-company-mode)
   :config
-  (global-company-mode 1)
   (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
   (setq company-tooltip-align-annotations t
         company-tooltip-flip-when-above t
         ;; Easy navigation to candidates with M-<n>
-        company-show-numbers t)
-  :diminish company-mode)
+        company-show-numbers t))
 
 (use-package company-quickhelp          ; Show help in tooltip
   :ensure t
