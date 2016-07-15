@@ -67,6 +67,7 @@
   (setq web-mode-enable-current-element-highlight t)
   (add-hook 'web-mode-hook #'smartparens-mode))
 
+
 (use-package dired+
   :ensure t
   :defer t
@@ -126,6 +127,9 @@
   :load-path "lisp/")
 
 (use-package init-elixir
+  :load-path "lisp/")
+
+(use-package init-elm
   :load-path "lisp/")
 
 
