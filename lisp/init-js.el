@@ -6,7 +6,6 @@
   :ensure t
   :mode ("\\.js\\'" . js2-mode)
   :config
-
   (setq flycheck-disable-checker '(javascript-jshint))
   (add-hook 'js2-mode-hook #'smartparens-mode))
 

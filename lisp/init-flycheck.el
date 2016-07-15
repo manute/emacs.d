@@ -2,7 +2,14 @@
   :ensure t
   :bind ("C-," . global-flycheck-mode)
   :config
+
   (setq flycheck-global-modes '(not emacs-lisp-mode lisp-mode))
+
+  ;; Disabled jshint and enable eslint for web-mode too
+  (setq-default flycheck-disabled-checkers
+                (append flycheck-disabled-checkers
+                        '(javascript-jshint)))
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
 
   ;; Jump between current errors with M-n and M-p.
   (global-set-key (kbd "M-n") 'next-error)
