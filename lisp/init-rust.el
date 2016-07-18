@@ -21,8 +21,6 @@
   :mode ("\\.rs\\'" . rust-mode)
   :diminish eldoc-mode
   :config
-
-  (add-hook 'rust-mode-hook #'smartparens-mode)
   (setq company-tooltip-align-annotations t)
   '(manu/setup-rust-arrows 'rust-mode rust-mode-map))
 

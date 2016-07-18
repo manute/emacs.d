@@ -9,8 +9,7 @@
   :config
   (setq flycheck-disable-checker '(javascript-jshint))
   (flycheck-add-mode 'javascript-eslint 'js2-mode)
-  (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
-  (add-hook 'js2-mode-hook #'smartparens-mode))
+  (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode))
 
 ;; M-x run-skewer for start
 (use-package skewer-mode

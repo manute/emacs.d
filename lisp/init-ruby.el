@@ -7,8 +7,7 @@
          ("\\.gemspec\\'" . ruby-mode)
          ("Gemfile\\'" . ruby-mode))
   :config
-  (setq ruby-use-encoding-map nil)
-  (add-hook 'ruby-mode-hook #'smartparens-mode))
+  (setq ruby-use-encoding-map nil))
 
 (use-package robe
   :after ruby-mode

@@ -16,7 +16,6 @@
 
   (setq compile-command "go build -v && go test -v && go vet")
   (setq gofmt-command "goimports")
-  (add-hook 'go-mode-hook #'smartparens-mode)
   (add-hook 'before-save-hook #'gofmt-before-save))
 
 (use-package exec-path-from-shell

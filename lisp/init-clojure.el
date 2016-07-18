@@ -23,10 +23,7 @@
   (change-lamda-chars 'clojure-mode)
   (change-lamda-chars 'clojurescript-mode)
 
-  (add-hook 'clojure-mode-hook #'smartparens-mode)
   (add-hook 'clojure-mode-hook #'eldoc-mode)
-
-  (add-hook 'clojurescript-mode-hook #'smartparens-mode)
   (add-hook 'clojurescript-mode-hook #'eldoc-mode))
 
 

@@ -12,7 +12,6 @@
          ("\\.elixir[2]\\'" . elixir-mode))
   :config
 
-  (add-hook 'elixir-mode-hook #'smartparens-mode)
   ;; NOT YET FLYCHECK
   ;; (add-hook 'elixir-mode-hook #'flycheck-mode)
 

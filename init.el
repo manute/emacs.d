@@ -47,7 +47,7 @@
 
 (use-package smartparens
   :ensure t
-  :defer t
+  :init (smartparens-global-mode 1)
   :diminish smartparens-mode)
 
 (use-package custom-org
@@ -63,8 +63,7 @@
   :config
   (setq web-mode-markup-indent-offset 4)
   (setq web-mode-enable-current-column-highlight t)
-  (setq web-mode-enable-current-element-highlight t)
-  (add-hook 'web-mode-hook #'smartparens-mode))
+  (setq web-mode-enable-current-element-highlight t))
 
 
 (use-package dired+
@@ -137,7 +136,6 @@
          ("\\.perl\\'" . perl-mode)
          ("\\.pm\\'" . perl-mode))
   :config
-  (add-hook 'perl-mode-hook #'smartparens-mode)
   (add-hook 'perl-mode-hook #'company-mode))
 
 
