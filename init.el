@@ -59,7 +59,6 @@
          ("\\.erb\\'" . web-mode)
          ("\\.mustache\\'" . web-mode)
          ("\\.djhtml\\'" . web-mode)
-         ("\\.jsx\\'" . web-mode)
          ("\\.html\\'" . web-mode))
   :config
   (setq web-mode-markup-indent-offset 4)

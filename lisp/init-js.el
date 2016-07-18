@@ -4,9 +4,12 @@
 
 (use-package js2-mode
   :ensure t
-  :mode ("\\.js\\'" . js2-mode)
+  :mode (("\\.js\\'" . js2-mode)
+         ("\\.jsx\\'" . js2-jsx-mode))
   :config
   (setq flycheck-disable-checker '(javascript-jshint))
+  (flycheck-add-mode 'javascript-eslint 'js2-mode)
+  (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
   (add-hook 'js2-mode-hook #'smartparens-mode))
 
 ;; M-x run-skewer for start
