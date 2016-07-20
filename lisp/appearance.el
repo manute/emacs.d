@@ -22,8 +22,11 @@
 
 
 (when (eq system-type 'darwin)
-  (set-face-attribute 'default nil :height 150 :family "consolas")
   (setq mac-allow-anti-aliasing t))  ;; nice fonts in OS X
+
+;; (set-face-attribute 'default nil :height 150 :family "consolas")
+(set-face-attribute 'default nil :height 110 :family "Source Code Pro")
+
 
 (setq-default truncate-lines 1)  ;; no word wrap
 (setq-default line-spacing 4)
