@@ -11,6 +11,8 @@
   (flycheck-add-mode 'javascript-eslint 'js2-mode)
   (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
 
+  (setq js2-highlight-level 3)
+
   (sp-with-modes '(js2-mode js2-jsx-mode)
     (sp-local-pair "<" ">")))
 

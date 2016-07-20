@@ -161,6 +161,10 @@
   :ensure t
   :mode ("\\.toml\\'" . toml-mode))
 
+(use-package yaml-mode
+  :ensure t
+  :mode ("\\.yml\\'" . yaml-mode))
+
 (use-package json-mode
   :ensure t
   :mode (("\\.json\\'" . json-mode)
