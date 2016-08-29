@@ -2,7 +2,7 @@
   :ensure t
   :bind ("C-," . global-flycheck-mode)
   :config
-  (setq flycheck-global-modes '(not emacs-lisp-mode lisp-mode))
+  (setq flycheck-global-modes '(not emacs-lisp-mode lisp-mode magit-mode))
   ;; Jump between current errors with M-n and M-p.
   (global-set-key (kbd "M-n") 'next-error)
   (global-set-key (kbd "M-p") 'previous-error))
