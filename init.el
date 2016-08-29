@@ -15,8 +15,7 @@
   :ensure t
   :bind ("C-x P" . auto-package-update-now)
   :config
-  (setq auto-package-update-delete-old-versions t)
-  (auto-package-update-at-time "03:00"))
+  (setq auto-package-update-delete-old-versions t))
 
 ;; ACTIVATE BENCHMARKS
 ;; (require 'benchmark-init)
