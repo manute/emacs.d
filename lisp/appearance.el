@@ -26,7 +26,9 @@
 
 
 (when (eq system-type 'darwin)
-  (setq mac-allow-anti-aliasing t))  ;; nice fonts in OS X
+  (setq mac-allow-anti-aliasing t)  ;; nice fonts in OS X
+  (set-face-attribute 'default nil :height 135))
+
 
 (setq-default truncate-lines 1)  ;; no word wrap
 (setq-default line-spacing 4)

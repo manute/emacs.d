@@ -15,11 +15,19 @@
   (define-key mode-map (kbd "←") (lambda () (interactive) (insert "<-")))
   (define-key mode-map (kbd "⇒") (lambda () (interactive) (insert "=>"))))
 
+(use-package rust-mode
+  :ensure t
+  :mode ("\\.rs\\'" . rust-mode)
+  :diminish eldoc-mode
+  :config
+  (setq company-tooltip-align-annotations t)
+  '(manu/setup-rust-arrows 'rust-mode rust-mode-map))
+
 
 (use-package racer
   :ensure t
   :after rust-mode
-  :Config
+  :config
   ;; Set path to racer binary
   (setq racer-cmd "~/.cargo/bin/racer")
   ;; Set path to rust src directory
