@@ -16,22 +16,14 @@
   (define-key mode-map (kbd "⇒") (lambda () (interactive) (insert "=>"))))
 
 
-(use-package rust-mode
-  :ensure t
-  :mode ("\\.rs\\'" . rust-mode)
-  :diminish eldoc-mode
-  :config
-  (setq company-tooltip-align-annotations t)
-  '(manu/setup-rust-arrows 'rust-mode rust-mode-map))
-
 (use-package racer
   :ensure t
   :after rust-mode
-  :config
+  :Config
   ;; Set path to racer binary
   (setq racer-cmd "~/.cargo/bin/racer")
   ;; Set path to rust src directory
-  (setq racer-rust-src-path "~/rust/1.6/src")
+  (setq racer-rust-src-path "~/rust/src")
   (add-hook 'rust-mode-hook #'racer-mode)
   (add-hook 'racer-mode-hook #'eldoc-mode)
   (add-hook 'racer-mode-hook #'company-mode))
@@ -49,7 +41,7 @@
 
 (use-package company-racer
   :ensure t
-  :after rust-mode
+  :after racer-mode
   :config (add-to-list 'company-backends 'company-racer))
 
 (provide 'init-rust)
