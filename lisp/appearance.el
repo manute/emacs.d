@@ -1,6 +1,5 @@
 
 (set-default-font "Source Code Pro" nil t)
-(set-face-attribute 'default nil :height 110)
 
 (use-package atom-one-dark-theme
   :if window-system
@@ -29,7 +28,10 @@
   (setq mac-allow-anti-aliasing t)  ;; nice fonts in OS X
   (set-face-attribute 'default nil :height 135))
 
+(when (eq system-type 'gnu/linux)
+  (set-face-attribute 'default nil :height 116))
 
+(print system-type)
 (setq-default truncate-lines 1)  ;; no word wrap
 (setq-default line-spacing 4)
 
