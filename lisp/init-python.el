@@ -30,19 +30,24 @@
     (when (file-directory-p virtualenv-path)
       (setq python-shell-virtualenv-path virtualenv-path))))
 
+(use-package virtualenvwrapper
+  :ensure t
+  :config
+  (setq venv-location "~/.virtualenvs/"))
 
 (use-package python
   :ensure t
   :mode ("\\.py\\'" . python-mode)
+  :after virtualenvwrapper
   :config
   ;; Ignored Python bytecode in dired
   ;; (add-to-list 'dired-omit-extensions ".pyc")
   (add-hook 'python-mode-hook #'manu/configure-python-venv)
-  (define-key python-mode-map (kbd "C-c C-b") 'python-add-breakpoint)
+  (define-key python-mode-map (kbd "C-c C-b") 'python-add-breakpoint))
 
-  (use-package virtualenvwrapper
-    :ensure t
-    :config
-    (setq venv-location "~/.virtualenvs/")))
+(use-package elpy
+  :ensure t
+  :after python-mode
+  :init (elpy-enable))
 
 (provide 'init-python)
