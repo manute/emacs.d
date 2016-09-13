@@ -1,8 +1,11 @@
 (use-package flycheck
   :ensure t
-  :bind ("C-," . global-flycheck-mode)
+  :defer t
+  ;; :bind ("C-," . global-flycheck-mode)
+  :init
+  (add-hook 'after-init-hook 'global-flycheck-mode)
   :config
-  (setq flycheck-global-modes '(not emacs-lisp-mode lisp-mode magit-mode))
+  (setq flycheck-global-modes '(not emacs-lisp-mode lisp-mode magit-mode sql-mode))
   ;; Jump between current errors with M-n and M-p.
   (global-set-key (kbd "M-n") 'next-error)
   (global-set-key (kbd "M-p") 'previous-error))
