@@ -88,6 +88,13 @@
           ("C-c p p" . projectile-switch-project))
   :config (projectile-global-mode t))
 
+(use-package grep
+  :config
+  (add-to-list 'grep-find-ignored-directories "dist")
+  (add-to-list 'grep-find-ignored-directories "node_modules")
+  (add-to-list 'grep-find-ignored-directories "bower_components")
+ )
+
 (use-package warnings
   :ensure t
   :defer t
