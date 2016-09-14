@@ -28,9 +28,9 @@
 (setq use-package-verbose t)
 
 ;; DEBUG errors
-(setq max-specpdl-size 5)
-(setq max-lisp-eval-depth 10000)
-(setq debug-on-error t)
+;; (setq max-specpdl-size 5)
+;; (setq max-lisp-eval-depth 10000)
+;; (setq debug-on-error nil)
 
 (use-package general
   :load-path "lisp/")
