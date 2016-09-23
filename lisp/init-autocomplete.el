@@ -4,14 +4,16 @@
   :defer t
   :diminish company-mode
   :init
-  (setq completion-at-point-functions '(company-complete-common))
+  ;; (setq completion-at-point-functions '(company-complete-common))
   (add-hook 'after-init-hook 'global-company-mode)
   :config
   (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
-  (setq company-tooltip-align-annotations t
-        company-tooltip-flip-when-above t
-        ;; Easy navigation to candidates with M-<n>
-        company-show-numbers t))
+  (setq company-global-modes '(not term-mode))
+  (setq company-minimum-prefix-length 2
+        company-selection-wrap-around t
+        company-show-numbers t
+        company-tooltip-align-annotations t
+        company-require-match nil))
 
 (use-package company-quickhelp          ; Show help in tooltip
   :ensure t
