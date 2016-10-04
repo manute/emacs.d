@@ -55,11 +55,11 @@
 
 
 ;;MAC OS keys -> cmd is meta
-(when (eq system-type 'darwin)
-  (setq mac-option-key-is-meta nil
-        mac-command-key-is-meta t
-        mac-command-modifier 'meta
-        mac-option-modifier 'none))
+;; (when (eq system-type 'darwin)
+;;   (setq mac-option-key-is-meta nil
+;;         mac-command-key-is-meta t
+;;         mac-command-modifier 'meta
+;;         mac-option-modifier 'none))
 
 (setq make-backup-files nil)
 (setq column-number-mode t)
@@ -92,8 +92,7 @@
   :config
   (add-to-list 'grep-find-ignored-directories "dist")
   (add-to-list 'grep-find-ignored-directories "node_modules")
-  (add-to-list 'grep-find-ignored-directories "bower_components")
- )
+  (add-to-list 'grep-find-ignored-directories "bower_components"))
 
 (use-package warnings
   :ensure t
