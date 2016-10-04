@@ -1,7 +1,7 @@
 
 (set-default-font "Source Code Pro" nil t)
 
-;; Needs folder 'fonts' on root emacs
+;; Install all the fonts located in root emacs folder 'fonts'
 ;; https://github.com/NicolasPetton/zerodark-theme
 (use-package zerodark-theme
   :ensure t
