@@ -97,6 +97,7 @@
   :load-path "lisp/")
 
 (use-package init-rust
+  :disabled t
   :load-path "lisp/")
 
 (use-package init-js
@@ -111,6 +112,7 @@
   :load-path "lisp/")
 
 (use-package init-clojure
+  :disabled t
   :load-path "lisp/")
 
 (use-package init-racket
