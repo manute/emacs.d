@@ -6,12 +6,13 @@
 (use-package zerodark-theme
   :ensure t
   :config
-  (zerodark-setup-modeline-format)
-  (zerodark-setup-modeline-format-alt))
+  (zerodark-setup-modeline-format))
+
+  ;; (zerodark-setup-modeline-format-alt))
 
 (when (eq system-type 'darwin)
   (setq mac-allow-anti-aliasing t)  ;; nice fonts in OS X
-  (set-face-attribute 'default nil :height 145))
+  (set-face-attribute 'default nil :height 135))
 
 (when (eq system-type 'gnu/linux)
   (set-face-attribute 'default nil :height 116))

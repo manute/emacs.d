@@ -9,11 +9,6 @@
   :bind ( "M-." . godef-jump-other-window)
   :mode ("\\.go\\'" . go-mode)
   :config
-
-  ;; (when (memq window-system '(mac ns))
-  ;;   (setenv "PATH" (concat (getenv "PATH") (getenv "GOPATH")))
-  ;;   (setenv "PATH" (concat (getenv "PATH") (getenv "GOROOT"))))
-
   (setq compile-command "go build -v && go test -v && go vet")
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook #'gofmt-before-save))
@@ -43,10 +38,10 @@
   :diminish eldoc-mode
   :init (add-hook 'go-mode-hook #'go-eldoc-setup))
 
-(use-package gorepl-mode
-  :ensure t
-  :after go-mode
-  :diminish gorepl-mode
-  :init (add-hook 'go-mode-hook #'gorepl-mode))
+;; (use-package gorepl-mode
+;;   :ensure t
+;;   :after go-mode
+;;   :diminish gorepl-mode
+;;   :init (add-hook 'go-mode-hook #'gorepl-mode))
 
 (provide 'init-golang)

@@ -63,6 +63,7 @@
          ("\\.erb\\'" . web-mode)
          ("\\.mustache\\'" . web-mode)
          ("\\.djhtml\\'" . web-mode)
+         ("\\.tmpl\\'" . web-mode)
          ("\\.html\\'" . web-mode))
   :config
   (setq web-mode-markup-indent-offset 4)
@@ -152,17 +153,26 @@
   :ensure t
   :mode ("\\.asciidoc\\'" . adoc-mode))
 
+(use-package web-server
+  :ensure t)
+
 (use-package markdown-mode
   :ensure t
-  :mode (("\\.md\\'" . markdown-mode)
-         ("\\.text\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode)))
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("CONTRIBUTING\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 
 (use-package markdown-preview-mode
   :ensure t
   :after markdown-mode
-  :bind (("C-c m p" . markdown-preview-mode)
-         ("C-c m o" . markdown-preview-open-browser)))
+  :bind (("C-c m p" . markdown-preview-mode);;
+         ("C-c m o" . markdown-preview-open-browser))
+  :config
+  (add-hook 'markdown-mode-hook (lambda () ( markdown-preview-mode 1 )))
+  (add-hook 'gfm-mode-hook (lambda () ( markdown-preview-mode 1 ))))
 
 (use-package toml-mode
   :ensure t
@@ -187,6 +197,10 @@
   :ensure t
   :mode ("Dockerfile\\'" . dockerfile-mode))
 
+(use-package mustache-mode
+  :ensure t
+  :mode ("\\.mustache\\'" . mustache-mode))
+
 
 ;; INIT DAEMON SERVER
 (require 'server)
@@ -199,7 +213,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (zerodark-theme elpy yaml-mode whole-line-or-region which-key web-mode virtualenvwrapper use-package toml-mode smex smartparens smart-mode-line-powerline-theme rustfmt rainbow-delimiters racer projectile popwin org-bullets org-beautify-theme markdown-preview-mode magit key-chord json-mode ido-vertical-mode htmlize gorepl-mode go-eldoc flycheck-rust flycheck-elm flycheck-color-mode-line exec-path-from-shell elm-mode dockerfile-mode dired+ company-statistics company-racer company-quickhelp company-math company-go company-emoji clj-refactor cl-generic auto-package-update atom-one-dark-theme anzu alchemist adoc-mode ac-js2))))
+    (markdown-preview-mode mustache-mode jade zerodark-theme elpy yaml-mode whole-line-or-region which-key web-mode virtualenvwrapper use-package toml-mode smex smartparens smart-mode-line-powerline-theme rustfmt rainbow-delimiters racer projectile popwin org-bullets org-beautify-theme magit key-chord json-mode ido-vertical-mode htmlize gorepl-mode go-eldoc flycheck-rust flycheck-elm flycheck-color-mode-line exec-path-from-shell elm-mode dockerfile-mode dired+ company-statistics company-racer company-quickhelp company-math company-go company-emoji clj-refactor cl-generic auto-package-update atom-one-dark-theme anzu alchemist adoc-mode ac-js2))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

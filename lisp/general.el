@@ -107,13 +107,18 @@
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 
-;; Whitespace
+;; Spaces Indent
 (set-default 'indent-tabs-mode nil)
+
+;; Always newline-and-indent
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
+;; JSON
+(setq-default js-indent-level 2)
+
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (setq sentence-end-double-space nil)
 
-;; Always indent after a newline.
-(define-key global-map (kbd "RET") 'newline-and-indent)
 
 (use-package which-key
   :ensure t
@@ -133,6 +138,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (fringe-mode '(4 . 0))
+(global-unset-key "\C-z")
 
 ;; Show line numbers in buffers.
 ;;(global-linum-mode t)
