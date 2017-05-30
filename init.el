@@ -35,7 +35,7 @@
 ;; http://www.funtoo.org/Keychain
 (use-package keychain-environment
   :ensure t
-  :config (keychain-refresh-environment))
+  :init (keychain-refresh-environment))
 
 (use-package general
   :load-path "lisp/")
