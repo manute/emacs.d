@@ -11,6 +11,8 @@
   :config
   (setq compile-command "go build -v && go test -v && go vet")
   (setq gofmt-command "goimports")
+  (setq-default tab-width 4)
+
   (add-hook 'before-save-hook #'gofmt-before-save))
 
 (use-package exec-path-from-shell

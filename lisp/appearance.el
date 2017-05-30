@@ -1,12 +1,15 @@
 
 (set-default-font "Source Code Pro" nil t)
 
+(use-package memoize
+  :ensure t)
+
 ;; Install all the fonts located in root emacs folder 'fonts'
 ;; https://github.com/NicolasPetton/zerodark-theme
 (use-package zerodark-theme
-  :ensure t
-  :config
-  (zerodark-setup-modeline-format))
+ :ensure t
+ :config
+ (zerodark-setup-modeline-format))
 
   ;; (zerodark-setup-modeline-format-alt))
 

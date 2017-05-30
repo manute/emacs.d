@@ -28,20 +28,30 @@
   (exec-path-from-shell-initialize)
   (exec-path-from-shell-copy-env "NPMBIN"))
 
-(use-package prettier-js
-  :after js2-mode
-  :init  (setq prettier-target-mode "js2-mode")
-  :config
-  (setq prettier-args '("--trailing-comma" "all"
-                        "--bracket-spacing" "false"))
-  (add-hook 'js2-mode-hook
-            (lambda ()
-              (add-hook 'before-save-hook #'prettier-before-save))))
+;; (use-package prettier-js
+;;   :after js2-mode
+;;   :init  (setq prettier-target-mode "js2-mode")
+;;   :config
+;;   (setq prettier-args '("--trailing-comma" "none"
+;;                         "--bracket-spacing" "true"
+;;                         "--use-tabs" "true" ;; because why not - remove ASAP
+;;                         "--print-width" "80"
+;;                         "--tab-width" "2"
+;;                         ))
+;;   (add-hook 'js2-mode-hook
+;;             (lambda ()
+;;               (add-hook 'before-save-hook #'prettier-before-save))))
 
+
+(use-package skewer-mode
+  :ensure t
+  :after js2-mode
+  :config
+  (add-hook 'js2-mode-hook #'skewer-mode))
 
 (use-package ac-js2
   :ensure t
-  :after js2-mode
+  :after skewer-mode
   :config
   (setq ac-js2-evaluate-calls t)
   (add-hook 'js2-mode-hook #'ac-js2-mode))
