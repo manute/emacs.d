@@ -30,11 +30,12 @@ there's a region, all lines that region covers will be duplicated."
     (comment-or-uncomment-region beg end)
     (next-line)))
 
+
 (use-package whole-line-or-region
-  :ensure t
-  :diminish whole-line-or-region-mode
-  :config
-  (whole-line-or-region-mode t)
-  (make-variable-buffer-local 'whole-line-or-region-mode))
+ :ensure t
+ :diminish whole-line-or-region-mode
+ :config
+ (whole-line-or-region-mode t)
+ (make-variable-buffer-local 'whole-line-or-region-mode))
 
 (provide 'init-editing)

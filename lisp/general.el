@@ -90,9 +90,14 @@
 
 (use-package grep
   :config
+
+  ;; js ignore folders
   (add-to-list 'grep-find-ignored-directories "dist")
   (add-to-list 'grep-find-ignored-directories "node_modules")
-  (add-to-list 'grep-find-ignored-directories "bower_components"))
+  (add-to-list 'grep-find-ignored-directories "bower_components")
+
+  ;; golang ignore folders
+  (add-to-list 'grep-find-ignored-directories "vendor"))
 
 (use-package warnings
   :ensure t
@@ -100,21 +105,18 @@
   :config (setq warning-suppress-types '(undo discard-info)))
 
 
-; Show empty lines
+;; Always newline-and-indent
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
+;; Spaces Indent
+(set-default 'indent-tabs-mode nil)
+
+;; Show empty lines
 (toggle-indicate-empty-lines)
 
 ; Increase/Decrease font size
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
-
-;; Spaces Indent
-(set-default 'indent-tabs-mode nil)
-
-;; Always newline-and-indent
-(define-key global-map (kbd "RET") 'newline-and-indent)
-
-;; JSON
-(setq-default js-indent-level 2)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (setq sentence-end-double-space nil)

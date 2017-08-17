@@ -9,21 +9,11 @@
   :bind ( "M-." . godef-jump-other-window)
   :mode ("\\.go\\'" . go-mode)
   :config
-  (setq compile-command "go build -v && go test -v && go vet")
-  (setq gofmt-command "goimports")
-  (setq-default tab-width 4)
-
+  (add-hook 'go-mode-hook  (lambda ()
+                             (setq tab-width 4)
+                             (setq gofmt-command "goimports")
+                             (setq compile-command "go build -v && go test -v && go vet")))
   (add-hook 'before-save-hook #'gofmt-before-save))
-
-(use-package exec-path-from-shell
-  :ensure t
-  :if (memq window-system '(mac ns))
-  :after go-mode
-  :config
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-env "GOROOT")
-  (exec-path-from-shell-copy-env "GOPATH"))
-
 
 (use-package company-go
   :ensure t

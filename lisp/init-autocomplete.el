@@ -38,5 +38,11 @@
   :after company
   :config (add-to-list 'company-backends 'company-emoji))
 
+;; javascript autocomplete
+(use-package company-tern
+  :ensure t
+  :after company
+  :config (add-to-list 'company-backends 'company-tern))
+
 
 (provide 'init-autocomplete)

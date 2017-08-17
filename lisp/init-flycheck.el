@@ -10,12 +10,25 @@
   (global-set-key (kbd "M-n") 'next-error)
   (global-set-key (kbd "M-p") 'previous-error))
 
+
+;; https://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+(defun manu/use-eslint-from-node-modules ()
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (eslint (and root
+                      (expand-file-name "node_modules/eslint/bin/eslint.js"
+                                        root))))
+    (when (and eslint (file-executable-p eslint))
+      (setq-local flycheck-javascript-eslint-executable eslint))))
+
 (use-package flycheck-color-mode-line
   :ensure t
   :after flycheck
   :config
   (setq flycheck-highlighting-mode 'symbols)
   (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
+
   (set-face-background 'flycheck-error "#660000")
   (set-face-foreground 'flycheck-error nil)
   (set-face-background 'flycheck-warning "#331800")
@@ -25,6 +38,9 @@
   (set-face-background 'flycheck-color-mode-line-info-face nil)
   (set-face-foreground 'flycheck-color-mode-line-error-face "#ffffff")
   (set-face-foreground 'flycheck-color-mode-line-warning-face "#ffffff")
-  (set-face-foreground 'flycheck-color-mode-line-info-face nil))
+  (set-face-foreground 'flycheck-color-mode-line-info-face nil)
+
+  (add-hook 'flycheck-mode-hook #'manu/use-eslint-from-node-modules))
+
 
 (provide 'init-flycheck)

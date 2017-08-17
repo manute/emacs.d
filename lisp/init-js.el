@@ -7,53 +7,56 @@
   :mode (("\\.js\\'" . js2-mode)
          ("\\.jsx\\'" . js2-jsx-mode))
   :config
-  (setq flycheck-disable-checker '(javascript-jshint))
-  (flycheck-add-mode 'javascript-eslint 'js2-mode)
-  (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
-
-  ;; (setq-default js2-mode-indent-ignore-first-tab t)
   (setq-default tab-width 2)
   (setq-default js2-basic-offset 2)
 
+  (setq-default js2-mode-indent-ignore-first-tab t)
+  (setq-default js2-show-parse-errors nil)
+  (setq-default js2-strict-inconsistent-return-warning nil)
+  (setq-default js2-strict-var-hides-function-arg-warning nil)
+  (setq-default js2-strict-missing-semi-warning nil)
+  (setq-default js2-strict-trailing-comma-warning nil)
+  (setq-default js2-strict-cond-assign-warning nil)
+  (setq-default js2-strict-var-redeclaration-warning nil)
+
   (sp-with-modes '(js2-mode js2-jsx-mode)
-    (sp-local-pair "<" ">")))
+    (sp-local-pair "<" ">"))
 
+  (setq flycheck-disable-checker '(javascript-jshint))
+  (flycheck-add-mode 'javascript-eslint 'js2-mode)
+  (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode))
 
-;; Add $NPMBIN path as env and copy with exec-path for getting 'prettier'
-(use-package exec-path-from-shell
-  :ensure t
-  :if (memq window-system '(mac ns))
-  :after js2-mode
-  :config
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-env "NPMBIN"))
-
-;; (use-package prettier-js
-;;   :after js2-mode
-;;   :init  (setq prettier-target-mode "js2-mode")
-;;   :config
-;;   (setq prettier-args '("--trailing-comma" "none"
-;;                         "--bracket-spacing" "true"
-;;                         "--use-tabs" "true" ;; because why not - remove ASAP
-;;                         "--print-width" "80"
-;;                         "--tab-width" "2"
-;;                         ))
-;;   (add-hook 'js2-mode-hook
-;;             (lambda ()
-;;               (add-hook 'before-save-hook #'prettier-before-save))))
-
-
-(use-package skewer-mode
+(use-package prettier-js
   :ensure t
   :after js2-mode
   :config
-  (add-hook 'js2-mode-hook #'skewer-mode))
+  (setq prettier-js-args '(
+                           "--use-tabs" "false"
+                           "--tab-width" "2"
+                           "--trailing-comma" "none"
+                           "--bracket-spacing" "true"
+                           "--jsx-bracket-same-line" "false"
+                           "--single-quote" "false"
+                           "--print-width" "80"
+                           ))
+  (add-hook 'js2-mode-hook 'prettier-js-mode))
 
-(use-package ac-js2
+;; https://emacs.cafe/emacs/javascript/setup/2017/05/09/emacs-setup-javascript-2.html
+(use-package tern
   :ensure t
-  :after skewer-mode
+  :after js2-mode
   :config
-  (setq ac-js2-evaluate-calls t)
-  (add-hook 'js2-mode-hook #'ac-js2-mode))
+  (add-hook 'js2-mode-hook (lambda ()
+                             (tern-mode)
+                             (company-mode))))
+
+;; https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html
+(use-package xref-js2
+  :ensure t
+  :after tern-mode
+  :config
+  (define-key js-mode-map (kbd "M-.") nil)
+  (add-hook 'js2-mode-hook (lambda ()
+                             (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t))))
 
 (provide 'init-js)
