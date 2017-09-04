@@ -21,8 +21,8 @@
   :config
   (add-hook 'go-mode-hook 'company-mode)
   (add-hook 'go-mode-hook (lambda ()
-                            (set (make-local-variable 'company-backends) '(company-go))
-                            (company-mode))))
+                             (set (make-local-variable 'company-backends) '(company-go))
+                             (company-mode))))
 
 (use-package go-eldoc
   :ensure t
@@ -30,10 +30,10 @@
   :diminish eldoc-mode
   :init (add-hook 'go-mode-hook #'go-eldoc-setup))
 
-;; (use-package gorepl-mode
-;;   :ensure t
-;;   :after go-mode
-;;   :diminish gorepl-mode
-;;   :init (add-hook 'go-mode-hook #'gorepl-mode))
+(use-package gorepl-mode
+  :ensure t
+  :after go-mode
+  :diminish gorepl-mode
+  :init (add-hook 'go-mode-hook #'gorepl-mode))
 
 (provide 'init-golang)

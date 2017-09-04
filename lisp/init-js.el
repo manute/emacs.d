@@ -51,9 +51,10 @@
                              (company-mode))))
 
 ;; https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html
+;; needs to install ag https://github.com/ggreer/the_silver_searcher
 (use-package xref-js2
   :ensure t
-  :after tern-mode
+  :after js2-mode
   :config
   (define-key js-mode-map (kbd "M-.") nil)
   (add-hook 'js2-mode-hook (lambda ()
