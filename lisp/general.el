@@ -75,7 +75,9 @@
 
 (use-package magit
   :ensure t
-  :bind ("C-x g" . magit-status))
+  :bind ("C-x g" . magit-status)
+  :config
+  (setq magit-refresh-status-buffer nil))
 
 (use-package popwin
   :ensure t
@@ -98,6 +100,10 @@
 
   ;; golang ignore folders
   (add-to-list 'grep-find-ignored-directories "vendor"))
+
+(use-package ripgrep
+  :ensure t)
+
 
 (use-package warnings
   :ensure t
