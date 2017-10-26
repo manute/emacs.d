@@ -88,7 +88,12 @@
   :ensure t
   :bind  (("C-c C-f" . projectile-find-file)
           ("C-c p p" . projectile-switch-project))
-  :config (projectile-global-mode t))
+  :config
+  (projectile-global-mode t)
+  ;; workaround https://github.com/bbatsov/projectile/issues/1183
+  (setq projectile-mode-line
+         '(:eval (format " Projectile[%s]"
+                         (projectile-project-name)))))
 
 (use-package grep
   :config

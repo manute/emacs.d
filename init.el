@@ -151,9 +151,11 @@
   :load-path "lisp/")
 
 (use-package init-elixir
+  :disabled t
   :load-path "lisp/")
 
 (use-package init-elm
+  :disabled t
   :load-path "lisp/")
 
 
@@ -189,14 +191,14 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package markdown-preview-mode
-  :ensure t
-  :after markdown-mode
-  :bind (("C-c m p" . markdown-preview-mode);;
-         ("C-c m o" . markdown-preview-open-browser))
-  :config
-  (add-hook 'markdown-mode-hook (lambda () ( markdown-preview-mode 1 )))
-  (add-hook 'gfm-mode-hook (lambda () ( markdown-preview-mode 1 ))))
+;; (use-package markdown-preview-mode
+;;   :ensure t
+;;   :after markdown-mode
+;;   :bind (("C-c m p" . markdown-preview-mode);;
+;;          ("C-c m o" . markdown-preview-open-browser))
+;;   :config
+;;   (add-hook 'markdown-mode-hook (lambda () ( markdown-preview-mode 1 )))
+;;   (add-hook 'gfm-mode-hook (lambda () ( markdown-preview-mode 1 ))))
 
 (use-package toml-mode
   :ensure t
