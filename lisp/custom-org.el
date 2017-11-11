@@ -3,6 +3,17 @@
 ;; https://github.com/kostajh/.emacs.d/blob/master/customizations/09-org.el
 ;; https://github.com/xenodium/dotfiles/blob/master/emacs/init.el
 
+(defun open-encrypted-file (fname)
+  (interactive "FFind file: \n")
+  (let ((buf (create-file-buffer fname)))
+    (shell-command
+     (concat "echo " (read-passwd "Decrypt password: ") " | bcrypt -o " fname)
+     buf)
+    (set-buffer buf)
+    (kill-line)(kill-line)
+    (toggle-read-only)
+    (not-modified)))
+
 (defun gtd ()
    (interactive)
    (find-file "~/org/gtd.org"))

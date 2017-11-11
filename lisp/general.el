@@ -75,9 +75,9 @@
 
 (use-package magit
   :ensure t
-  :bind ("C-x g" . magit-status)
-  :config
-  (setq magit-refresh-status-buffer nil))
+  :bind ("C-x g" . magit-status))
+  ;; :config
+  ;; (setq magit-refresh-status-buffer nil))
 
 (use-package popwin
   :ensure t
