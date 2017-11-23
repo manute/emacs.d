@@ -13,6 +13,7 @@
                              (setq tab-width 4)
                              (setq gofmt-command "goimports")
                              (setq compile-command "go build -v && go test -v && go vet")))
+  (add-to-list 'yas-snippet-dirs "~/.emacs.d/snippets/go-mode")
   (add-hook 'before-save-hook #'gofmt-before-save))
 
 (use-package company-go
