@@ -1,6 +1,6 @@
-
-;; npm install -g eslint babel-eslint eslint-plugin-react
-;; file ~/.eslintrc with these rules -> ;; http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
+;; https://emacs.cafe/emacs/javascript/setup/2017/05/09/emacs-setup-javascript-2.html
+;; https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html
+;; needs to install ag https://github.com/ggreer/the_silver_searcher
 
 (use-package js2-mode
   :ensure t
@@ -26,6 +26,13 @@
   (flycheck-add-mode 'javascript-eslint 'js2-mode)
   (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode))
 
+
+(use-package add-node-modules-path
+  :ensure t
+  :after js2-mode
+  :config
+  (add-hook 'js-mode-hook #'add-node-modules-path))
+
 (use-package prettier-js
   :ensure t
   :after js2-mode
@@ -41,7 +48,6 @@
                            ))
   (add-hook 'js2-mode-hook 'prettier-js-mode))
 
-;; https://emacs.cafe/emacs/javascript/setup/2017/05/09/emacs-setup-javascript-2.html
 (use-package tern
   :ensure t
   :after js2-mode
@@ -50,8 +56,6 @@
                              (tern-mode)
                              (company-mode))))
 
-;; https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html
-;; needs to install ag https://github.com/ggreer/the_silver_searcher
 (use-package xref-js2
   :ensure t
   :after js2-mode
