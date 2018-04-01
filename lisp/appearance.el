@@ -1,29 +1,55 @@
-
-(set-default-font "Source Code Pro" nil t)
+;; Fira Code enabled
+;; https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs
+(set-default-font "Fira Code" nil t)
 
 (use-package memoize
   :ensure t)
 
+(use-package base16-theme
+  :ensure t
+  :if (not window-system)
+  :config
+  (load-theme 'base16-onedark t))
+
+
 ;; Install all the fonts located in root emacs folder 'fonts'
 ;; https://github.com/NicolasPetton/zerodark-theme
 (use-package zerodark-theme
- :ensure t
- :config
- (zerodark-setup-modeline-format))
+  :ensure t
+  :if window-system
+ ;; :config
+ ;; (zerodark-setup-modeline-format)
+ )
 
-  ;; (zerodark-setup-modeline-format-alt))
+
+(use-package all-the-icons
+  :ensure t
+  :if window-system)
+
+(use-package spaceline
+  :if window-system
+  :ensure t
+  :config
+  (spaceline-helm-mode 1)
+  (spaceline-emacs-theme))
+
+(use-package spaceline-all-the-icons
+  :ensure t
+  :after spaceline
+  :config
+  (spaceline-all-the-icons-theme)
+  (spaceline-all-the-icons--setup-package-updates)
+  (spaceline-all-the-icons--setup-git-ahead)
+  (setq-default spaceline-all-the-icons-separator-type 'arrow))
 
 (when (eq system-type 'darwin)
   (setq mac-allow-anti-aliasing t)  ;; nice fonts in OS X
-  (set-face-attribute 'default nil :height 135))
+  (set-face-attribute 'default nil :height 125))
 
 (when (eq system-type 'gnu/linux)
   (set-face-attribute 'default nil :height 116))
 
-;; Fira Code enabled
-;; https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs
-(when (window-system)
-  (set-default-font "Fira Code"))
+
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
                (36 . ".\\(?:>\\)")

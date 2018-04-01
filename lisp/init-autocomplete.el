@@ -33,12 +33,14 @@
 
 (use-package company-statistics         ; Sort company candidates by statistics
   :ensure t
+  :defer t
   :after company
   :config (company-statistics-mode))
 
 (use-package company-math               ; Completion for Math symbols
   :ensure t
   :after company
+  :defer t
   :config
   ;; Add backends for math characters
   (add-to-list 'company-backends 'company-math-symbols-unicode)
@@ -46,12 +48,14 @@
 
 (use-package company-emoji              ; Emojis completion like Github/Slack
   :ensure t
+  :defer t
   :after company
   :config (add-to-list 'company-backends 'company-emoji))
 
 ;; javascript autocomplete
 (use-package company-tern
   :ensure t
+  :defer t
   :after company
   :config (add-to-list 'company-backends 'company-tern))
 

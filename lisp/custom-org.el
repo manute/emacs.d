@@ -15,8 +15,8 @@
     (not-modified)))
 
 (defun gtd ()
-   (interactive)
-   (find-file "~/org/gtd.org"))
+  (interactive)
+  (find-file "~/org/gtd.org"))
 
 (use-package org
   :mode ("\\.org\\'" . org-mode)
@@ -55,9 +55,9 @@
 
   ;;beautify theme special config
   (ignore-errors
-    (use-package org-beautify-theme :ensure t
-      :config
-      (when (window-system)
+    (when (window-system)
+      (use-package org-beautify-theme :ensure t
+        :config
         ;; From https://github.com/howardabrams/dot-files/blob/HEAD/emacs-client.org
         (deftheme ar/org-theme "Sub-theme to beautify org mode")
         (let* ((sans-font (cond ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))

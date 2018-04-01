@@ -1,12 +1,14 @@
 ;; Install these tools:
-;; - https://github.com/nsf/gocode
-;; - https://github.com/bradfitz/goimports
-;; - https://github.com/buaazp/Godef
-;; - https://github.com/motemen/gore
+;; go get -u github.com/nsf/gocode
+;; go get -u golang.org/x/tools/cmd/goimports
+;; go get -u github.com/rogpeppe/godef
+;; go get -u golang.org/x/tools/cmd/guru
+;; go get -u github.com/motemen/gore
+;; go get -u github.com/fatih/gomodifytags
 
 (use-package go-mode
   :ensure t
-  :bind ( "M-." . godef-jump-other-window)
+  :bind ("M-." . godef-jump-other-window)
   :mode ("\\.go\\'" . go-mode)
   :config
   (add-hook 'go-mode-hook  (lambda ()
@@ -22,14 +24,21 @@
   :config
   (add-hook 'go-mode-hook 'company-mode)
   (add-hook 'go-mode-hook (lambda ()
-                             (set (make-local-variable 'company-backends) '(company-go))
-                             (company-mode))))
+                            (set (make-local-variable 'company-backends) '(company-go))
+                            (company-mode))))
 
 (use-package go-eldoc
   :ensure t
   :after go-mode
   :diminish eldoc-mode
   :init (add-hook 'go-mode-hook #'go-eldoc-setup))
+
+(use-package go-tag
+  :ensure t
+  :after go-mode
+  :config
+  (define-key go-mode-map (kbd "C-c t") #'go-tag-add)
+  (define-key go-mode-map (kbd "C-c T") #'go-tag-remove))
 
 ;; (use-package gorepl-mode
 ;;  :ensure t

@@ -10,7 +10,6 @@
   (global-set-key (kbd "M-n") 'next-error)
   (global-set-key (kbd "M-p") 'previous-error))
 
-
 ;; https://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
 (defun manu/use-eslint-from-node-modules ()
   (let* ((root (locate-dominating-file

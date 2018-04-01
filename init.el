@@ -6,10 +6,18 @@
 
 (package-initialize)
 
+;; If this fails , use local version of use-package
+;;
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
+
+;; This is only needed once, near the top of the file
+(eval-when-compile
+  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+  ;; (add-to-list 'load-path "~/.emacs.d/local/use-package")
+  (require 'use-package))
 
 (use-package auto-package-update
   :ensure t
@@ -25,7 +33,10 @@
   (exec-path-from-shell-initialize)
   (exec-path-from-shell-copy-env "GOROOT")
   (exec-path-from-shell-copy-env "GOPATH")
-  (exec-path-from-shell-copy-env "NPMBIN"))
+  (exec-path-from-shell-copy-env "NPMBIN")
+  (exec-path-from-shell-copy-env "LC_ALL")
+  (exec-path-from-shell-copy-env "LANG")
+  (exec-path-from-shell-copy-env "LC_TYPE"))
 
 ;; ACTIVATE BENCHMARKS
 ;; (require 'benchmark-init)
@@ -96,9 +107,8 @@
   (setq web-mode-enable-current-column-highlight t)
   (setq web-mode-enable-current-element-highlight t))
 
-
 (use-package dired+
-  :ensure t
+  ;; :ensure t
   :defer t
   :config
   (setq diredp-hide-details-initially-flag nil)
@@ -112,7 +122,6 @@
   :config
   (key-chord-mode 1)
   (key-chord-define-global "--" "_"))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Init config PLs
@@ -139,7 +148,6 @@
   :load-path "lisp/")
 
 (use-package init-clojure
-  :disabled t
   :load-path "lisp/")
 
 (use-package init-racket
@@ -166,14 +174,12 @@
   :disabled t
   :load-path "lisp/")
 
-
 (use-package perl-mode
   :mode (("\\.pl\\'" . perl-mode)
          ("\\.perl\\'" . perl-mode)
          ("\\.pm\\'" . perl-mode))
   :config
   (add-hook 'perl-mode-hook #'company-mode))
-
 
 (use-package lua-mode
   :ensure t
@@ -188,7 +194,8 @@
   :mode ("\\.asciidoc\\'" . adoc-mode))
 
 (use-package web-server
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package markdown-mode
   :ensure t
@@ -228,7 +235,6 @@
   :after json-mode
   :bind (("C-c r" . json-reformat-region)))
 
-
 (use-package dockerfile-mode
   :ensure t
   :mode ("Dockerfile\\'" . dockerfile-mode))
@@ -236,7 +242,6 @@
 (use-package mustache-mode
   :ensure t
   :mode ("\\.mustache\\'" . mustache-mode))
-
 
 ;; INIT DAEMON SERVER
 (require 'server)
@@ -249,7 +254,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (add-node-modules-path yasnippet ripgrep lua-mode xref-js2 tern-mode company-tern prettier-js keychain-environment markdown-preview-mode mustache-mode jade zerodark-theme elpy yaml-mode whole-line-or-region which-key web-mode virtualenvwrapper use-package toml-mode smex smartparens smart-mode-line-powerline-theme rustfmt rainbow-delimiters racer projectile popwin org-bullets org-beautify-theme magit key-chord json-mode ido-vertical-mode htmlize gorepl-mode go-eldoc flycheck-rust flycheck-elm flycheck-color-mode-line exec-path-from-shell elm-mode dockerfile-mode dired+ company-statistics company-racer company-quickhelp company-math company-go company-emoji clj-refactor cl-generic auto-package-update atom-one-dark-theme anzu alchemist adoc-mode ac-js2))))
+    (spaceline-config base16-theme helm-themes spaceline-all-the-icons all-the-icons-install-fonts flycheck-pos-tip flycheck-clojure cider clojure-mode doom-themes go-tag add-node-modules-path yasnippet ripgrep lua-mode xref-js2 tern-mode company-tern prettier-js keychain-environment markdown-preview-mode mustache-mode jade zerodark-theme elpy yaml-mode whole-line-or-region which-key web-mode virtualenvwrapper use-package toml-mode smex smartparens smart-mode-line-powerline-theme rustfmt rainbow-delimiters racer projectile popwin org-bullets org-beautify-theme key-chord json-mode ido-vertical-mode htmlize gorepl-mode go-eldoc flycheck-rust flycheck-elm flycheck-color-mode-line exec-path-from-shell elm-mode dockerfile-mode dired+ company-statistics company-racer company-quickhelp company-math company-go company-emoji clj-refactor cl-generic auto-package-update magit atom-one-dark-theme anzu alchemist adoc-mode ac-js2))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -54,12 +54,16 @@
 (setq uniquify-buffer-name-style 'post-forward)
 
 
-;;MAC OS keys -> cmd is meta
-;; (when (eq system-type 'darwin)
-;;   (setq mac-option-key-is-meta nil
-;;         mac-command-key-is-meta t
-;;         mac-command-modifier 'meta
-;;         mac-option-modifier 'none))
+
+;; MAC OS keys -> cmd is meta
+(defun manu/osx-laptop-keyboard ()
+  (setq mac-option-key-is-meta nil
+        mac-command-key-is-meta t
+        mac-command-modifier 'meta
+        mac-option-modifier 'none))
+
+
+(global-set-key (kbd "C-c k l") 'manu/osx-laptop-keyboard)
 
 (setq make-backup-files nil)
 (setq column-number-mode t)
@@ -73,9 +77,10 @@
   :config
   (global-anzu-mode 1))
 
+
 (use-package magit
-  :ensure t
-  :bind ("C-x g" . magit-status))
+ :ensure t
+ :bind ("C-x g" . magit-status))
   ;; :config
   ;; (setq magit-refresh-status-buffer nil))
 
@@ -97,7 +102,6 @@
 
 (use-package grep
   :config
-
   ;; js ignore folders
   (add-to-list 'grep-find-ignored-directories "dist")
   (add-to-list 'grep-find-ignored-directories "node_modules")
@@ -151,7 +155,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (fringe-mode '(4 . 0))
-(global-unset-key "\C-z")
+;; (global-unset-key "\C-z")
 
 ;; Show line numbers in buffers.
 ;;(global-linum-mode t)
