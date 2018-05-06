@@ -133,7 +133,6 @@
   :load-path "lisp/")
 
 (use-package init-rust
-  :disabled t
   :load-path "lisp/")
 
 (use-package init-js
@@ -254,7 +253,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (spaceline-config base16-theme helm-themes spaceline-all-the-icons all-the-icons-install-fonts flycheck-pos-tip flycheck-clojure cider clojure-mode doom-themes go-tag add-node-modules-path yasnippet ripgrep lua-mode xref-js2 tern-mode company-tern prettier-js keychain-environment markdown-preview-mode mustache-mode jade zerodark-theme elpy yaml-mode whole-line-or-region which-key web-mode virtualenvwrapper use-package toml-mode smex smartparens smart-mode-line-powerline-theme rustfmt rainbow-delimiters racer projectile popwin org-bullets org-beautify-theme key-chord json-mode ido-vertical-mode htmlize gorepl-mode go-eldoc flycheck-rust flycheck-elm flycheck-color-mode-line exec-path-from-shell elm-mode dockerfile-mode dired+ company-statistics company-racer company-quickhelp company-math company-go company-emoji clj-refactor cl-generic auto-package-update magit atom-one-dark-theme anzu alchemist adoc-mode ac-js2))))
+    (rust-mode dracula-theme projectile-ripgrep spaceline-config base16-theme spaceline-all-the-icons all-the-icons-install-fonts flycheck-clojure cider clojure-mode go-tag add-node-modules-path yasnippet ripgrep lua-mode xref-js2 tern-mode company-tern prettier-js keychain-environment markdown-preview-mode mustache-mode jade zerodark-theme elpy yaml-mode whole-line-or-region which-key web-mode virtualenvwrapper use-package toml-mode smex smartparens smart-mode-line-powerline-theme rustfmt rainbow-delimiters racer projectile popwin org-bullets org-beautify-theme key-chord json-mode ido-vertical-mode htmlize gorepl-mode go-eldoc flycheck-rust flycheck-elm flycheck-color-mode-line exec-path-from-shell elm-mode dockerfile-mode dired+ company-statistics company-racer company-quickhelp company-math company-go company-emoji clj-refactor cl-generic auto-package-update magit atom-one-dark-theme anzu alchemist adoc-mode ac-js2))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -6,6 +6,7 @@
   (add-hook 'after-init-hook 'global-flycheck-mode)
   :config
   (setq flycheck-global-modes '(not emacs-lisp-mode lisp-mode magit-mode sql-mode))
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc clojure-cider-typed))
   ;; Jump between current errors with M-n and M-p.
   (global-set-key (kbd "M-n") 'next-error)
   (global-set-key (kbd "M-p") 'previous-error))

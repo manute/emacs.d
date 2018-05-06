@@ -12,6 +12,7 @@
   (load-theme 'base16-onedark t))
 
 
+
 ;; Install all the fonts located in root emacs folder 'fonts'
 ;; https://github.com/NicolasPetton/zerodark-theme
 (use-package zerodark-theme
@@ -44,10 +45,14 @@
 
 (when (eq system-type 'darwin)
   (setq mac-allow-anti-aliasing t)  ;; nice fonts in OS X
-  (set-face-attribute 'default nil :height 125))
+  (if (window-system)
+      (set-face-attribute 'default nil :height 135)
+    (set-face-attribute 'default nil :height 125)))
+
 
 (when (eq system-type 'gnu/linux)
   (set-face-attribute 'default nil :height 116))
+
 
 
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")

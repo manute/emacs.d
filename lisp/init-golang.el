@@ -25,7 +25,8 @@
   (add-hook 'go-mode-hook 'company-mode)
   (add-hook 'go-mode-hook (lambda ()
                             (set (make-local-variable 'company-backends) '(company-go))
-                            (company-mode))))
+                            (company-mode)))
+  (setq company-tooltip-align-annotations t))
 
 (use-package go-eldoc
   :ensure t
