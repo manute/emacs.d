@@ -11,37 +11,46 @@
   :config
   (load-theme 'base16-onedark t))
 
-
+(use-package all-the-icons
+  :ensure t
+  :if window-system)
 
 ;; Install all the fonts located in root emacs folder 'fonts'
 ;; https://github.com/NicolasPetton/zerodark-theme
 (use-package zerodark-theme
   :ensure t
   :if window-system
- ;; :config
- ;; (zerodark-setup-modeline-format)
- )
-
-
-(use-package all-the-icons
-  :ensure t
-  :if window-system)
-
-(use-package spaceline
-  :if window-system
-  :ensure t
+  :after all-the-icons
   :config
-  (spaceline-helm-mode 1)
-  (spaceline-emacs-theme))
+  (zerodark-setup-modeline-format)
+  (zerodark--active-window-p)
+  (zerodark-modeline-flycheck-status)
+  )
 
-(use-package spaceline-all-the-icons
-  :ensure t
-  :after spaceline
-  :config
-  (spaceline-all-the-icons-theme)
-  (spaceline-all-the-icons--setup-package-updates)
-  (spaceline-all-the-icons--setup-git-ahead)
-  (setq-default spaceline-all-the-icons-separator-type 'arrow))
+;; (use-package powerline
+;;   :ensure t)
+
+;; (use-package spaceline
+;;   :if window-system
+;;   :ensure t
+;;   :after powerline
+;;   :config
+;;   (require 'spaceline-config)
+;;   (setq powerline-default-separator (quote arrow))
+;;   (setq powerline-height 20)
+;;   (spaceline-emacs-theme)
+;;   (spaceline-helm-mode 1))
+
+;; (use-package spaceline-all-the-icons
+;;   :ensure t
+;;   :after spaceline
+;;   :init (setq-default spaceline-all-the-icons-separator-type 'arrow)
+;;   :config
+;;   (spaceline-all-the-icons--setup-package-updates)
+;;   (spaceline-all-the-icons--setup-git-ahead)
+;;   (spaceline-all-the-icons--height 25)
+;;   ;; (spaceline-all-the-icons--flycheck-status-slim)
+;;   (spaceline-all-the-icons-theme))
 
 (when (eq system-type 'darwin)
   (setq mac-allow-anti-aliasing t)  ;; nice fonts in OS X
