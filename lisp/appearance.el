@@ -11,21 +11,19 @@
   :config
   (load-theme 'base16-onedark t))
 
-(use-package all-the-icons
-  :ensure t
-  :if window-system)
-
-;; Install all the fonts located in root emacs folder 'fonts'
+;; Install all the fonts located in root emacs folder 'fonts'.
+;; This package installs also all-the-icons.
 ;; https://github.com/NicolasPetton/zerodark-theme
 (use-package zerodark-theme
   :ensure t
   :if window-system
-  :after all-the-icons
   :config
   (zerodark-setup-modeline-format)
   (zerodark--active-window-p)
-  (zerodark-modeline-flycheck-status)
-  )
+  ;; (setq zerodark-use-paddings-in-mode-line nil)
+  (zerodark-modeline-flycheck-status))
+
+
 
 ;; (use-package powerline
 ;;   :ensure t)
@@ -55,15 +53,18 @@
 (when (eq system-type 'darwin)
   (setq mac-allow-anti-aliasing t)  ;; nice fonts in OS X
   (if (window-system)
-      (set-face-attribute 'default nil :height 135)
+      (set-face-attribute 'default nil :height 140)
     (set-face-attribute 'default nil :height 125)))
 
+(defun manu/set-font-height (h)
+  (set-face-attribute 'default nil :height h))
 
 (when (eq system-type 'gnu/linux)
   (set-face-attribute 'default nil :height 116))
 
 
-
+;; Fira Code ligatures
+;; https://github.com/tonsky/FiraCode/wiki/Emacs-instructions
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
                (36 . ".\\(?:>\\)")
@@ -72,7 +73,7 @@
                (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
                (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
                (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
-               (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
+               ;; (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
                (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
                (48 . ".\\(?:x[a-zA-Z]\\)")
                (58 . ".\\(?:::\\|[:=]\\)")

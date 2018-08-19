@@ -6,6 +6,8 @@
 ;; go get -u github.com/motemen/gore
 ;; go get -u github.com/fatih/gomodifytags
 
+;; https://github.com/golangci/golangci-lint -> flycheck linters
+
 (use-package go-mode
   :ensure t
   :bind ("M-." . godef-jump-other-window)
@@ -40,6 +42,18 @@
   :config
   (define-key go-mode-map (kbd "C-c t") #'go-tag-add)
   (define-key go-mode-map (kbd "C-c T") #'go-tag-remove))
+
+(use-package flycheck-golangci-lint
+  :ensure t
+  :after go-mode
+  :init  (flycheck-golangci-lint-setup)
+  :config
+  (setq flycheck-golangci-lint-deadline "20s")
+  (setq flycheck-golangci-lint-tests t)
+
+  ;; `fast` avoids slow checkers but some of them are useful
+  ;; (setq flycheck-golangci-lint-fast t)
+  )
 
 ;; (use-package gorepl-mode
 ;;  :ensure t

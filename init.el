@@ -1,6 +1,6 @@
 ;; package-refresh-contents if fails
 (require 'package)
-(setq package-enable-at-startup nil)
+;; (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 
@@ -51,7 +51,7 @@
 ;; DEBUG errors
 ;; (setq max-specpdl-size 5)
 ;; (setq max-lisp-eval-depth 10000)
-;; (setq debug-on-error nil)
+;; (setq debug-on-error t)
 
 ;; http://www.funtoo.org/Keychain
 (use-package keychain-environment
@@ -253,7 +253,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (rust-mode dracula-theme projectile-ripgrep spaceline-config base16-theme spaceline-all-the-icons all-the-icons-install-fonts flycheck-clojure cider clojure-mode go-tag add-node-modules-path yasnippet ripgrep lua-mode xref-js2 tern-mode company-tern prettier-js keychain-environment markdown-preview-mode mustache-mode jade zerodark-theme elpy yaml-mode whole-line-or-region which-key web-mode virtualenvwrapper use-package toml-mode smex smartparens smart-mode-line-powerline-theme rustfmt rainbow-delimiters racer projectile popwin org-bullets org-beautify-theme key-chord json-mode ido-vertical-mode htmlize gorepl-mode go-eldoc flycheck-rust flycheck-elm flycheck-color-mode-line exec-path-from-shell elm-mode dockerfile-mode dired+ company-statistics company-racer company-quickhelp company-math company-go company-emoji clj-refactor cl-generic auto-package-update magit atom-one-dark-theme anzu alchemist adoc-mode ac-js2))))
+    (flycheck-golangci-lint flycheck-pos-tip rust-mode projectile-ripgrep spaceline-config spaceline-all-the-icons all-the-icons-install-fonts clojure-mode go-tag add-node-modules-path yasnippet ripgrep lua-mode xref-js2 tern-mode company-tern prettier-js keychain-environment markdown-preview-mode mustache-mode jade zerodark-theme elpy yaml-mode whole-line-or-region which-key web-mode virtualenvwrapper use-package toml-mode smex smartparens smart-mode-line-powerline-theme rustfmt rainbow-delimiters racer projectile popwin org-bullets org-beautify-theme key-chord json-mode ido-vertical-mode htmlize gorepl-mode go-eldoc flycheck-rust flycheck-elm flycheck-color-mode-line exec-path-from-shell elm-mode dockerfile-mode dired+ company-statistics company-racer company-quickhelp company-math company-go company-emoji clj-refactor cl-generic auto-package-update magit atom-one-dark-theme anzu alchemist adoc-mode ac-js2))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

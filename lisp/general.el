@@ -57,11 +57,12 @@
 
 ;; MAC OS keys -> cmd is meta
 (defun manu/osx-laptop-keyboard ()
+  "change command key for mac os"
+  (interactive)
   (setq mac-option-key-is-meta nil
         mac-command-key-is-meta t
         mac-command-modifier 'meta
         mac-option-modifier 'none))
-
 
 (global-set-key (kbd "C-c k l") 'manu/osx-laptop-keyboard)
 
@@ -94,11 +95,8 @@
   :bind  (("C-c C-f" . projectile-find-file)
           ("C-c p p" . projectile-switch-project))
   :config
-  (projectile-global-mode t)
-  ;; workaround https://github.com/bbatsov/projectile/issues/1183
-  (setq projectile-mode-line
-         '(:eval (format " Projectile[%s]"
-                         (projectile-project-name)))))
+  (projectile-global-mode))
+
 
 (use-package grep
   :config

@@ -22,3 +22,4 @@ smex-items
 /.last-package-update-day
 /company-statistics-cache.el
 /network-security.data
+/cider-history
