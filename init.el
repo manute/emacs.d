@@ -36,7 +36,13 @@
   (exec-path-from-shell-copy-env "NPMBIN")
   (exec-path-from-shell-copy-env "LC_ALL")
   (exec-path-from-shell-copy-env "LANG")
-  (exec-path-from-shell-copy-env "LC_TYPE"))
+  (exec-path-from-shell-copy-env "LC_TYPE")
+  (exec-path-from-shell-copy-env "SSH_AGENT_PID")
+  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
+  (exec-path-from-shell-copy-env "SHELL")
+  (exec-path-from-shell-copy-env "JAVA_HOME")
+
+  )
 
 ;; ACTIVATE BENCHMARKS
 ;; (require 'benchmark-init)
@@ -48,10 +54,26 @@
 
 (setq use-package-verbose t)
 
+(setq explicit-shell-file-name "/bin/zsh")
+
+(defun manu/zsh-launch ()
+  (interactive)
+  (ansi-term "/bin/zsh"))
+
+(global-set-key (kbd "C-c z") 'manu/zsh-launch)
+
+
+(eval-after-load "term"
+  '(define-key term-raw-map (kbd "C-c C-y") 'term-paste))
+
 ;; DEBUG errors
 ;; (setq max-specpdl-size 5)
 ;; (setq max-lisp-eval-depth 10000)
 ;; (setq debug-on-error t)
+
+(use-package eyebrowse
+  :ensure t
+  :init (eyebrowse-mode t))
 
 ;; http://www.funtoo.org/Keychain
 (use-package keychain-environment
@@ -68,6 +90,12 @@
   (add-to-list 'load-path
                "~/.emacs.d/snippets")
   (yas-global-mode 1))
+
+(use-package magit
+ :ensure t
+ :bind ("C-x g" . magit-status))
+  ;; (setq magit-refresh-status-buffer nil))
+
 
 (use-package general
   :load-path "lisp/")
@@ -106,6 +134,12 @@
   (setq web-mode-markup-indent-offset 4)
   (setq web-mode-enable-current-column-highlight t)
   (setq web-mode-enable-current-element-highlight t))
+
+(use-package rainbow-delimiters
+  :ensure t
+  :diminish rainbow-delimiters-mode
+  :config
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package dired+
   ;; :ensure t
@@ -186,6 +220,16 @@
   :config
   (add-hook 'lua-mode-hook #'company-mode))
 
+
+;; (use-package meghanada
+;;   :mode (("\\.java\\'" . meghanada-mode))
+;;   :config
+;;   (smartparens-mode t)
+;;   (rainbow-delimiters-mode t)
+;;   (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)
+;;   :commands
+;;   (meghanada-mode))
+
 ;; FILES MODE
 
 (use-package adoc-mode
@@ -229,6 +273,9 @@
          ("\\.eslintrc\\'" . json-mode))
   :config (setq-default js-indent-level 2))
 
+(use-package graphql-mode
+  :ensure t)
+
 (use-package json-reformat
   :ensure t
   :after json-mode
@@ -246,6 +293,7 @@
 (require 'server)
 (unless (server-running-p)
   (server-start))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -253,10 +301,19 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flycheck-golangci-lint flycheck-pos-tip rust-mode projectile-ripgrep spaceline-config spaceline-all-the-icons all-the-icons-install-fonts clojure-mode go-tag add-node-modules-path yasnippet ripgrep lua-mode xref-js2 tern-mode company-tern prettier-js keychain-environment markdown-preview-mode mustache-mode jade zerodark-theme elpy yaml-mode whole-line-or-region which-key web-mode virtualenvwrapper use-package toml-mode smex smartparens smart-mode-line-powerline-theme rustfmt rainbow-delimiters racer projectile popwin org-bullets org-beautify-theme key-chord json-mode ido-vertical-mode htmlize gorepl-mode go-eldoc flycheck-rust flycheck-elm flycheck-color-mode-line exec-path-from-shell elm-mode dockerfile-mode dired+ company-statistics company-racer company-quickhelp company-math company-go company-emoji clj-refactor cl-generic auto-package-update magit atom-one-dark-theme anzu alchemist adoc-mode ac-js2))))
+    (meghanada graphql-mode gotest ns-auto-titlebar flycheck-joker magit window-number eyebrowse ansi-term sayid-mode sayid flycheck-pos-tip rust-mode projectile-ripgrep spaceline-config spaceline-all-the-icons all-the-icons-install-fonts clojure-mode go-tag add-node-modules-path yasnippet ripgrep lua-mode xref-js2 tern-mode company-tern prettier-js keychain-environment markdown-preview-mode mustache-mode jade zerodark-theme elpy yaml-mode whole-line-or-region which-key web-mode virtualenvwrapper use-package toml-mode smex smartparens smart-mode-line-powerline-theme rustfmt rainbow-delimiters racer projectile popwin org-bullets org-beautify-theme key-chord json-mode ido-vertical-mode htmlize go-eldoc flycheck-rust flycheck-elm flycheck-color-mode-line exec-path-from-shell elm-mode dockerfile-mode dired+ company-statistics company-racer company-quickhelp company-math company-go company-emoji clj-refactor cl-generic auto-package-update anzu alchemist adoc-mode ac-js2))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ ;; '(rainbow-delimiters-depth-1-face ((t (:foreground "white"))))
+ ;; '(rainbow-delimiters-depth-2-face ((t (:foreground "dark orange"))))
+ ;; '(rainbow-delimiters-depth-3-face ((t (:foreground "yellow"))))
+ ;; '(rainbow-delimiters-depth-4-face ((t (:foreground "green"))))
+ ;; '(rainbow-delimiters-depth-5-face ((t (:foreground "cyan"))))
+ ;; '(rainbow-delimiters-depth-6-face ((t (:foreground "blue"))))
+ ;; '(rainbow-delimiters-depth-7-face ((t (:foreground "dark violet"))))
+ ;; '(rainbow-delimiters-depth-8-face ((t (:foreground "magenta"))))
+ ;; '(rainbow-delimiters-depth-9-face ((t (:foreground "saddle brown"))))
+ '(show-paren-match ((((class color) (min-colors 89)) (:background "#1f5582")))))

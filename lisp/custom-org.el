@@ -30,7 +30,7 @@
   (setq org-directory "~/org")
 
   (setq org-agenda-files
-        (list "~/org/gtd.org" "~/org/work.org" "~/org/personal.org"))
+        (list "~/org/gtd.org" "~/org/work.org" "~/org/personal.org" "~/org/eod.org"))
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))

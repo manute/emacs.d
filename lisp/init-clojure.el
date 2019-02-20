@@ -1,33 +1,16 @@
-(defun change-lamda-chars (mode)
-  (font-lock-add-keywords
-   mode
-   `(("(\\(fn\\)[\[[:space:]]"  ; anon funcs 1
-      (0 (progn (compose-region (match-beginning 1)
-                                (match-end 1) "λ")
-                nil)))
-     ("\\(#\\)("                ; anon funcs 2
-      (0 (progn (compose-region (match-beginning 1)
-                                (match-end 1) "ƒ")
-                nil)))
-     ("\\(#\\){"                 ; sets
-      (0 (progn (compose-region (match-beginning 1)
-                                (match-end 1) "∈")
-                nil))))))
-
-(use-package rainbow-delimiters
-  :ensure t
-  :diminish rainbow-delimiters-mode)
 
 (use-package clojure-mode
   :ensure t
-  :after rainbow-delimiters-mode
-  :mode  (("\\.clj" . clojure-mode)
-          ("\\.edn" . clojure-mode)
+  :mode  (("\\.clj"  . clojure-mode)
+          ("\\.edn"  . clojure-mode)
           ("\\.cljs" . clojurescript-mode)
-          )
+          ("\\.java" . clojure-mode))
   :config
-  (change-lamda-chars 'clojure-mode)
-  (change-lamda-chars 'clojurescript-mode)
+  ;; (setq clojure-defun-style-default-indent t)
+  ;; (setq clojure-indent-style 'always-align)
+  ;; (setq clojure-indent-style 'always-indent)
+  ;; (setq clojure-indent-style 'align-arguments)
+  (setq clojure-align-forms-automatically 1)
 
   (add-hook 'clojure-mode-hook #'eldoc-mode)
   (add-hook 'clojurescript-mode-hook #'eldoc-mode)
@@ -42,6 +25,28 @@
   (add-hook 'clojurescript-mode-hook #'rainbow-delimiters-mode))
 
 
+(eval-after-load 'clojure-mode
+  '(font-lock-add-keywords
+    'clojure-mode `(("(\\(fn\\)[\[[:space:]]"
+                     (0 (progn (compose-region (match-beginning 1)
+                                               (match-end 1) "λ")
+                               nil))))))
+
+(eval-after-load 'clojure-mode
+  '(font-lock-add-keywords
+    'clojure-mode `(("\\(#\\)("
+                     (0 (progn (compose-region (match-beginning 1)
+                                               (match-end 1) "ƒ")
+                               nil))))))
+
+(eval-after-load 'clojure-mode
+  '(font-lock-add-keywords
+    'clojure-mode `(("\\(#\\){"
+                     (0 (progn (compose-region (match-beginning 1)
+                                               (match-end 1) "∈")
+                               nil))))))
+
+
 (defun manu/clj-format-before-save-hook ()
   (when (eq major-mode 'clojure-mode)
     (cider-format-buffer)))
@@ -50,6 +55,14 @@
   :ensure t
   :after clojure-mode
   :config
+
+  ;; java source paths
+  (setq cider-jdk-src-paths '("/Users/manute/java/openjdk11"
+                              "/Users/manute/java/sources"))
+
+  ;; lein for now
+  (setq cider-jack-in-default "lein")
+
   ;; Config CIDER figwheel
   ;; (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
 
@@ -57,9 +70,21 @@
   (define-key clojure-mode-map (kbd "C-c r") #'cider-jack-in)
   (define-key clojure-mode-map (kbd "C-c s") #'cider-jack-in-clojurescript)
   (define-key clojure-mode-map (kbd "C-c t") #'cider-test-run-test)
+  (define-key clojure-mode-map (kbd "C-c C-n") #'cider-pprint-eval-defun-at-point)
+  (define-key cider-mode-map (kbd "C-c C-n") #'cider-pprint-eval-defun-at-point)
+
+  ;; find file key
+  (define-key clojure-mode-map (kbd "C-c C-f") nil)
+  (define-key cider-mode-map (kbd "C-c C-f") nil)
 
   ;; Format buffer
-  (add-hook 'before-save-hook #'manu/clj-format-before-save-hook)
+  ;; (add-hook 'before-save-hook #'manu/clj-format-before-save-hook)
+  ;; disable indentation - for matching Cursive code
+  ;; (setq cider-dynamic-indentation nil)
+
+  ;; nrepl
+  (setq nrepl-log-messages t)
+  (setq nrepl-hide-special-buffers t)
 
   ;; REPL history file
   (setq cider-repl-history-file "~/.emacs.d/cider-history")
@@ -70,15 +95,15 @@
   ;; go right to the REPL buffer when it's finished connecting
   (setq cider-repl-pop-to-buffer-on-connect t)
 
-  ;; When there's a cider error, show its buffer and switch to it
-  (setq cider-show-error-buffer t)
-  (setq cider-auto-select-error-buffer t)
+  ;; When there's a cider error, don't show it
+  (setq cider-show-error-buffer nil)
+  ;; (setq cider-auto-select-error-buffer t)
 
   ;; nicer font lock in REPL
   (setq cider-repl-use-clojure-font-lock t)
 
   ;; result prefix for the REPL
-  (setq cider-repl-result-prefix ";; => ")
+  (setq cider-repl-result-prefix " - ")
 
   ;; never ending REPL history
   (setq cider-repl-wrap-history t)
@@ -86,11 +111,23 @@
   ;; looong history
   (setq cider-repl-history-size 3000)
 
+  (setq cider-repl-display-help-banner nil)
+
+  (setq cider-ns-refresh-show-log-buffer t)
+
+  (setq cider-prefer-local-resources t)
+  (setq nrepl-hide-special-buffers t)
+
   (add-hook 'cider-mode-hook #'company-mode)
   (add-hook 'cider-mode-hook #'smartparens-mode)
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'company-mode)
-  (add-hook 'cider-mode-hook #'rainbow-delimiters-mode))
+  (add-hook 'cider-mode-hook #'rainbow-delimiters-mode)
+
+  ;; Fuzzy candidate matching
+  (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
+  (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
+  )
 
 (use-package clj-refactor
   :ensure t
@@ -101,11 +138,16 @@
   (clj-refactor-mode 1))
 
 
+(use-package flycheck-joker
+  :ensure t
+  :after (clojure-mode flycheck))
+
 
 (use-package flycheck-clojure
   :ensure t
-  :after (clojure-mode flycheck)
+  :after flycheck-joker
   :config (flycheck-clojure-setup))
+
 
 (use-package flycheck-pos-tip
   :ensure t
@@ -113,5 +155,10 @@
   :config
   (when (eq major-mode 'clojure-mode)
     (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
+
+;; (use-package sayid-mode
+;;   :ensure t
+;;   :after cider-mode
+;;   :init ((sayid-setup-package)))
 
 (provide 'init-clojure)

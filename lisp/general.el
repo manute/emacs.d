@@ -2,9 +2,12 @@
 (setq inhibit-startup-message t)
 
 ;; Make sure we always use UTF-8.
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
+
 (load-library "iso-transl")
 
 ;; Make the selection work like most people expect.
@@ -57,12 +60,13 @@
 
 ;; MAC OS keys -> cmd is meta
 (defun manu/osx-laptop-keyboard ()
-  "change command key for mac os"
+  "change command key to meta for mac os"
   (interactive)
   (setq mac-option-key-is-meta nil
         mac-command-key-is-meta t
         mac-command-modifier 'meta
         mac-option-modifier 'none))
+
 
 (global-set-key (kbd "C-c k l") 'manu/osx-laptop-keyboard)
 
@@ -78,12 +82,6 @@
   :config
   (global-anzu-mode 1))
 
-
-(use-package magit
- :ensure t
- :bind ("C-x g" . magit-status))
-  ;; :config
-  ;; (setq magit-refresh-status-buffer nil))
 
 (use-package popwin
   :ensure t
@@ -167,7 +165,8 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (fringe-mode '(4 . 0))
-;; (global-unset-key "\C-z")
+(global-unset-key "\C-z")
+(setq ring-bell-function 'ignore)
 
 ;; Show line numbers in buffers.
 ;;(global-linum-mode t)

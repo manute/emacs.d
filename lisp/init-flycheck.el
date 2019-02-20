@@ -9,7 +9,10 @@
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc clojure-cider-typed))
   ;; Jump between current errors with M-n and M-p.
   (global-set-key (kbd "M-n") 'next-error)
-  (global-set-key (kbd "M-p") 'previous-error))
+  (global-set-key (kbd "M-p") 'previous-error)
+
+  ;; https://github.com/koalaman/shellcheck
+  (add-hook 'sh-mode-hook 'flycheck-mode))
 
 ;; https://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
 (defun manu/use-eslint-from-node-modules ()
