@@ -9,37 +9,24 @@
 ;; https://github.com/golangci/golangci-lint -> flycheck linters
 
 (defun my-go-mode-hook ()
-      (local-set-key (kbd "M-.") #'godef-jump)
-      (add-hook 'before-save-hook 'gofmt-before-save)
-
-      ; extra keybindings from https://github.com/bbatsov/prelude/blob/master/modules/prelude-go.el
-      (let ((map go-mode-map))
-        (define-key map (kbd "C-c a") 'go-test-current-project) ;; current package, really
-        (define-key map (kbd "C-c m") 'go-test-current-file)
-        (define-key map (kbd "C-c .") 'go-test-current-test)
-        (define-key map (kbd "C-c b") 'go-run)))
+  (local-set-key (kbd "M-.") #'godef-jump-other-window)
+  (setq tab-width 4)
+  (setq gofmt-command "goimports")
+  (add-hook 'before-save-hook 'gofmt-before-save))
 
 (use-package go-mode
   :ensure t
-  :mode ("\\.go\\'" . go-mode)
+  :mode (
+         ("\\.go\\'" . go-mode)
+         )
   :config
   (add-hook 'go-mode-hook 'my-go-mode-hook)
-
-  ;; (add-hook 'before-save-hook #'gofmt-before-save)
-  ;; (add-hook 'go-mode-hook  (lambda ()
-  ;;                            (setq tab-width 4)
-  ;;                            (setq gofmt-command "goimports")
-  ;;                            (setq compile-command "go build -v && go test -v && go vet")))
   (add-to-list 'yas-snippet-dirs "~/.emacs.d/snippets/go-mode"))
 
 (use-package company-go
   :ensure t
   :after go-mode
   :config
-  ;; (add-hook 'go-mode-hook 'company-mode)
-  ;; (add-hook 'go-mode-hook (lambda ()
-  ;;                           (set (make-local-variable 'company-backends) '(company-go))
-  ;;                           (company-mode)))
   (add-hook 'go-mode-hook 'company-mode)
   (add-to-list 'company-backends 'company-go)
   (setq company-tooltip-align-annotations t))
@@ -76,7 +63,8 @@
   (setq flycheck-golangci-lint-deadline "8s")
   (setq flycheck-golangci-lint-tests t)
   ;; `fast` avoids slow checkers but some of them are useful
-  (setq flycheck-golangci-lint-fast t))
+  ;; (setq flycheck-golangci-lint-fast t)
+  )
 
 ;; (use-package gorepl-mode
 ;;  :ensure t

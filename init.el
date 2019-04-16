@@ -289,11 +289,18 @@
   :ensure t
   :mode ("\\.mustache\\'" . mustache-mode))
 
+(use-package terraform-mode
+  :ensure t
+  :mode ("\\.tf\\'" . terraform-mode)
+  :config
+  (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode))
+
+
+
 ;; INIT DAEMON SERVER
 (require 'server)
 (unless (server-running-p)
   (server-start))
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -301,19 +308,10 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (meghanada graphql-mode gotest ns-auto-titlebar flycheck-joker magit window-number eyebrowse ansi-term sayid-mode sayid flycheck-pos-tip rust-mode projectile-ripgrep spaceline-config spaceline-all-the-icons all-the-icons-install-fonts clojure-mode go-tag add-node-modules-path yasnippet ripgrep lua-mode xref-js2 tern-mode company-tern prettier-js keychain-environment markdown-preview-mode mustache-mode jade zerodark-theme elpy yaml-mode whole-line-or-region which-key web-mode virtualenvwrapper use-package toml-mode smex smartparens smart-mode-line-powerline-theme rustfmt rainbow-delimiters racer projectile popwin org-bullets org-beautify-theme key-chord json-mode ido-vertical-mode htmlize go-eldoc flycheck-rust flycheck-elm flycheck-color-mode-line exec-path-from-shell elm-mode dockerfile-mode dired+ company-statistics company-racer company-quickhelp company-math company-go company-emoji clj-refactor cl-generic auto-package-update anzu alchemist adoc-mode ac-js2))))
+    (terraform-mode mustache-mode dockerfile-mode graphql-mode json-mode yaml-mode toml-mode markdown-mode web-server adoc-mode lua-mode flycheck-pos-tip flycheck-clojure flycheck-joker clj-refactor cider clojure-mode xref-js2 prettier-js add-node-modules-path js2-mode company-racer flycheck-rust racer rust-mode flycheck-golangci-lint go-tag go-eldoc gotest company-go go-mode key-chord rainbow-delimiters web-mode org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-tern company-emoji company-math company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;; '(rainbow-delimiters-depth-1-face ((t (:foreground "white"))))
- ;; '(rainbow-delimiters-depth-2-face ((t (:foreground "dark orange"))))
- ;; '(rainbow-delimiters-depth-3-face ((t (:foreground "yellow"))))
- ;; '(rainbow-delimiters-depth-4-face ((t (:foreground "green"))))
- ;; '(rainbow-delimiters-depth-5-face ((t (:foreground "cyan"))))
- ;; '(rainbow-delimiters-depth-6-face ((t (:foreground "blue"))))
- ;; '(rainbow-delimiters-depth-7-face ((t (:foreground "dark violet"))))
- ;; '(rainbow-delimiters-depth-8-face ((t (:foreground "magenta"))))
- ;; '(rainbow-delimiters-depth-9-face ((t (:foreground "saddle brown"))))
- '(show-paren-match ((((class color) (min-colors 89)) (:background "#1f5582")))))
+ )

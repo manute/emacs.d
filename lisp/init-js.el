@@ -5,6 +5,7 @@
 (use-package js2-mode
   :ensure t
   :mode (("\\.js\\'" . js2-mode)
+         ("\\.spec.js\\'" . js2-mode)
          ("\\.jsx\\'" . js2-jsx-mode))
   :config
   (setq-default tab-width 2)

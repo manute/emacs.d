@@ -21,7 +21,8 @@
   (zerodark-setup-modeline-format)
   (zerodark--active-window-p)
   ;; (setq zerodark-use-paddings-in-mode-line nil)
-  (zerodark-modeline-flycheck-status))
+  (zerodark-modeline-flycheck-status)
+  )
 
 (use-package ns-auto-titlebar
   :ensure t

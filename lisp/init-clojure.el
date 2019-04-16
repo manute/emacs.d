@@ -6,10 +6,6 @@
           ("\\.cljs" . clojurescript-mode)
           ("\\.java" . clojure-mode))
   :config
-  ;; (setq clojure-defun-style-default-indent t)
-  ;; (setq clojure-indent-style 'always-align)
-  ;; (setq clojure-indent-style 'always-indent)
-  ;; (setq clojure-indent-style 'align-arguments)
   (setq clojure-align-forms-automatically 1)
 
   (add-hook 'clojure-mode-hook #'eldoc-mode)
@@ -64,7 +60,11 @@
   (setq cider-jack-in-default "lein")
 
   ;; Config CIDER figwheel
-  ;; (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
+  ;; https://github.com/Day8/re-frame-template#start-cider-from-emacs-if-using-cider
+  (setq cider-cljs-lein-repl
+	"(do (require 'figwheel-sidecar.repl-api)
+         (figwheel-sidecar.repl-api/start-figwheel!)
+         (figwheel-sidecar.repl-api/cljs-repl))")
 
   ;; Shortcut keys config
   (define-key clojure-mode-map (kbd "C-c r") #'cider-jack-in)
