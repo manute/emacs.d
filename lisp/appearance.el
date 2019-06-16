@@ -24,6 +24,19 @@
   (zerodark-modeline-flycheck-status)
   )
 
+;; use spacemacs-theme
+;; (unless (package-installed-p 'spacemacs-theme)
+;;   (package-install 'spacemacs-theme))
+
+
+;; (use-package spaceline
+;;   :ensure t
+;;   :if window-system
+;;   :config
+;;   (load-theme 'spacemacs-light t)
+;;   (require 'spaceline-config)
+;;   (spaceline-emacs-theme))
+
 (use-package ns-auto-titlebar
   :ensure t
   :if window-system
