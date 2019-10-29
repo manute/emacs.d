@@ -47,7 +47,9 @@
                            "--single-quote" "false"
                            "--print-width" "80"
                            ))
-  (add-hook 'js2-mode-hook 'prettier-js-mode))
+
+  (add-hook 'js2-mode-hook 'prettier-js-mode)
+  )
 
 (use-package tern
   :ensure t

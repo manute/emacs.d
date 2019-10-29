@@ -36,6 +36,7 @@
   (exec-path-from-shell-initialize)
   (exec-path-from-shell-copy-env "GOROOT")
   (exec-path-from-shell-copy-env "GOPATH")
+  (exec-path-from-shell-copy-env "GO111MODULE")
   (exec-path-from-shell-copy-env "NPMBIN")
   (exec-path-from-shell-copy-env "LC_ALL")
   (exec-path-from-shell-copy-env "LANG")
@@ -98,6 +99,9 @@
  :ensure t
  :bind ("C-x g" . magit-status))
   ;; (setq magit-refresh-status-buffer nil))
+
+(use-package init-lsp
+  :load-path "lisp/")
 
 
 (use-package general
@@ -173,6 +177,9 @@
   :load-path "lisp/")
 
 (use-package init-js
+  :load-path "lisp/")
+
+(use-package init-typescript
   :load-path "lisp/")
 
 (use-package init-python
@@ -314,7 +321,7 @@
     ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
  '(package-selected-packages
    (quote
-    (go-rename go-guru use-package-ensure-system-package spacemacs-theme whole-line-or-region spaceline spaceline-config terraform-mode mustache-mode dockerfile-mode graphql-mode json-mode yaml-mode toml-mode markdown-mode web-server adoc-mode lua-mode flycheck-pos-tip flycheck-clojure flycheck-joker clj-refactor cider clojure-mode xref-js2 prettier-js add-node-modules-path js2-mode company-racer flycheck-rust racer rust-mode flycheck-golangci-lint go-tag go-eldoc gotest company-go go-mode key-chord rainbow-delimiters web-mode org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-tern company-emoji company-math company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package))))
+    (company-lsp lsp-ui lsp-mode typescript typescript-mode tide go-rename go-guru use-package-ensure-system-package spacemacs-theme whole-line-or-region spaceline spaceline-config terraform-mode mustache-mode dockerfile-mode graphql-mode json-mode yaml-mode toml-mode markdown-mode web-server adoc-mode lua-mode flycheck-pos-tip flycheck-clojure flycheck-joker clj-refactor cider clojure-mode xref-js2 prettier-js add-node-modules-path js2-mode company-racer flycheck-rust racer rust-mode flycheck-golangci-lint go-tag go-eldoc gotest company-go go-mode key-chord rainbow-delimiters web-mode org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-tern company-emoji company-math company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

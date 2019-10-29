@@ -24,3 +24,4 @@ smex-items
 /network-security.data
 /cider-history
 transient
+/.lsp-session-*
