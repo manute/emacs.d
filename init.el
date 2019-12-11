@@ -34,19 +34,11 @@
   :config
   (setq exec-path-from-shell-arguments '("-l"))
   (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-env "GOROOT")
-  (exec-path-from-shell-copy-env "GOPATH")
-  (exec-path-from-shell-copy-env "GO111MODULE")
-  (exec-path-from-shell-copy-env "NPMBIN")
-  (exec-path-from-shell-copy-env "LC_ALL")
-  (exec-path-from-shell-copy-env "LANG")
-  (exec-path-from-shell-copy-env "LC_TYPE")
-  (exec-path-from-shell-copy-env "SSH_AGENT_PID")
-  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
-  (exec-path-from-shell-copy-env "SHELL")
-  (exec-path-from-shell-copy-env "JAVA_HOME")
-
-  )
+  (exec-path-from-shell-copy-envs
+   '("GOPATH" "GO111MODULE" "GOPROXY"
+     "NPMBIN" "LC_ALL" "LANG" "LC_TYPE"
+     "SSH_AGENT_PID" "SSH_AUTH_SOCK" "SHELL"
+     "JAVA_HOME")))
 
 ;; ACTIVATE BENCHMARKS
 ;; (require 'benchmark-init)
@@ -66,7 +58,6 @@
 
 (global-set-key (kbd "C-c z") 'manu/zsh-launch)
 
-
 (eval-after-load "term"
   '(define-key term-raw-map (kbd "C-c C-y") 'term-paste))
 
@@ -74,6 +65,7 @@
 ;; (setq max-specpdl-size 5)
 ;; (setq max-lisp-eval-depth 10000)
 ;; (setq debug-on-error t)
+;; (toggle-debug-on-quit t)
 
 (use-package eyebrowse
   :ensure t
@@ -99,9 +91,6 @@
  :ensure t
  :bind ("C-x g" . magit-status))
   ;; (setq magit-refresh-status-buffer nil))
-
-(use-package init-lsp
-  :load-path "lisp/")
 
 
 (use-package general
@@ -167,10 +156,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Init config PLs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package init-lisp
+
+;; (use-package init-golang
+;;   :load-path "lisp/")
+
+(use-package init-lsp
   :load-path "lisp/")
 
-(use-package init-golang
+(use-package init-lisp
   :load-path "lisp/")
 
 (use-package init-rust
@@ -229,7 +222,6 @@
   :mode (("\\.lua\\'" . lua-mode))
   :config
   (add-hook 'lua-mode-hook #'company-mode))
-
 
 ;; (use-package meghanada
 ;;   :mode (("\\.java\\'" . meghanada-mode))
@@ -311,20 +303,3 @@
 (require 'server)
 (unless (server-running-p)
   (server-start))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
- '(package-selected-packages
-   (quote
-    (company-lsp lsp-ui lsp-mode typescript typescript-mode tide go-rename go-guru use-package-ensure-system-package spacemacs-theme whole-line-or-region spaceline spaceline-config terraform-mode mustache-mode dockerfile-mode graphql-mode json-mode yaml-mode toml-mode markdown-mode web-server adoc-mode lua-mode flycheck-pos-tip flycheck-clojure flycheck-joker clj-refactor cider clojure-mode xref-js2 prettier-js add-node-modules-path js2-mode company-racer flycheck-rust racer rust-mode flycheck-golangci-lint go-tag go-eldoc gotest company-go go-mode key-chord rainbow-delimiters web-mode org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-tern company-emoji company-math company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

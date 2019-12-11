@@ -1,44 +1,86 @@
 
 (use-package lsp-mode
   :ensure t
+  ;; :hook (go-mode . lsp-deferred)
+  :init
+  (setq lsp-auto-guess-root t
+        lsp-prefer-flymake nil
+        )
+  ;; :ensure-system-package
+  ;; (
+  ;;  (gopls . "go get golang.org/x/tools/gopls@latest")
+  ;;  )
+  :bind (:map lsp-mode-map
+              ("C-c C-j" . lsp-find-definition)
+              ("C-c C-d" . lsp-describe-thing-at-point)
+              )
   ;; uncomment to enable gopls http debug server
   ;; :custom (lsp-gopls-server-args '("-debug" "127.0.0.1:0"))
   :commands (lsp lsp-deferred)
-  :config (progn
-            ;; use flycheck, not flymake
-            (setq lsp-prefer-flymake nil)))
+  :config
+  ;; Configure LSP clients
+  (use-package lsp-clients)
+  )
 
+
+(use-package go-eldoc
+  :ensure t
+  :ensure-system-package (godoc . "go get -u golang.org/x/tools/cmd/godoc"))
 
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode
-  :requires lsp-mode flycheck
+  :custom-face (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))
+  :bind (:map lsp-ui-mode-map
+              ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+              ([remap xref-find-references] . lsp-ui-peek-find-references)
+              ("C-c u" . lsp-ui-imenu))
+  :init
+  (setq lsp-ui-doc-border (face-foreground 'default))
   :config
-  (setq lsp-ui-doc-enable t
-        lsp-ui-doc-use-childframe t
-        lsp-ui-doc-position 'top
-        lsp-ui-doc-include-signature t
-        lsp-ui-sideline-enable nil
-        lsp-ui-flycheck-enable t
-        lsp-ui-flycheck-list-position 'right
-        lsp-ui-flycheck-live-reporting t
-        lsp-ui-peek-enable t
-        lsp-ui-peek-list-width 60
-        lsp-ui-peek-peek-height 25)
-
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-ui-doc-enable nil)
+  (setq lsp-eldoc-enable-hover t))
 
 
 (use-package company-lsp
   :ensure t
+  :commands company-lsp
   :requires company
+  ;; :init (setq company-lsp-cache-candidates 'auto)
   :config
   (push 'company-lsp company-backends)
-
   ;; Disable client-side cache because the LSP server does a better job.
   (setq company-transformers nil
         company-lsp-async t
         company-lsp-cache-candidates nil))
 
+
+;; Set up before-save hooks to format buffer and add/delete imports.
+;; Make sure you don't have other gofmt/goimports hooks enabled.
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+
+
+(use-package go-mode
+  :ensure t
+  ;; :bind  (
+        ;;  ("C-c C-j" . lsp-find-definition)
+        ;;  ("C-c C-d" . lsp-describe-thing-at-point)
+        ;;  )
+  :config
+  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+  (add-hook 'go-mode-hook #'lsp-deferred))
+
+(use-package gotest
+  :ensure t
+  :after go-mode
+  :config
+  (define-key go-mode-map (kbd "C-c C-t n") 'go-test-current-file)
+  (define-key go-mode-map (kbd "C-c t") 'go-test-current-test)
+  (define-key go-mode-map (kbd "C-c C-t p") 'go-test-current-project)
+  (define-key go-mode-map (kbd "C-c C-t b") 'go-test-current-benchmark)
+  (define-key go-mode-map (kbd "C-c C-t x") 'go-run))
 
 (provide 'init-lsp)
