@@ -53,8 +53,8 @@
   :config
 
   ;; java source paths
-  (setq cider-jdk-src-paths '("/Users/manute/java/openjdk11"
-                              "/Users/manute/java/sources"))
+  ;; (setq cider-jdk-src-paths '("/Users/manute/java/openjdk11"
+  ;;                             "/Users/manute/java/sources"))
 
   ;; lein for now
   (setq cider-jack-in-default "lein")

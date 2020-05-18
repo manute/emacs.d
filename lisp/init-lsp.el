@@ -5,6 +5,9 @@
   :init
   (setq lsp-auto-guess-root t
         lsp-prefer-flymake nil
+        lsp-enable-file-watchers nil
+        lsp-idle-delay 0.500
+        lsp-prefer-capf t
         )
   ;; :ensure-system-package
   ;; (

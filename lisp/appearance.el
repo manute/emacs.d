@@ -1,6 +1,13 @@
 ;; Fira Code enabled
 ;; https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs
-(set-default-font "Fira Code" nil t)
+;; (set-default-font "Fira Code" nil t)
+(set-frame-font "Fira Code" nil t)
+
+;; emoji
+(if (version< "27.0" emacs-version)
+    (set-fontset-font "fontset-default" 'unicode "Apple Color Emoji" nil 'prepend)
+  (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend))
+
 
 (use-package memoize
   :ensure t)
@@ -21,8 +28,10 @@
   (zerodark-setup-modeline-format)
   (zerodark--active-window-p)
   ;; (setq zerodark-use-paddings-in-mode-line nil)
-  (zerodark-modeline-flycheck-status)
-  )
+  (zerodark-modeline-flycheck-status))
+
+(load-theme 'zerodark t)
+
 
 ;; use spacemacs-theme
 ;; (unless (package-installed-p 'spacemacs-theme)

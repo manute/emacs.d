@@ -6,6 +6,8 @@
 
 (package-initialize)
 
+(setq package-check-signature nil)
+
 ;; If this fails , use local version of use-package
 ;;
 ;; Bootstrap `use-package'
@@ -49,8 +51,11 @@
 ;; (benchmark-init/show-durations-tree)
 
 (setq use-package-verbose t)
-
 (setq explicit-shell-file-name "/bin/zsh")
+
+;; performance
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
 
 (defun manu/zsh-launch ()
   (interactive)
@@ -88,8 +93,8 @@
   (yas-global-mode 1))
 
 (use-package magit
- :ensure t
- :bind ("C-x g" . magit-status))
+  :ensure t
+  :bind (("C-x g" . magit-status)))
   ;; (setq magit-refresh-status-buffer nil))
 
 
@@ -303,3 +308,16 @@
 (require 'server)
 (unless (server-running-p)
   (server-start))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(lsp-ui-doc-background ((t (:background "lightyellow")))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(company-emoji whole-line-or-region terraform-mode mustache-mode dockerfile-mode graphql-mode json-mode yaml-mode toml-mode web-server adoc-mode lua-mode flycheck-pos-tip flycheck-clojure flycheck-joker clj-refactor cider clojure-mode tide typescript-mode xref-js2 tern prettier-js add-node-modules-path js2-mode company-racer flycheck-rust racer rust-mode gotest company-lsp lsp-ui go-eldoc lsp-mode key-chord rainbow-delimiters web-mode org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package)))
