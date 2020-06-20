@@ -1,7 +1,13 @@
 
 (use-package lsp-mode
   :ensure t
-  ;; :hook (go-mode . lsp-deferred)
+  ;; languages
+  :hook  (
+          (go-mode . lsp-deferred) ;; go get -u golang.org/x/tools/gopls
+          (sh-mode . lsp) ;; npm i -g bash-language-server
+          (dockerfile-mode . lsp) ;; npm install -g dockerfile-language-server-nodejs
+          (yaml-mode . lsp) ;; npm install -g yaml-language-server
+          )
   :init
   (setq lsp-auto-guess-root t
         lsp-prefer-flymake nil

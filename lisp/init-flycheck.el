@@ -12,6 +12,7 @@
   (global-set-key (kbd "M-p") 'previous-error)
 
   ;; https://github.com/koalaman/shellcheck
+  ;; brew install shellcheck
   (add-hook 'sh-mode-hook 'flycheck-mode))
 
 ;; https://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable

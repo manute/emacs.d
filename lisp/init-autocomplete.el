@@ -45,4 +45,11 @@
   :config (add-to-list 'company-backends 'company-emoji))
 
 
+(use-package company-box
+  :ensure t
+  :defer t
+  :after company
+  :hook (company-mode . company-box-mode))
+
+
 (provide 'init-autocomplete)

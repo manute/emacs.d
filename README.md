@@ -7,8 +7,7 @@ emacs.d
 Mac OSX
 --------
 
-It´s recommendable the version of emacs >= 28 and with jansson (for gopls perfomance)
-
+It´s recommendable the version of emacs >= 28 and with native JSON support (for lsp perfomance)
 
 ```shell
 brew tap daviderestivo/emacs-head
