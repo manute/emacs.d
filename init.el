@@ -8,6 +8,8 @@
 
 (setq package-check-signature nil)
 
+(setq tramp-default-method "ssh")
+
 ;; If this fails , use local version of use-package
 ;;
 ;; Bootstrap `use-package'

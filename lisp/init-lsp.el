@@ -8,6 +8,9 @@
         lsp-enable-file-watchers nil
         lsp-idle-delay 0.500
         lsp-prefer-capf t
+
+        ;; https://github.com/emacs-lsp/lsp-mode/issues/1778
+        lsp-gopls-codelens nil
         )
   ;; :ensure-system-package
   ;; (
