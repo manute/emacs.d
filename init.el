@@ -273,7 +273,11 @@
 
 (use-package yaml-mode
   :ensure t
-  :mode ("\\.yml\\'" . yaml-mode))
+  :mode (
+         ("\\.yml\\'" . yaml-mode)
+         ("\\.yaml\\'" . yaml-mode)
+         )
+  )
 
 (use-package json-mode
   :ensure t
