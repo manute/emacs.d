@@ -44,12 +44,12 @@
   :after company
   :config (add-to-list 'company-backends 'company-emoji))
 
-
-(use-package company-box
-  :ensure t
-  :defer t
-  :after company
-  :hook (company-mode . company-box-mode))
+;; Error -> Cannot open load file: No such file or directory, company-box
+;; (use-package company-box
+;; :ensure t
+;; :defer t
+;; :after company
+;; :hook (company-mode . company-box-mode))
 
 
 (provide 'init-autocomplete)

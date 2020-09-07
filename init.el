@@ -144,15 +144,16 @@
   :config
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
-(use-package dired+
-  ;; :ensure t
-  :defer t
-  :config
-  (setq diredp-hide-details-initially-flag nil)
-  (set-face-foreground 'diredp-file-name nil)
-  ;; Keep dired buffers updated when the file system changes.
-  (setq global-auto-revert-non-file-buffers t)
-  (setq auto-revert-verbose nil))
+;; https://emacs.stackexchange.com/questions/38553/dired-missing-from-melpa
+;; (use-package dired+
+;;   :ensure t
+;;   :defer t
+;;   :config
+;;   (setq diredp-hide-details-initially-flag nil)
+;;   (set-face-foreground 'diredp-file-name nil)
+;;   ;; Keep dired buffers updated when the file system changes.
+;;   (setq global-auto-revert-non-file-buffers t)
+;;   (setq auto-revert-verbose nil))
 
 (use-package key-chord
   :ensure t
@@ -309,6 +310,10 @@
   (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode))
 
 
+(use-package rego-mode
+  :ensure t
+  :mode ("\\.rego\\'" . rego-mode))
+
 
 ;; INIT DAEMON SERVER
 (require 'server)
@@ -326,4 +331,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company-emoji whole-line-or-region terraform-mode mustache-mode dockerfile-mode graphql-mode json-mode yaml-mode toml-mode web-server adoc-mode lua-mode flycheck-pos-tip flycheck-clojure flycheck-joker clj-refactor cider clojure-mode tide typescript-mode xref-js2 tern prettier-js add-node-modules-path js2-mode company-racer flycheck-rust racer rust-mode gotest company-lsp lsp-ui go-eldoc lsp-mode key-chord rainbow-delimiters web-mode org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package)))
+   '(dired+ rego-mode company-emoji whole-line-or-region terraform-mode mustache-mode dockerfile-mode graphql-mode json-mode yaml-mode toml-mode web-server adoc-mode lua-mode flycheck-pos-tip flycheck-clojure flycheck-joker clj-refactor cider clojure-mode tide typescript-mode xref-js2 tern prettier-js add-node-modules-path js2-mode company-racer flycheck-rust racer rust-mode gotest company-lsp lsp-ui go-eldoc lsp-mode key-chord rainbow-delimiters web-mode org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package)))
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)

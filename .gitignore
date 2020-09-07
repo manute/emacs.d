@@ -26,3 +26,5 @@ smex-items
 transient
 /.lsp-session-*
 /local/
+/.cache/
+/projects
