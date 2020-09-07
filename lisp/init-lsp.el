@@ -1,10 +1,10 @@
 
 (use-package lsp-mode
-  :ensure t
+  ;; :ensure t
 
-  ;; If there're errors, download the lastest tag i.e https://github.com/emacs-lsp/lsp-mode/releases/tag/6.3.1
-  ;; And move it to .emacs/local/lsp-mode-6.3.1
-  ;; :load-path "local/lsp-mode-6.3.1"
+  ;; If there're errors, download the lastest tag i.e https://github.com/emacs-lsp/lsp-mode/releases/tag/7.0.1
+  ;; And move it to .emacs/local/..
+  :load-path "local/lsp-mode-7.0"
 
   ;; languages
   :hook  (
@@ -45,11 +45,11 @@
   :ensure-system-package (godoc . "go get -u golang.org/x/tools/cmd/godoc"))
 
 (use-package lsp-ui
-  :ensure t
+  ;; :ensure t
 
   ;; If there're errors, download the latest tag i.e tag https://github.com/emacs-lsp/lsp-ui/releases/tag/6.0
-  ;; and move it to .emacs/local/lsp-mode-6.3.1
-  ;; :load-path "local/lsp-ui-6.0"
+  ;; and move it to .emacs/local/..
+  :load-path "local/lsp-ui-7.0"
 
   :commands lsp-ui-mode
   :custom-face (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))

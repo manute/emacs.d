@@ -44,12 +44,19 @@
   :after company
   :config (add-to-list 'company-backends 'company-emoji))
 
-;; Error -> Cannot open load file: No such file or directory, company-box
-;; (use-package company-box
-;; :ensure t
-;; :defer t
-;; :after company
-;; :hook (company-mode . company-box-mode))
 
+(defcustom display-icon (display-graphic-p)
+  "Display icons or not."
+  :group 'icons
+  :type 'boolean)
+
+(use-package company-box
+  :ensure t
+  :hook (company-mode . company-box-mode)
+  :defines company-box-icons-all-the-icons
+  :hook (company-mode . company-box-mode)
+  :init (setq company-box-enable-icon display-icon
+              company-box-backends-colors nil
+              company-box-highlight-prefix t))
 
 (provide 'init-autocomplete)
