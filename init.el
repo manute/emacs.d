@@ -97,7 +97,7 @@
 (use-package magit
   :ensure t
   :bind (("C-x g" . magit-status)))
-  ;; (setq magit-refresh-status-buffer nil))
+;; (setq magit-refresh-status-buffer nil))
 
 
 (use-package general
@@ -164,10 +164,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Init config PLs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; (use-package init-golang
-;;   :load-path "lisp/")
-
 (use-package init-lsp
   :load-path "lisp/")
 
@@ -181,10 +177,6 @@
   :load-path "lisp/")
 
 (use-package init-typescript
-  :load-path "lisp/")
-
-(use-package init-python
-  :disabled t
   :load-path "lisp/")
 
 (use-package init-scala
@@ -207,10 +199,6 @@
   :load-path "lisp/")
 
 (use-package init-ruby
-  :disabled t
-  :load-path "lisp/")
-
-(use-package init-elixir
   :disabled t
   :load-path "lisp/")
 
@@ -331,6 +319,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(dired+ rego-mode company-emoji whole-line-or-region terraform-mode mustache-mode dockerfile-mode graphql-mode json-mode yaml-mode toml-mode web-server adoc-mode lua-mode flycheck-pos-tip flycheck-clojure flycheck-joker clj-refactor cider clojure-mode tide typescript-mode xref-js2 tern prettier-js add-node-modules-path js2-mode company-racer flycheck-rust racer rust-mode gotest company-lsp lsp-ui go-eldoc lsp-mode key-chord rainbow-delimiters web-mode org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package)))
+   '(python-mode pyvenv elixir-mode eglot dired+ rego-mode company-emoji whole-line-or-region terraform-mode mustache-mode dockerfile-mode graphql-mode json-mode yaml-mode toml-mode web-server adoc-mode lua-mode flycheck-pos-tip flycheck-clojure flycheck-joker clj-refactor cider clojure-mode tide typescript-mode xref-js2 tern prettier-js add-node-modules-path js2-mode company-racer flycheck-rust racer rust-mode gotest company-lsp lsp-ui go-eldoc lsp-mode key-chord rainbow-delimiters web-mode org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package)))
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)

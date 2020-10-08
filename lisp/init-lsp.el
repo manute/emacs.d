@@ -12,13 +12,20 @@
           (sh-mode . lsp) ;; npm i -g bash-language-server
           (dockerfile-mode . lsp) ;; npm install -g dockerfile-language-server-nodejs
           (yaml-mode . lsp) ;; npm install -g yaml-language-server
+          (elixir-mode . lsp) ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196
+          (python-mode . lsp)
           )
   :init
+  ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196
+  (add-to-list 'exec-path "/Users/manute/go/src/github.com/elixir-ls/release/")
+
   (setq lsp-auto-guess-root t
         lsp-prefer-flymake nil
         lsp-enable-file-watchers nil
+        lsp-eldoc-render-all t
         lsp-idle-delay 0.500
         lsp-prefer-capf t
+        lsp-pyls-plugins-flake8-enabled t
 
         ;; https://github.com/emacs-lsp/lsp-mode/issues/1778
         ;; lsp-gopls-codelens nil
@@ -37,6 +44,11 @@
   :config
   ;; Configure LSP clients
   (use-package lsp-clients)
+  (lsp-register-custom-settings
+   '(("pyls.plugins.pyls_mypy.enabled" t t)
+     ("pyls.plugins.pyls_mypy.live_mode" nil t)
+     ("pyls.plugins.pyls_black.enabled" t t)
+     ("pyls.plugins.pyls_isort.enabled" t t)))
   )
 
 
@@ -78,21 +90,25 @@
         company-lsp-cache-candidates nil))
 
 
+;; (defun lsp-format-onsave-hook ()
+;;   (add-hook #'before-save-hook #'lsp-format-buffer t t))
+
+(use-package format-all
+  :ensure t
+  :config
+  (add-hook #'before-save-hook #'format-all-mode))
+
 ;; Set up before-save hooks to format buffer and add/delete imports.
 ;; Make sure you don't have other gofmt/goimports hooks enabled.
-(defun lsp-go-install-save-hooks ()
-  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+(defun lsp-go-hooks ()
+  ;; (lsp-format-onsave-hook)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
 
 
 (use-package go-mode
   :ensure t
-  ;; :bind  (
-        ;;  ("C-c C-j" . lsp-find-definition)
-        ;;  ("C-c C-d" . lsp-describe-thing-at-point)
-        ;;  )
   :config
-  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+  (add-hook 'go-mode-hook #'lsp-go-hooks)
   (add-hook 'go-mode-hook #'lsp-deferred))
 
 (use-package gotest
@@ -104,5 +120,22 @@
   (define-key go-mode-map (kbd "C-c C-t p") 'go-test-current-project)
   (define-key go-mode-map (kbd "C-c C-t b") 'go-test-current-benchmark)
   (define-key go-mode-map (kbd "C-c C-t x") 'go-run))
+
+(use-package elixir-mode
+  :ensure t
+  :config
+  (add-hook 'elixir-mode-hook #'lsp-format-onsave-hook))
+
+;; install pip
+;; pip install pydocstyle pylint rope autopep8 black
+(use-package python-mode
+  :ensure t)
+
+;; (use-package pyvenv
+;;   :ensure t
+;;   :config
+;;   (setq pyvenv-workon "emacs")  ; Default venv
+;;   (pyvenv-tracking-mode 1))  ; Automatically use pyvenv-workon via dir-locals
+
 
 (provide 'init-lsp)

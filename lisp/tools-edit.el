@@ -35,7 +35,7 @@ there's a region, all lines that region covers will be duplicated."
  :ensure t
  :diminish whole-line-or-region-mode
  :config
- (whole-line-or-region-mode t)
+ (whole-line-or-region-global-mode t)
  (make-variable-buffer-local 'whole-line-or-region-mode))
 
 (provide 'init-editing)
