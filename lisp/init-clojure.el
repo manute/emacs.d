@@ -1,6 +1,6 @@
 ;; brew install borkdude/brew/clj-kondo
-(use-package flycheck-clj-kondo
-  :ensure t)
+;; (use-package flycheck-clj-kondo
+;;   :ensure t)
 
 (use-package clojure-mode
   :ensure t
@@ -9,7 +9,7 @@
           ("\\.cljs" . clojurescript-mode)
           ("\\.java" . clojure-mode))
   :config
-  (require 'flycheck-clj-kondo)
+  ;; (require 'flycheck-clj-kondo)
   (setq clojure-align-forms-automatically 1)
 
   (add-hook 'clojure-mode-hook #'eldoc-mode)

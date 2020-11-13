@@ -1,10 +1,10 @@
 
 (use-package lsp-mode
-  ;; :ensure t
+  :ensure t
 
   ;; If there're errors, download the lastest tag i.e https://github.com/emacs-lsp/lsp-mode/releases/tag/7.0.1
   ;; And move it to .emacs/local/..
-  :load-path "local/lsp-mode-7.0"
+  ;; :load-path "local/lsp-mode-7.0"
 
   ;; languages
   :hook  (
@@ -24,16 +24,9 @@
         lsp-enable-file-watchers nil
         lsp-eldoc-render-all t
         lsp-idle-delay 0.500
-        lsp-prefer-capf t
         lsp-pyls-plugins-flake8-enabled t
-
-        ;; https://github.com/emacs-lsp/lsp-mode/issues/1778
-        ;; lsp-gopls-codelens nil
+        lsp-completion-provider :capf
         )
-  ;; :ensure-system-package
-  ;; (
-  ;;  (gopls . "go get golang.org/x/tools/gopls@latest")
-  ;;  )
   :bind (:map lsp-mode-map
               ("C-c C-j" . lsp-find-definition)
               ("C-c C-d" . lsp-describe-thing-at-point)
@@ -42,8 +35,6 @@
   ;; :custom (lsp-gopls-server-args '("-debug" "127.0.0.1:0"))
   :commands (lsp lsp-deferred)
   :config
-  ;; Configure LSP clients
-  (use-package lsp-clients)
   (lsp-register-custom-settings
    '(("pyls.plugins.pyls_mypy.enabled" t t)
      ("pyls.plugins.pyls_mypy.live_mode" nil t)
@@ -57,11 +48,11 @@
   :ensure-system-package (godoc . "go get -u golang.org/x/tools/cmd/godoc"))
 
 (use-package lsp-ui
-  ;; :ensure t
+  :ensure t
 
   ;; If there're errors, download the latest tag i.e tag https://github.com/emacs-lsp/lsp-ui/releases/tag/6.0
   ;; and move it to .emacs/local/..
-  :load-path "local/lsp-ui-7.0"
+  ;; :load-path "local/lsp-ui-7.0"
 
   :commands lsp-ui-mode
   :custom-face (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))
@@ -75,19 +66,6 @@
   (setq lsp-ui-sideline-enable nil)
   (setq lsp-ui-doc-enable nil)
   (setq lsp-eldoc-enable-hover t))
-
-
-(use-package company-lsp
-  :ensure t
-  :commands company-lsp
-  :requires company
-  ;; :init (setq company-lsp-cache-candidates 'auto)
-  :config
-  (push 'company-lsp company-backends)
-  ;; Disable client-side cache because the LSP server does a better job.
-  (setq company-transformers nil
-        company-lsp-async t
-        company-lsp-cache-candidates nil))
 
 
 ;; (defun lsp-format-onsave-hook ()
