@@ -3,20 +3,10 @@
 ;; https://github.com/kostajh/.emacs.d/blob/master/customizations/09-org.el
 ;; https://github.com/xenodium/dotfiles/blob/master/emacs/init.el
 
-(defun open-encrypted-file (fname)
-  (interactive "FFind file: \n")
-  (let ((buf (create-file-buffer fname)))
-    (shell-command
-     (concat "echo " (read-passwd "Decrypt password: ") " | bcrypt -o " fname)
-     buf)
-    (set-buffer buf)
-    (kill-line)(kill-line)
-    (toggle-read-only)
-    (not-modified)))
-
 (defun gtd ()
   (interactive)
   (find-file "~/org/gtd.org"))
+
 
 (use-package org
   :mode ("\\.org\\'" . org-mode)
@@ -86,7 +76,21 @@
   (use-package org-bullets
     :ensure t
     :commands org-bullets-mode)
+
   (add-hook 'org-mode-hook #'org-bullets-mode 1))
 
+(use-package org-roam
+  :ensure t
+  :hook
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory "~/org/roam")
+  :bind (:map org-roam-mode-map
+              (("C-c n l" . org-roam)
+               ("C-c n f" . org-roam-find-file)
+               ("C-c n g" . org-roam-graph))
+              :map org-mode-map
+              (("C-c n i" . org-roam-insert))
+              (("C-c n I" . org-roam-insert-immediate))))
 
 (provide 'custom-org)

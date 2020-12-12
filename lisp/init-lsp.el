@@ -1,4 +1,3 @@
-
 (use-package lsp-mode
   :ensure t
 
@@ -9,15 +8,19 @@
   ;; languages
   :hook  (
           (go-mode . lsp-deferred) ;; go get -u golang.org/x/tools/gopls
-          (sh-mode . lsp) ;; npm i -g bash-language-server
-          (dockerfile-mode . lsp) ;; npm install -g dockerfile-language-server-nodejs
-          (yaml-mode . lsp) ;; npm install -g yaml-language-server
-          (elixir-mode . lsp) ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196
-          (python-mode . lsp)
+          (sh-mode . lsp-deferred) ;; npm i -g bash-language-server
+          (dockerfile-mode . lsp-deferred) ;; npm install -g dockerfile-language-server-nodejs
+          (yaml-mode . lsp-deferred) ;; npm install -g yaml-language-server
+          (elixir-mode . lsp-deferred) ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196
+          (python-mode . lsp-deferred)
+          (json-mode . lsp-deferred) ;; npm i -g vscode-json-languageserve
+          (yaml-mode . lsp-deferred) ;; npm install -g yaml-language-server
+          (terraform-mode . lsp-deferred) ;; go get github.com/juliosueiras/terraform-lsp
+
           )
   :init
   ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196
-  (add-to-list 'exec-path "/Users/manute/go/src/github.com/elixir-ls/release/")
+  ;; (add-to-list 'exec-path "/Users/manute/go/src/github.com/elixir-ls/release/")
 
   (setq lsp-auto-guess-root t
         lsp-prefer-flymake nil
@@ -43,10 +46,6 @@
   )
 
 
-(use-package go-eldoc
-  :ensure t
-  :ensure-system-package (godoc . "go get -u golang.org/x/tools/cmd/godoc"))
-
 (use-package lsp-ui
   :ensure t
 
@@ -68,8 +67,10 @@
   (setq lsp-eldoc-enable-hover t))
 
 
-;; (defun lsp-format-onsave-hook ()
-;;   (add-hook #'before-save-hook #'lsp-format-buffer t t))
+(use-package go-eldoc
+  :ensure t
+  :ensure-system-package (godoc . "go get -u golang.org/x/tools/cmd/godoc"))
+
 
 (use-package format-all
   :ensure t
@@ -79,8 +80,8 @@
 ;; Set up before-save hooks to format buffer and add/delete imports.
 ;; Make sure you don't have other gofmt/goimports hooks enabled.
 (defun lsp-go-hooks ()
-  ;; (lsp-format-onsave-hook)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+  (add-hook #'before-save-hook #'lsp-format-buffer t t)
+  (add-hook #'before-save-hook #'lsp-organize-imports t t))
 
 
 (use-package go-mode
@@ -107,13 +108,29 @@
 ;; install pip
 ;; pip install pydocstyle pylint rope autopep8 black
 (use-package python-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
-;; (use-package pyvenv
-;;   :ensure t
-;;   :config
-;;   (setq pyvenv-workon "emacs")  ; Default venv
-;;   (pyvenv-tracking-mode 1))  ; Automatically use pyvenv-workon via dir-locals
+(use-package yaml-mode
+  :ensure t
+  :mode (("\\.yml\\'" . yaml-mode)
+         ("\\.yaml\\'" . yaml-mode)))
+
+(use-package json-mode
+  :ensure t
+  :mode (("\\.json\\'" . json-mode)
+         ("\\.tmpl\\'" . json-mode)
+         ("\\.eslintrc\\'" . json-mode))
+  :config (setq-default js-indent-level 2))
+
+(use-package json-reformat
+  :ensure t
+  :after json-mode
+  :bind (("C-c r" . json-reformat-region)))
+
+(use-package dockerfile-mode
+  :ensure t
+  :mode ("Dockerfile\\'" . dockerfile-mode))
 
 
 (provide 'init-lsp)

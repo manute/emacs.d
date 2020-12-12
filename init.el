@@ -179,54 +179,9 @@
 (use-package init-typescript
   :load-path "lisp/")
 
-(use-package init-scala
-  :disabled t
-  :load-path "lisp/")
-
 (use-package init-clojure
   :load-path "lisp/")
 
-(use-package init-racket
-  :disabled t
-  :load-path "lisp/")
-
-(use-package init-haskell
-  :disabled t
-  :load-path "lisp/")
-
-(use-package init-groovy
-  :disabled t
-  :load-path "lisp/")
-
-(use-package init-ruby
-  :disabled t
-  :load-path "lisp/")
-
-(use-package init-elm
-  :disabled t
-  :load-path "lisp/")
-
-(use-package perl-mode
-  :mode (("\\.pl\\'" . perl-mode)
-         ("\\.perl\\'" . perl-mode)
-         ("\\.pm\\'" . perl-mode))
-  :config
-  (add-hook 'perl-mode-hook #'company-mode))
-
-(use-package lua-mode
-  :ensure t
-  :mode (("\\.lua\\'" . lua-mode))
-  :config
-  (add-hook 'lua-mode-hook #'company-mode))
-
-;; (use-package meghanada
-;;   :mode (("\\.java\\'" . meghanada-mode))
-;;   :config
-;;   (smartparens-mode t)
-;;   (rainbow-delimiters-mode t)
-;;   (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)
-;;   :commands
-;;   (meghanada-mode))
 
 ;; FILES MODE
 
@@ -260,42 +215,13 @@
   :ensure t
   :mode ("\\.toml\\'" . toml-mode))
 
-(use-package yaml-mode
-  :ensure t
-  :mode (
-         ("\\.yml\\'" . yaml-mode)
-         ("\\.yaml\\'" . yaml-mode)
-         )
-  )
-
-(use-package json-mode
-  :ensure t
-  :mode (("\\.json\\'" . json-mode)
-         ("\\.tmpl\\'" . json-mode)
-         ("\\.eslintrc\\'" . json-mode))
-  :config (setq-default js-indent-level 2))
-
 (use-package graphql-mode
   :ensure t)
-
-(use-package json-reformat
-  :ensure t
-  :after json-mode
-  :bind (("C-c r" . json-reformat-region)))
-
-(use-package dockerfile-mode
-  :ensure t
-  :mode ("Dockerfile\\'" . dockerfile-mode))
 
 (use-package mustache-mode
   :ensure t
   :mode ("\\.mustache\\'" . mustache-mode))
 
-(use-package terraform-mode
-  :ensure t
-  :mode ("\\.tf\\'" . terraform-mode)
-  :config
-  (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode))
 
 
 (use-package rego-mode
@@ -319,6 +245,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(python-mode pyvenv elixir-mode eglot dired+ rego-mode company-emoji whole-line-or-region terraform-mode mustache-mode dockerfile-mode graphql-mode json-mode yaml-mode toml-mode web-server adoc-mode lua-mode flycheck-pos-tip flycheck-clojure flycheck-joker clj-refactor cider clojure-mode tide typescript-mode xref-js2 tern prettier-js add-node-modules-path js2-mode company-racer flycheck-rust racer rust-mode gotest company-lsp lsp-ui go-eldoc lsp-mode key-chord rainbow-delimiters web-mode org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package)))
+   '(python-mode elixir-mode eglot dired+ rego-mode company-emoji whole-line-or-region terraform-mode mustache-mode dockerfile-mode graphql-mode json-mode yaml-mode toml-mode web-server adoc-mode lua-mode flycheck-pos-tip flycheck-clojure flycheck-joker clj-refactor cider clojure-mode tide typescript-mode xref-js2 tern prettier-js add-node-modules-path js2-mode company-racer flycheck-rust racer rust-mode gotest company-lsp lsp-ui go-eldoc lsp-mode key-chord rainbow-delimiters web-mode org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package)))
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
