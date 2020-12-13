@@ -28,3 +28,4 @@ transient
 /local/
 /.cache/
 /projects
+/org-roam.db
