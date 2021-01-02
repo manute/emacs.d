@@ -16,6 +16,7 @@
           (json-mode . lsp-deferred) ;; npm i -g vscode-json-languageserve
           (yaml-mode . lsp-deferred) ;; npm install -g yaml-language-server
           (terraform-mode . lsp-deferred) ;; go get github.com/juliosueiras/terraform-lsp
+          ((js2-mode rjsx-mode typescript-mode) . lsp-deferred) ;; https://www.chadstovern.com/javascript-in-emacs-revisited/
 
           )
   :init
@@ -29,6 +30,7 @@
         lsp-idle-delay 0.500
         lsp-pyls-plugins-flake8-enabled t
         lsp-completion-provider :capf
+        lsp-gopls-codelens nil
         )
   :bind (:map lsp-mode-map
               ("C-c C-j" . lsp-find-definition)
@@ -131,6 +133,39 @@
 (use-package dockerfile-mode
   :ensure t
   :mode ("Dockerfile\\'" . dockerfile-mode))
+
+;;;;;;;;;;;;;;;;;;
+;; javascript
+;;;;;;;;;;;;;;;;;;
+(use-package rjsx-mode
+  :ensure t
+  :mode ("\\.js\\'"
+         "\\.jsx\\'")
+  :config
+  (setq js2-mode-show-parse-errors nil
+        js2-mode-show-strict-warnings nil
+        js2-basic-offset 2
+        js-indent-level 2)
+  (setq-local flycheck-disabled-checkers (cl-union flycheck-disabled-checkers
+                                                   '(javascript-jshint))) ; jshint doesn't work for JSX
+  (electric-pair-mode 1))
+
+(use-package typescript-mode
+  :ensure t
+  :mode (("\\.ts\\'" . typescript-mode)
+         ("\\.tsx\\'" . typescript-mode))
+  :config
+  (setq-default typescript-indent-level 2))
+
+(use-package add-node-modules-path
+  :ensure t
+  :defer t
+  :hook (((js2-mode rjsx-mode) . add-node-modules-path)))
+
+(use-package prettier-js
+  :defer t
+  :diminish prettier-js-mode
+  :hook (((js2-mode rjsx-mode) . prettier-js-mode)))
 
 
 (provide 'init-lsp)

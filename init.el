@@ -99,6 +99,21 @@
   :bind (("C-x g" . magit-status)))
 ;; (setq magit-refresh-status-buffer nil))
 
+;; https://passingcuriosity.com/2017/emacs-hunspell-and-dictionaries/
+;; (setenv
+;;   "DICPATH"
+;;   (concat (getenv "HOME") "/Library/Spelling"))
+;; ;; Tell ispell-mode to use hunspell.
+;; (setq
+;;   ispell-program-name
+;;   "/usr/local/bin/hunspell")
+
+;; (use-package flyspell
+;;   :ensure t
+;;   :config
+;;   (add-hook 'text-mode-hook 'flyspell-mode)
+;;   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+
 
 (use-package general
   :load-path "lisp/")
@@ -173,18 +188,10 @@
 (use-package init-rust
   :load-path "lisp/")
 
-(use-package init-js
-  :load-path "lisp/")
-
-(use-package init-typescript
-  :load-path "lisp/")
-
 (use-package init-clojure
   :load-path "lisp/")
 
-
 ;; FILES MODE
-
 (use-package adoc-mode
   :ensure t
   :mode ("\\.asciidoc\\'" . adoc-mode))
