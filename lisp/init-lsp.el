@@ -1,5 +1,7 @@
 (use-package lsp-mode
+  :commands lsp
   :ensure t
+  :diminish lsp-mode
 
   ;; If there're errors, download the lastest tag i.e https://github.com/emacs-lsp/lsp-mode/releases/tag/7.0.1
   ;; And move it to .emacs/local/..
@@ -11,17 +13,20 @@
           (sh-mode . lsp-deferred) ;; npm i -g bash-language-server
           (dockerfile-mode . lsp-deferred) ;; npm install -g dockerfile-language-server-nodejs
           (yaml-mode . lsp-deferred) ;; npm install -g yaml-language-server
-          (elixir-mode . lsp-deferred) ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196
-          (python-mode . lsp-deferred)
+          (elixir-mode . lsp) ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196
+          (python-mode . lsp-deferred) ;; https://github.com/palantir/python-language-server
           (json-mode . lsp-deferred) ;; npm i -g vscode-json-languageserve
           (yaml-mode . lsp-deferred) ;; npm install -g yaml-language-server
           (terraform-mode . lsp-deferred) ;; go get github.com/juliosueiras/terraform-lsp
           ((js2-mode rjsx-mode typescript-mode) . lsp-deferred) ;; https://www.chadstovern.com/javascript-in-emacs-revisited/
-
-          )
+  )
   :init
-  ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196
-  ;; (add-to-list 'exec-path "/Users/manute/go/src/github.com/elixir-ls/release/")
+  ;; 1. git clone https://github.com/elixir-lsp/elixir-ls.git
+  ;; 2. cd elixir-ls (that you just cloned)
+  ;; 3. mix deps.get
+  ;; 4. mix elixir_ls.release
+  ;; 5. point here the path for release
+  (add-to-list 'exec-path "/Users/manute/go/src/github.com/elixir-ls/release")
 
   (setq lsp-auto-guess-root t
         lsp-prefer-flymake nil
@@ -30,8 +35,8 @@
         lsp-idle-delay 0.500
         lsp-pyls-plugins-flake8-enabled t
         lsp-completion-provider :capf
-        lsp-gopls-codelens nil
-        )
+        lsp-gopls-codelens nil)
+
   :bind (:map lsp-mode-map
               ("C-c C-j" . lsp-find-definition)
               ("C-c C-d" . lsp-describe-thing-at-point)
@@ -66,7 +71,8 @@
   :config
   (setq lsp-ui-sideline-enable nil)
   (setq lsp-ui-doc-enable nil)
-  (setq lsp-eldoc-enable-hover t))
+  (setq lsp-eldoc-enable-hover t)
+  )
 
 
 (use-package go-eldoc
@@ -74,14 +80,10 @@
   :ensure-system-package (godoc . "go get -u golang.org/x/tools/cmd/godoc"))
 
 
-(use-package format-all
-  :ensure t
-  :config
-  (add-hook #'before-save-hook #'format-all-mode))
-
 ;; Set up before-save hooks to format buffer and add/delete imports.
 ;; Make sure you don't have other gofmt/goimports hooks enabled.
 (defun lsp-go-hooks ()
+  ;; added on lsp
   (add-hook #'before-save-hook #'lsp-format-buffer t t)
   (add-hook #'before-save-hook #'lsp-organize-imports t t))
 
@@ -91,6 +93,7 @@
   :config
   (add-hook 'go-mode-hook #'lsp-go-hooks)
   (add-hook 'go-mode-hook #'lsp-deferred))
+
 
 (use-package gotest
   :ensure t
@@ -105,13 +108,27 @@
 (use-package elixir-mode
   :ensure t
   :config
-  (add-hook 'elixir-mode-hook #'lsp-format-onsave-hook))
+  (add-hook 'elixir-mode-hook
+          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
+
+  (add-hook 'elixir-mode-hook #'rainbow-delimiters-mode)
+  )
+
+(use-package exunit
+  :ensure t
+  :after elixir-mode
+  :config
+  (add-hook 'elixir-mode-hook 'exunit-mode))
+
 
 ;; install pip
 ;; pip install pydocstyle pylint rope autopep8 black
 (use-package python-mode
   :ensure t
-  :defer t)
+  :config
+  (add-hook 'python-mode-hook #'lsp-format-onsave-hook)
+  (add-hook 'python-mode-hook #'lsp-deferred))
+
 
 (use-package yaml-mode
   :ensure t
@@ -148,6 +165,8 @@
         js-indent-level 2)
   (setq-local flycheck-disabled-checkers (cl-union flycheck-disabled-checkers
                                                    '(javascript-jshint))) ; jshint doesn't work for JSX
+  (add-hook 'js2-mode-hook #'lsp-format-onsave-hook)
+
   (electric-pair-mode 1))
 
 (use-package typescript-mode
@@ -155,7 +174,8 @@
   :mode (("\\.ts\\'" . typescript-mode)
          ("\\.tsx\\'" . typescript-mode))
   :config
-  (setq-default typescript-indent-level 2))
+  (setq-default typescript-indent-level 2)
+  (add-hook 'typescript-mode-hook #'lsp-format-onsave-hook))
 
 (use-package add-node-modules-path
   :ensure t

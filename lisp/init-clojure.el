@@ -2,6 +2,9 @@
 ;; (use-package flycheck-clj-kondo
 ;;   :ensure t)
 
+(use-package inf-clojure
+  :ensure t)
+
 (use-package clojure-mode
   :ensure t
   :mode  (("\\.clj"  . clojure-mode)
@@ -22,7 +25,10 @@
   (add-hook 'clojurescript-mode-hook #'company-mode)
 
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'clojurescript-mode-hook #'rainbow-delimiters-mode))
+  (add-hook 'clojurescript-mode-hook #'rainbow-delimiters-mode)
+
+  ;; (add-hook 'clojure-mode-hook #'inf-clojure-minor-mode)
+  )
 
 
 (eval-after-load 'clojure-mode
