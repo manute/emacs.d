@@ -88,7 +88,7 @@
   (define-key cider-mode-map (kbd "C-c C-f") nil)
 
   ;; Format buffer
-  ;; (add-hook 'before-save-hook #'manu/clj-format-before-save-hook)
+  (add-hook 'before-save-hook #'manu/clj-format-before-save-hook)
   ;; disable indentation - for matching Cursive code
   ;; (setq cider-dynamic-indentation nil)
 

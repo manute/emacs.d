@@ -109,16 +109,27 @@
   :ensure t
   :config
   (add-hook 'elixir-mode-hook
-          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
+          (lambda ()
+            (add-hook 'before-save-hook 'elixir-format nil t)
+            (add-hook 'after-save-hook 'alchemist-iex-reload-module)
+            ))
 
   (add-hook 'elixir-mode-hook #'rainbow-delimiters-mode)
   )
 
+(use-package alchemist
+  :ensure t
+  :hook (elixir-mode . alchemist-mode)
+  :config
+  (setq alchemist-mix-env "dev")
+  (setq alchemist-hooks-compile-on-save t)
+  (setq al)
+  )
+
+
 (use-package exunit
   :ensure t
-  :after elixir-mode
-  :config
-  (add-hook 'elixir-mode-hook 'exunit-mode))
+  :hook (elixir-mode . exunit-mode))
 
 
 ;; install pip
