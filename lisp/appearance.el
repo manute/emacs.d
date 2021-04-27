@@ -1,12 +1,16 @@
-;; Fira Code enabled
-;; https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs
-;; (set-default-font "Fira Code" nil t)
-(set-frame-font "Fira Code" nil t)
-
-;; emoji
-(if (version< "27.0" emacs-version)
-    (set-fontset-font "fontset-default" 'unicode "Apple Color Emoji" nil 'prepend)
-  (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend))
+(when (eq system-type 'darwin)
+  (setq mac-allow-anti-aliasing t)  ;; nice fonts in OS X
+  ;; Fira Code enabled
+  ;; https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs
+  (when (member "Fira Code" (font-family-list))
+    (add-to-list 'initial-frame-alist '(font . "Fira Code-14"))
+    (add-to-list 'default-frame-alist '(font . "Fira Code-14")))
+  ;; Emoji
+  (set-fontset-font t 'symbol (font-spec :family "Apple Symbols") nil 'prepend)
+  (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend)
+  (if (window-system)
+      (set-face-attribute 'default nil :height 140)
+    (set-face-attribute 'default nil :height 125)))
 
 
 (use-package memoize
@@ -77,11 +81,6 @@
 ;;   ;; (spaceline-all-the-icons--flycheck-status-slim)
 ;;   (spaceline-all-the-icons-theme))
 
-(when (eq system-type 'darwin)
-  (setq mac-allow-anti-aliasing t)  ;; nice fonts in OS X
-  (if (window-system)
-      (set-face-attribute 'default nil :height 140)
-    (set-face-attribute 'default nil :height 125)))
 
 (defun manu/set-font-height (h)
   (set-face-attribute 'default nil :height h))

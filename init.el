@@ -96,8 +96,12 @@
 
 (use-package magit
   :ensure t
-  :bind (("C-x g" . magit-status)))
-;; (setq magit-refresh-status-buffer nil))
+  :bind (("C-x g" . magit-status))
+  :config
+  ;; perfomance tips
+  (setq magit-commit-show-diff nil)
+  (setq magit-refresh-status-buffer nil)
+  (setq magit-git-executable "/usr/bin/git"))
 
 ;; https://passingcuriosity.com/2017/emacs-hunspell-and-dictionaries/
 ;; (setenv
@@ -246,12 +250,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(lsp-ui-doc-background ((t (:background "lightyellow")))))
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(alchemist exunit inf-clojure python-mode elixir-mode eglot dired+ rego-mode company-emoji whole-line-or-region terraform-mode mustache-mode dockerfile-mode graphql-mode json-mode yaml-mode toml-mode web-server adoc-mode lua-mode flycheck-pos-tip flycheck-clojure flycheck-joker clj-refactor cider clojure-mode tide typescript-mode xref-js2 tern prettier-js add-node-modules-path js2-mode company-racer flycheck-rust racer rust-mode gotest company-lsp lsp-ui go-eldoc lsp-mode key-chord rainbow-delimiters web-mode org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package)))
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
+   '(whole-line-or-region rego-mode mustache-mode graphql-mode toml-mode web-server adoc-mode flycheck-pos-tip clj-refactor cider inf-clojure company-racer flycheck-rust racer rust-mode add-node-modules-path typescript-mode rjsx-mode dockerfile-mode json-mode yaml-mode python-mode exunit alchemist elixir-mode gotest go-eldoc lsp-ui lsp-mode key-chord rainbow-delimiters web-mode org-roam org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-box company-emoji company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package)))
