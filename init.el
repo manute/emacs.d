@@ -59,12 +59,6 @@
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 
-(defun manu/zsh-launch ()
-  (interactive)
-  (ansi-term "/bin/zsh"))
-
-(global-set-key (kbd "C-c z") 'manu/zsh-launch)
-
 (eval-after-load "term"
   '(define-key term-raw-map (kbd "C-c C-y") 'term-paste))
 
@@ -96,28 +90,31 @@
 
 (use-package magit
   :ensure t
-  :bind (("C-x g" . magit-status))
+  :diminish magit-auto-revert-mode
+  :diminish auto-revert-mode
+  :bind (("C-x g" . #'magit-status))
   :config
   ;; perfomance tips
   (setq magit-commit-show-diff nil)
   (setq magit-refresh-status-buffer nil)
   (setq magit-git-executable "/usr/bin/git"))
 
-;; https://passingcuriosity.com/2017/emacs-hunspell-and-dictionaries/
-;; (setenv
-;;   "DICPATH"
-;;   (concat (getenv "HOME") "/Library/Spelling"))
-;; ;; Tell ispell-mode to use hunspell.
-;; (setq
-;;   ispell-program-name
-;;   "/usr/local/bin/hunspell")
 
-;; (use-package flyspell
+;; TODO: fix something with the build and the file libegit2.dylib
+;; (use-package libgit
+;;   :ensure t)
+
+;; (use-package magit-libgit
 ;;   :ensure t
-;;   :config
-;;   (add-hook 'text-mode-hook 'flyspell-mode)
-;;   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+;;   :after (magit libgit))
 
+;; (use-package forge
+;;   :ensure t
+;;   :after magit)
+
+(use-package restclient
+  :ensure t
+  :mode ("\\.restclient$" . restclient-mode))
 
 (use-package general
   :load-path "lisp/")
@@ -234,7 +231,6 @@
   :mode ("\\.mustache\\'" . mustache-mode))
 
 
-
 (use-package rego-mode
   :ensure t
   :mode ("\\.rego\\'" . rego-mode))
@@ -258,4 +254,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(whole-line-or-region rego-mode mustache-mode graphql-mode toml-mode web-server adoc-mode flycheck-pos-tip clj-refactor cider inf-clojure company-racer flycheck-rust racer rust-mode add-node-modules-path typescript-mode rjsx-mode dockerfile-mode json-mode yaml-mode python-mode exunit alchemist elixir-mode gotest go-eldoc lsp-ui lsp-mode key-chord rainbow-delimiters web-mode org-roam org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-box company-emoji company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package)))
+   '(restclient all-the-icons-dired undo-tree nord-theme whole-line-or-region rego-mode mustache-mode graphql-mode toml-mode web-server adoc-mode flycheck-pos-tip clj-refactor cider inf-clojure company-racer flycheck-rust racer rust-mode add-node-modules-path typescript-mode rjsx-mode dockerfile-mode json-mode yaml-mode python-mode exunit alchemist elixir-mode gotest go-eldoc lsp-ui lsp-mode key-chord rainbow-delimiters web-mode org-roam org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-box company-emoji company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package)))

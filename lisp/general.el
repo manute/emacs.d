@@ -146,12 +146,24 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (setq sentence-end-double-space nil)
 
+(setq
+ make-backup-files nil
+ auto-save-default nil
+ create-lockfiles nil)
 
 (use-package which-key
   :ensure t
   :diminish which-key-mode
   :config (which-key-mode))
 
+;; https://github.com/patrickt/emacs
+(use-package undo-tree
+  :ensure t
+  :diminish
+  :bind (("C-c _" . undo-tree-visualize))
+  :config
+  (global-undo-tree-mode +1)
+  (unbind-key "M-_" undo-tree-map))
 
 ;;--------------------
 ;THANKS TO BODIL -> https://github.com/bodil/ohai-emacs/blob/master/modules/ohai-appearance.el
@@ -165,12 +177,15 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (fringe-mode '(4 . 0))
-(global-unset-key "\C-z")
+
+(when (display-graphic-p)
+  (global-unset-key "\C-z"))
+
 (setq ring-bell-function 'ignore)
 
 ;; Show line numbers in buffers.
 ;;(global-linum-mode t)
-;;(setq linum-format (if (not window-system) "%2d" "%4d"))
+;;(setq linum-format (if (not display-graphic-p) "%2d" "%4d"))
 
 ;; Show column numbers in modeline.
 (setq column-number-mode t)

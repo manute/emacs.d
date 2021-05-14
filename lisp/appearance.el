@@ -8,30 +8,33 @@
   ;; Emoji
   (set-fontset-font t 'symbol (font-spec :family "Apple Symbols") nil 'prepend)
   (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend)
-  (if (window-system)
+  (if (display-graphic-p)
       (set-face-attribute 'default nil :height 140)
-    (set-face-attribute 'default nil :height 125)))
+    (set-face-attribute 'default nil :height 130)))
 
+
+(ignore-errors (set-frame-font "Menlo-14"))
+
+(use-package all-the-icons
+  :ensure t)
+
+(use-package all-the-icons-dired
+  :ensure t
+  :after all-the-icons
+  :hook (dired-mode . all-the-icons-dired-mode))
 
 (use-package memoize
   :ensure t)
-
-(use-package base16-theme
-  :ensure t
-  :if (not window-system)
-  :config
-  (load-theme 'base16-onedark t))
 
 ;; Install all the fonts located in root emacs folder 'fonts'.
 ;; This package installs also all-the-icons.
 ;; https://github.com/NicolasPetton/zerodark-theme
 (use-package zerodark-theme
   :ensure t
-  :if window-system
   :config
   (zerodark-setup-modeline-format)
   (zerodark--active-window-p)
-  ;; (setq zerodark-use-paddings-in-mode-line nil)
+  (setq zerodark-use-paddings-in-mode-line nil)
   (zerodark-modeline-flycheck-status))
 
 (load-theme 'zerodark t)
@@ -52,7 +55,7 @@
 
 (use-package ns-auto-titlebar
   :ensure t
-  :if window-system
+  :if (display-graphic-p)
   :config (ns-auto-titlebar-mode))
 
 
@@ -60,7 +63,7 @@
 ;;   :ensure t)
 
 ;; (use-package spaceline
-;;   :if window-system
+;;   :if (display-graphic-p)
 ;;   :ensure t
 ;;   :after powerline
 ;;   :config

@@ -2,8 +2,6 @@
 ;; (use-package flycheck-clj-kondo
 ;;   :ensure t)
 
-(use-package inf-clojure
-  :ensure t)
 
 (use-package clojure-mode
   :ensure t
@@ -147,6 +145,9 @@
   (yas-minor-mode 1)
   (clj-refactor-mode 1))
 
+(use-package inf-clojure
+  :after clojure-mode
+  :ensure t)
 
 ;; (use-package flycheck-joker
 ;;   :ensure t

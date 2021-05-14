@@ -13,7 +13,7 @@
           (sh-mode . lsp-deferred) ;; npm i -g bash-language-server
           (dockerfile-mode . lsp-deferred) ;; npm install -g dockerfile-language-server-nodejs
           (yaml-mode . lsp-deferred) ;; npm install -g yaml-language-server
-          (elixir-mode . lsp) ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196
+          ;; (elixir-mode . lsp) ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196
           (python-mode . lsp-deferred) ;; https://github.com/palantir/python-language-server
           (json-mode . lsp-deferred) ;; npm i -g vscode-json-languageserve
           (yaml-mode . lsp-deferred) ;; npm install -g yaml-language-server
@@ -26,7 +26,7 @@
   ;; 3. mix deps.get
   ;; 4. mix elixir_ls.release
   ;; 5. point here the path for release
-  (add-to-list 'exec-path "/Users/manute/go/src/github.com/elixir-ls/release")
+  ;; (add-to-list 'exec-path "/Users/manute/go/src/github.com/elixir-ls/release")
 
   (setq lsp-auto-guess-root t
         lsp-prefer-flymake nil
@@ -105,37 +105,41 @@
   (define-key go-mode-map (kbd "C-c C-t b") 'go-test-current-benchmark)
   (define-key go-mode-map (kbd "C-c C-t x") 'go-run))
 
-(use-package elixir-mode
-  :ensure t
-  :config
-  (add-hook 'elixir-mode-hook
-          (lambda ()
-            (add-hook 'before-save-hook 'elixir-format nil t)
-            (add-hook 'after-save-hook 'alchemist-iex-reload-module)
-            ))
+;; (use-package elixir-mode
+;;   :ensure t
+;;   :mode (("\\.ex\\'" . elixir-mode)
+;;          ("\\.iex\\'" . elixir-mode))
+;;   :config
+;;   (add-hook 'elixir-mode-hook
+;;           (lambda ()
+;;             (add-hook 'before-save-hook 'elixir-format nil t)
+;;             (add-hook 'after-save-hook 'alchemist-iex-reload-module)
+;;             ))
 
-  (add-hook 'elixir-mode-hook #'rainbow-delimiters-mode)
-  )
+;;   (add-hook 'elixir-mode-hook #'rainbow-delimiters-mode)
+;;   )
 
-(use-package alchemist
-  :ensure t
-  :hook (elixir-mode . alchemist-mode)
-  :config
-  (setq alchemist-mix-env "dev")
-  (setq alchemist-hooks-compile-on-save t)
-  (setq al)
-  )
+;; (use-package alchemist
+;;   :ensure t
+;;   :hook (elixir-mode . alchemist-mode)
+;;   :config
+;;   (setq alchemist-mix-env "dev")
+;;   (setq alchemist-hooks-compile-on-save t)
+;;   (setq al)
+;;   )
 
 
-(use-package exunit
-  :ensure t
-  :hook (elixir-mode . exunit-mode))
+;; (use-package exunit
+;;   :ensure t
+;;   :hook (elixir-mode . exunit-mode))
 
 
 ;; install pip
 ;; pip install pydocstyle pylint rope autopep8 black
 (use-package python-mode
   :ensure t
+  :mode (("\\.py\\'" . python-mode)
+         ("\\.python\\'" . python-mode))
   :config
   (add-hook 'python-mode-hook #'lsp-format-onsave-hook)
   (add-hook 'python-mode-hook #'lsp-deferred))

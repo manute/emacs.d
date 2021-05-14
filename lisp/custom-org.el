@@ -45,7 +45,7 @@
 
   ;;beautify theme special config
   (ignore-errors
-    (when (window-system)
+    (when (display-graphic-p)
       (use-package org-beautify-theme :ensure t
         :config
         ;; From https://github.com/howardabrams/dot-files/blob/HEAD/emacs-client.org
