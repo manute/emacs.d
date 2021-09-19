@@ -19,6 +19,33 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; Always newline-and-indent
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
+;; Spaces Indent
+(set-default 'indent-tabs-mode nil)
+
+;; Show empty lines
+(toggle-indicate-empty-lines)
+
+; Increase/Decrease font size
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+(setq
+ redisplay-dont-pause t ;; Don't defer screen updates when performing operations.
+ inhibit-splash-screen t
+ sentence-end-double-space nil
+ make-backup-files nil
+ auto-save-default nil
+ create-lockfiles nil
+ ring-bell-function 'ignore
+ column-number-mode t ;; Show column numbers in modeline
+ )
+
+
 (use-package smex
   :ensure t
   :defer t
@@ -44,9 +71,6 @@
   (setq ido-everywhere t)
   (ido-mode 1))
 
-;; (use-package ido-ubiquitous
-;;   :ensure t
-;;   :config (ido-ubiquitous-mode 1))
 
 (use-package ido-vertical-mode
   :ensure t
@@ -55,7 +79,6 @@
 ; Buffers
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
-
 
 
 ;; MAC OS keys -> cmd is meta
@@ -70,9 +93,12 @@
 
 (global-set-key (kbd "C-c k l") 'manu/osx-laptop-keyboard)
 
-(setq make-backup-files nil)
-(setq column-number-mode t)
-(setq create-lockfiles nil)
+;; ITERM2 MOUSE SUPPORT
+(unless window-system
+  (require 'mouse)
+  (xterm-mouse-mode t)
+  (defun track-mouse (e))
+  (setq mouse-sel-mode t))
 
 (use-package anzu
   :ensure t
@@ -130,26 +156,6 @@
   :config (setq warning-suppress-types '(undo discard-info)))
 
 
-;; Always newline-and-indent
-(define-key global-map (kbd "RET") 'newline-and-indent)
-
-;; Spaces Indent
-(set-default 'indent-tabs-mode nil)
-
-;; Show empty lines
-(toggle-indicate-empty-lines)
-
-; Increase/Decrease font size
-(global-set-key (kbd "C-+") 'text-scale-increase)
-(global-set-key (kbd "C--") 'text-scale-decrease)
-
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-(setq sentence-end-double-space nil)
-
-(setq
- make-backup-files nil
- auto-save-default nil
- create-lockfiles nil)
 
 (use-package which-key
   :ensure t
@@ -165,14 +171,7 @@
   (global-undo-tree-mode +1)
   (unbind-key "M-_" undo-tree-map))
 
-;;--------------------
-;THANKS TO BODIL -> https://github.com/bodil/ohai-emacs/blob/master/modules/ohai-appearance.el
-;;--------------------
 
-;; Don't defer screen updates when performing operations.
-(setq redisplay-dont-pause t)
-
-(setq inhibit-splash-screen t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -180,15 +179,6 @@
 
 (when (display-graphic-p)
   (global-unset-key "\C-z"))
-
-(setq ring-bell-function 'ignore)
-
-;; Show line numbers in buffers.
-;;(global-linum-mode t)
-;;(setq linum-format (if (not display-graphic-p) "%2d" "%4d"))
-
-;; Show column numbers in modeline.
-(setq column-number-mode t)
 
 (show-paren-mode 1)
 

@@ -4,6 +4,8 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t) ; Org-mode's repository
+
 (package-initialize)
 
 (setq package-check-signature nil)
@@ -52,12 +54,12 @@
 ;; (benchmark-init/show-durations-tabulated)
 ;; (benchmark-init/show-durations-tree)
 
-(setq use-package-verbose t)
-(setq explicit-shell-file-name "/bin/zsh")
+;; general vars
+(setq gc-cons-threshold 100000000 ;; performance
+      read-process-output-max (* 1024 1024) ;; 1mb
+      use-package-verbose t
+      explicit-shell-file-name "/bin/zsh")
 
-;; performance
-(setq gc-cons-threshold 100000000)
-(setq read-process-output-max (* 1024 1024)) ;; 1mb
 
 (eval-after-load "term"
   '(define-key term-raw-map (kbd "C-c C-y") 'term-paste))
@@ -99,6 +101,8 @@
   (setq magit-refresh-status-buffer nil)
   (setq magit-git-executable "/usr/bin/git"))
 
+;; M-x package-install RET xclip RET
+;; (xclip-mode 1)
 
 ;; TODO: fix something with the build and the file libegit2.dylib
 ;; (use-package libgit
@@ -125,7 +129,7 @@
          ("C-c d" . manu/duplicate-current-line-or-region)))
 
 (use-package appearance
-  :load-path "lisp/")
+ :load-path "lisp/")
 
 (use-package init-autocomplete
   :load-path "lisp/")
@@ -181,15 +185,12 @@
 ;;Init config PLs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package init-lsp
-  :load-path "lisp/")
+ :load-path "lisp/")
 
 (use-package init-lisp
   :load-path "lisp/")
 
 (use-package init-rust
-  :load-path "lisp/")
-
-(use-package init-clojure
   :load-path "lisp/")
 
 ;; FILES MODE
@@ -245,7 +246,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(lsp-ui-doc-background ((t (:background "lightyellow")))))
+ '(lsp-ui-doc-background ((t (:background "#dde3f4")))))
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (custom-set-variables
@@ -254,4 +255,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(restclient all-the-icons-dired undo-tree nord-theme whole-line-or-region rego-mode mustache-mode graphql-mode toml-mode web-server adoc-mode flycheck-pos-tip clj-refactor cider inf-clojure company-racer flycheck-rust racer rust-mode add-node-modules-path typescript-mode rjsx-mode dockerfile-mode json-mode yaml-mode python-mode exunit alchemist elixir-mode gotest go-eldoc lsp-ui lsp-mode key-chord rainbow-delimiters web-mode org-roam org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-box company-emoji company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex magit yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package)))
+   '(jsonnet-mode xclip terraform-mode moody flycheck-inline modus-operandi-theme modus-themes spaceline spacemacs-theme doom-themes restclient all-the-icons-dired undo-tree nord-theme whole-line-or-region rego-mode mustache-mode graphql-mode toml-mode web-server adoc-mode flycheck-pos-tip clj-refactor cider inf-clojure company-racer flycheck-rust racer rust-mode add-node-modules-path typescript-mode rjsx-mode dockerfile-mode json-mode yaml-mode python-mode exunit alchemist elixir-mode gotest go-eldoc lsp-ui lsp-mode key-chord rainbow-delimiters web-mode org-roam org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-box company-emoji company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package))
+ '(warning-suppress-types '((comp) (comp) (comp) undo discard-info)))

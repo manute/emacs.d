@@ -29,3 +29,5 @@ transient
 /.cache/
 /projects
 /org-roam.db
+/eln-cache/
+/.org-id-locations

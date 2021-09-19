@@ -3,31 +3,38 @@
   :ensure t
   :diminish lsp-mode
 
+  ;; uncomment this the first time
+  ;; :ensure-system-package
+  ;; ((typescript-language-server . "npm install -g typescript-language-server")
+  ;;  (javascript-typescript-langserver . "npm install -g javascript-typescript-langserver")
+  ;;  (yaml-language-server . "npm install -g yaml-language-server")
+  ;;  (tsc . "npm install -g typescript")
+  ;;  (json-mode . "npm i -g vscode-json-languageserver")
+  ;;  (dockerfile-mode . "npm i -g dockerfile-language-server-nodejs")
+  ;;  (sh-mode . "npm i -g bash-language-server")
+  ;;  (gopls . "go get -u golang.org/x/tools/gopls")
+  ;;  (terraform-mode . "go get -u github.com/juliosueiras/terraform-lsp")
+  ;;  (python-mode . "pip install python-lsp-server")
+  ;;  (clojure-mode . "brew install clojure-lsp/brew/clojure-lsp-native")
+  ;;  )
+
   ;; If there're errors, download the lastest tag i.e https://github.com/emacs-lsp/lsp-mode/releases/tag/7.0.1
   ;; And move it to .emacs/local/..
   ;; :load-path "local/lsp-mode-7.0"
 
   ;; languages
   :hook  (
-          (go-mode . lsp-deferred) ;; go get -u golang.org/x/tools/gopls
-          (sh-mode . lsp-deferred) ;; npm i -g bash-language-server
-          (dockerfile-mode . lsp-deferred) ;; npm install -g dockerfile-language-server-nodejs
-          (yaml-mode . lsp-deferred) ;; npm install -g yaml-language-server
-          ;; (elixir-mode . lsp) ;; https://elixirforum.com/t/emacs-elixir-setup-configuration-wiki/19196
-          (python-mode . lsp-deferred) ;; https://github.com/palantir/python-language-server
-          (json-mode . lsp-deferred) ;; npm i -g vscode-json-languageserve
-          (yaml-mode . lsp-deferred) ;; npm install -g yaml-language-server
-          (terraform-mode . lsp-deferred) ;; go get github.com/juliosueiras/terraform-lsp
-          ((js2-mode rjsx-mode typescript-mode) . lsp-deferred) ;; https://www.chadstovern.com/javascript-in-emacs-revisited/
+          (go-mode . lsp-deferred) 
+          (sh-mode . lsp-deferred) 
+          (dockerfile-mode . lsp-deferred) 
+          (yaml-mode . lsp-deferred)
+          (python-mode . lsp-deferred) 
+          (json-mode . lsp-deferred)
+          (terraform-mode . lsp-deferred)
+          ((js2-mode rjsx-mode typescript-mode) . lsp-deferred)
+          (clojure-mode . lsp-deferred)
   )
   :init
-  ;; 1. git clone https://github.com/elixir-lsp/elixir-ls.git
-  ;; 2. cd elixir-ls (that you just cloned)
-  ;; 3. mix deps.get
-  ;; 4. mix elixir_ls.release
-  ;; 5. point here the path for release
-  ;; (add-to-list 'exec-path "/Users/manute/go/src/github.com/elixir-ls/release")
-
   (setq lsp-auto-guess-root t
         lsp-prefer-flymake nil
         lsp-enable-file-watchers nil
@@ -35,7 +42,11 @@
         lsp-idle-delay 0.500
         lsp-pyls-plugins-flake8-enabled t
         lsp-completion-provider :capf
-        lsp-gopls-codelens nil)
+        lsp-gopls-codelens nil
+        ;; lsp-lens-enable t
+        lsp-signature-auto-activate nil
+        lsp-clojure-custom-server-command '("bash" "-c" "/usr/local/bin/clojure-lsp")
+        )
 
   :bind (:map lsp-mode-map
               ("C-c C-j" . lsp-find-definition)
@@ -74,24 +85,21 @@
   (setq lsp-eldoc-enable-hover t)
   )
 
+;;;;;;;;;;;;;;;;;;
+;; golang
+;;;;;;;;;;;;;;;;;;
 
 (use-package go-eldoc
   :ensure t
+  :after go-mode
   :ensure-system-package (godoc . "go get -u golang.org/x/tools/cmd/godoc"))
-
-
-;; Set up before-save hooks to format buffer and add/delete imports.
-;; Make sure you don't have other gofmt/goimports hooks enabled.
-(defun lsp-go-hooks ()
-  ;; added on lsp
-  (add-hook #'before-save-hook #'lsp-format-buffer t t)
-  (add-hook #'before-save-hook #'lsp-organize-imports t t))
 
 
 (use-package go-mode
   :ensure t
   :config
-  (add-hook 'go-mode-hook #'lsp-go-hooks)
+  (add-hook 'before-save-hook #'lsp-organize-imports)
+  (add-hook 'before-save-hook #'lsp-format-buffer)
   (add-hook 'go-mode-hook #'lsp-deferred))
 
 
@@ -105,34 +113,9 @@
   (define-key go-mode-map (kbd "C-c C-t b") 'go-test-current-benchmark)
   (define-key go-mode-map (kbd "C-c C-t x") 'go-run))
 
-;; (use-package elixir-mode
-;;   :ensure t
-;;   :mode (("\\.ex\\'" . elixir-mode)
-;;          ("\\.iex\\'" . elixir-mode))
-;;   :config
-;;   (add-hook 'elixir-mode-hook
-;;           (lambda ()
-;;             (add-hook 'before-save-hook 'elixir-format nil t)
-;;             (add-hook 'after-save-hook 'alchemist-iex-reload-module)
-;;             ))
-
-;;   (add-hook 'elixir-mode-hook #'rainbow-delimiters-mode)
-;;   )
-
-;; (use-package alchemist
-;;   :ensure t
-;;   :hook (elixir-mode . alchemist-mode)
-;;   :config
-;;   (setq alchemist-mix-env "dev")
-;;   (setq alchemist-hooks-compile-on-save t)
-;;   (setq al)
-;;   )
-
-
-;; (use-package exunit
-;;   :ensure t
-;;   :hook (elixir-mode . exunit-mode))
-
+;;;;;;;;;;;;;;;;;;
+;; python
+;;;;;;;;;;;;;;;;;;
 
 ;; install pip
 ;; pip install pydocstyle pylint rope autopep8 black
@@ -141,9 +124,13 @@
   :mode (("\\.py\\'" . python-mode)
          ("\\.python\\'" . python-mode))
   :config
-  (add-hook 'python-mode-hook #'lsp-format-onsave-hook)
+  (add-hook 'before-save-hook #'lsp-organize-imports)
+  (add-hook 'before-save-hook #'lsp-format-buffer)  
   (add-hook 'python-mode-hook #'lsp-deferred))
 
+;;;;;;;;;;;;;;;;;;
+;; extensions
+;;;;;;;;;;;;;;;;;;
 
 (use-package yaml-mode
   :ensure t
@@ -157,6 +144,14 @@
          ("\\.eslintrc\\'" . json-mode))
   :config (setq-default js-indent-level 2))
 
+(use-package jsonnet-mode
+  :ensure t
+  :mode (("\\.jsonnet\\'" . jsonnet-mode)))
+  ;; :config
+  ;; (add-hook 'jsonnet-mode-hook
+  ;;           (lambda () (add-hook 'before-save-hook  #'jsonnet-reformat-buffer)))
+  
+
 (use-package json-reformat
   :ensure t
   :after json-mode
@@ -165,6 +160,16 @@
 (use-package dockerfile-mode
   :ensure t
   :mode ("Dockerfile\\'" . dockerfile-mode))
+
+(use-package terraform-mode
+  :ensure t
+  :defer t
+  :mode (
+         ("\\.tf\\'" . terraform-mode)
+         )
+  :config
+  (add-hook 'terraform-mode-hook
+            (lambda () (add-hook 'before-save-hook  #'terraform-format-buffer))))
 
 ;;;;;;;;;;;;;;;;;;
 ;; javascript
@@ -201,6 +206,125 @@
   :defer t
   :diminish prettier-js-mode
   :hook (((js2-mode rjsx-mode) . prettier-js-mode)))
+
+;;;;;;;;;;;;;;;;;;
+;; clojure
+;;;;;;;;;;;;;;;;;;
+
+(use-package clojure-mode
+  :ensure t
+  :mode  (("\\.clj"  . clojure-mode)
+          ("\\.edn"  . clojure-mode)
+          ("\\.cljs" . clojurescript-mode)
+          ("\\.java" . clojure-mode))
+  :config
+  (add-hook 'clojure-mode-hook #'smartparens-mode)
+  (add-hook 'clojurescript-mode-hook #'smartparens-mode)
+  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'clojurescript-mode-hook #'rainbow-delimiters-mode)
+  )
+
+;; lambda and special chars for clojure
+
+(eval-after-load 'clojure-mode
+  '(font-lock-add-keywords
+    'clojure-mode `(("(\\(fn\\)[\[[:space:]]"
+                     (0 (progn (compose-region (match-beginning 1)
+                                               (match-end 1) "λ")
+                               nil))))))
+
+(eval-after-load 'clojure-mode
+  '(font-lock-add-keywords
+    'clojure-mode `(("\\(#\\)("
+                     (0 (progn (compose-region (match-beginning 1)
+                                               (match-end 1) "ƒ")
+                               nil))))))
+
+(eval-after-load 'clojure-mode
+  '(font-lock-add-keywords
+    'clojure-mode `(("\\(#\\){"
+                     (0 (progn (compose-region (match-beginning 1)
+                                               (match-end 1) "∈")
+                               nil))))))
+
+
+(use-package cider
+  :ensure t
+  :after clojure-mode
+  :config
+
+  ;; java source paths
+  ;; (setq cider-jdk-src-paths '("/Users/manute/java/openjdk11"
+  ;;                             "/Users/manute/java/sources"))
+
+  ;; lein for now
+  (setq cider-jack-in-default "lein")
+
+  ;; Config CIDER figwheel
+  ;; https://github.com/Day8/re-frame-template#start-cider-from-emacs-if-using-cider
+  (setq cider-cljs-lein-repl
+	"(do (require 'figwheel-sidecar.repl-api)
+         (figwheel-sidecar.repl-api/start-figwheel!)
+         (figwheel-sidecar.repl-api/cljs-repl))")
+
+  ;; Shortcut keys config
+  (define-key clojure-mode-map (kbd "C-c r") #'cider-jack-in)
+  (define-key clojure-mode-map (kbd "C-c s") #'cider-jack-in-clojurescript)
+  (define-key clojure-mode-map (kbd "C-c t") #'cider-test-run-test)
+  (define-key clojure-mode-map (kbd "C-c C-n") #'cider-pprint-eval-defun-at-point)
+  (define-key cider-mode-map (kbd "C-c C-n") #'cider-pprint-eval-defun-at-point)
+
+  ;; find file key
+  (define-key clojure-mode-map (kbd "C-c C-f") nil)
+  (define-key cider-mode-map (kbd "C-c C-f") nil)
+
+  ;; nrepl
+  (setq nrepl-log-messages t)
+  (setq nrepl-hide-special-buffers t)
+
+  ;; REPL history file
+  (setq cider-repl-history-file "~/.emacs.d/cider-history")
+
+  ;; nice pretty printing
+  (setq cider-repl-use-pretty-printing t)
+
+  ;; go right to the REPL buffer when it's finished connecting
+  (setq cider-repl-pop-to-buffer-on-connect t)
+
+  ;; When there's a cider error, don't show it
+  (setq cider-show-error-buffer nil)
+  ;; (setq cider-auto-select-error-buffer t)
+
+  ;; nicer font lock in REPL
+  (setq cider-repl-use-clojure-font-lock t)
+
+  ;; result prefix for the REPL
+  (setq cider-repl-result-prefix " - ")
+
+  ;; never ending REPL history
+  (setq cider-repl-wrap-history t)
+
+  ;; looong history
+  (setq cider-repl-history-size 3000)
+
+  (setq cider-repl-display-help-banner nil)
+
+  (setq cider-ns-refresh-show-log-buffer t)
+
+  (setq cider-prefer-local-resources t)
+  (setq nrepl-hide-special-buffers t)
+
+  ;; (add-hook 'cider-mode-hook #'company-mode)
+  (add-hook 'cider-mode-hook #'smartparens-mode)
+  ;; (add-hook 'cider-mode-hook #'eldoc-mode)
+  ;; (add-hook 'cider-repl-mode-hook #'company-mode)
+  (add-hook 'cider-mode-hook #'rainbow-delimiters-mode)
+
+  ;; Fuzzy candidate matching
+  ;; (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
+  ;; (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
+  )
+
 
 
 (provide 'init-lsp)

@@ -26,6 +26,7 @@
     (when (and eslint (file-executable-p eslint))
       (setq-local flycheck-javascript-eslint-executable eslint))))
 
+
 (use-package flycheck-color-mode-line
   :ensure t
   :after flycheck
@@ -33,15 +34,28 @@
   (setq flycheck-highlighting-mode 'symbols)
   (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)
 
-  (set-face-background 'flycheck-error "#660000")
+  ;; dark mode
+  ;; (set-face-background 'flycheck-error "#660000")
+  ;; (set-face-foreground 'flycheck-error nil)
+  ;; (set-face-background 'flycheck-warning "#331800")
+  ;; (set-face-foreground 'flycheck-warning nil)
+  ;; (set-face-background 'flycheck-color-mode-line-error-face "#440000")
+  ;; (set-face-background 'flycheck-color-mode-line-warning-face "#553300")
+  ;; (set-face-background 'flycheck-color-mode-line-info-face nil)
+  ;; (set-face-foreground 'flycheck-color-mode-line-error-face "#ffffff")
+  ;; (set-face-foreground 'flycheck-color-mode-line-warning-face "#ffffff")
+  ;; (set-face-foreground 'flycheck-color-mode-line-info-face nil)
+
+  ;; light mode
+  (set-face-background 'flycheck-error "#ff8888")
   (set-face-foreground 'flycheck-error nil)
-  (set-face-background 'flycheck-warning "#331800")
+  (set-face-background 'flycheck-warning "#ffcc88")
   (set-face-foreground 'flycheck-warning nil)
-  (set-face-background 'flycheck-color-mode-line-error-face "#440000")
-  (set-face-background 'flycheck-color-mode-line-warning-face "#553300")
-  (set-face-background 'flycheck-color-mode-line-info-face nil)
+  (set-face-background 'flycheck-color-mode-line-error-face "#ff0000")
   (set-face-foreground 'flycheck-color-mode-line-error-face "#ffffff")
+  (set-face-background 'flycheck-color-mode-line-warning-face "#886600")
   (set-face-foreground 'flycheck-color-mode-line-warning-face "#ffffff")
+  (set-face-background 'flycheck-color-mode-line-info-face nil)
   (set-face-foreground 'flycheck-color-mode-line-info-face nil)
 
   (add-hook 'flycheck-mode-hook #'manu/use-eslint-from-node-modules))
