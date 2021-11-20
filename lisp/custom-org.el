@@ -83,13 +83,13 @@
 
 (use-package org-roam
   :ensure t
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n g" . org-roam-graph)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
+  :bind (("C-c o r l" . org-roam-buffer-toggle)
+         ("C-c o r f" . org-roam-node-find)
+         ("C-c o r g" . org-roam-graph)
+         ("C-c o r i" . org-roam-node-insert)
+         ("C-c o r c" . org-roam-capture)
          ;; Dailies
-         ("C-c n j" . org-roam-dailies-capture-today))
+         ("C-c o r t" . org-roam-dailies-capture-today))
   :custom
   (org-roam-directory "~/org/roam")
   :config

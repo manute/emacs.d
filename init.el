@@ -60,6 +60,12 @@
       use-package-verbose t
       explicit-shell-file-name "/bin/zsh")
 
+;; Restore after startup
+(add-hook 'after-init-hook
+          (lambda ()
+            (setq gc-cons-threshold 1000000)
+            (message "gc-cons-threshold restored to %S"
+                     gc-cons-threshold)))
 
 (eval-after-load "term"
   '(define-key term-raw-map (kbd "C-c C-y") 'term-paste))

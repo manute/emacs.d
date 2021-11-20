@@ -25,7 +25,7 @@
   ;; languages
   :hook  (
           (go-mode . lsp-deferred) 
-          (sh-mode . lsp-deferred) 
+          (sh-mode . lsp-deferred)
           (dockerfile-mode . lsp-deferred) 
           (yaml-mode . lsp-deferred)
           (python-mode . lsp-deferred) 
