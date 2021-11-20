@@ -165,11 +165,9 @@
 ;; https://github.com/patrickt/emacs
 (use-package undo-tree
   :ensure t
+  :init (global-undo-tree-mode)
   :diminish
-  :bind (("C-c _" . undo-tree-visualize))
-  :config
-  (global-undo-tree-mode +1)
-  (unbind-key "M-_" undo-tree-map))
+  :bind (("C-c /" . undo-tree-visualize)))
 
 
 (menu-bar-mode -1)
