@@ -36,7 +36,7 @@
 
 (use-package exec-path-from-shell
   :ensure t
-  :if (memq window-system '(mac ns))
+  ;; :if (memq window-system '(mac ns))
   :config
   (setq exec-path-from-shell-arguments '("-l"))
   (exec-path-from-shell-initialize)
@@ -44,7 +44,8 @@
    '("GOPATH" "GO111MODULE" "GOPROXY"
      "NPMBIN" "LC_ALL" "LANG" "LC_TYPE"
      "SSH_AGENT_PID" "SSH_AUTH_SOCK" "SHELL"
-     "JAVA_HOME")))
+     ;; "JAVA_HOME"
+     )))
 
 ;; ACTIVATE BENCHMARKS
 ;; (require 'benchmark-init)
