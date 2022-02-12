@@ -44,6 +44,7 @@
    '("GOPATH" "GO111MODULE" "GOPROXY"
      "NPMBIN" "LC_ALL" "LANG" "LC_TYPE"
      "SSH_AGENT_PID" "SSH_AUTH_SOCK" "SHELL"
+     "GPG_TTY"
      ;; "JAVA_HOME"
      )))
 
