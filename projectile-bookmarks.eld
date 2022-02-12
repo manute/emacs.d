@@ -1,0 +1,1 @@
+("~/.emacs.d/" "~/go/src/github.com/local-test/")
