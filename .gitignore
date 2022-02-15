@@ -31,3 +31,4 @@ transient
 /org-roam.db
 /eln-cache/
 /.org-id-locations
+ido.last
