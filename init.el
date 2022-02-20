@@ -8,6 +8,24 @@
 
 (package-initialize)
 
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (setq exec-path-from-shell-arguments '("-l"))
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-envs
+   '("GOPATH" "GO111MODULE" "GOPROXY" ;; golang
+     "LC_ALL" "LANG" "LC_TYPE"
+     "SSH_AGENT_PID" "SSH_AUTH_SOCK" ;; ssh
+     "SHELL"
+     "GPG_TTY" ;; gpg session
+     "NPMBIN"  ;; npm
+     ;; Using x11 the .bashrc or .zshrc could have not been sourcered yet
+     ;; so it may need this symlink:
+     ;; ln -s /home/manu/.nvm/versions/node/v17.5.0/bin/node /usr/bin/node
+     )))
+
+
 (setq package-check-signature nil)
 
 (setq tramp-default-method "ssh")
@@ -33,20 +51,6 @@
   :bind ("C-x P" . auto-package-update-now)
   :config
   (setq auto-package-update-delete-old-versions t))
-
-(use-package exec-path-from-shell
-  :ensure t
-  ;; :if (memq window-system '(mac ns))
-  :config
-  (setq exec-path-from-shell-arguments '("-l"))
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-envs
-   '("GOPATH" "GO111MODULE" "GOPROXY"
-     "NPMBIN" "LC_ALL" "LANG" "LC_TYPE"
-     "SSH_AGENT_PID" "SSH_AUTH_SOCK" "SHELL"
-     "GPG_TTY"
-     ;; "JAVA_HOME"
-     )))
 
 ;; ACTIVATE BENCHMARKS
 ;; (require 'benchmark-init)
@@ -254,7 +258,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(lsp-ui-doc-background ((t (:background "lightyellow")))))
+ )
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (custom-set-variables
@@ -263,5 +267,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(jsonnet-mode xclip terraform-mode moody flycheck-inline modus-operandi-theme modus-themes spaceline spacemacs-theme doom-themes restclient all-the-icons-dired undo-tree nord-theme whole-line-or-region rego-mode mustache-mode graphql-mode toml-mode web-server adoc-mode flycheck-pos-tip clj-refactor cider inf-clojure company-racer flycheck-rust racer rust-mode add-node-modules-path typescript-mode rjsx-mode dockerfile-mode json-mode yaml-mode python-mode exunit alchemist elixir-mode gotest go-eldoc lsp-ui lsp-mode key-chord rainbow-delimiters web-mode org-roam org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-box company-emoji company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package))
+   '(all-the-icons jsonnet-mode xclip terraform-mode moody flycheck-inline modus-operandi-theme modus-themes spaceline spacemacs-theme doom-themes restclient all-the-icons-dired undo-tree nord-theme whole-line-or-region rego-mode mustache-mode graphql-mode toml-mode web-server adoc-mode flycheck-pos-tip clj-refactor cider inf-clojure company-racer flycheck-rust racer rust-mode add-node-modules-path typescript-mode rjsx-mode dockerfile-mode json-mode yaml-mode python-mode exunit alchemist elixir-mode gotest go-eldoc lsp-ui lsp-mode key-chord rainbow-delimiters web-mode org-roam org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-box company-emoji company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package))
  '(warning-suppress-types '((comp) (comp) (comp) undo discard-info)))
