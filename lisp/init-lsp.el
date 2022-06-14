@@ -33,6 +33,8 @@
           (terraform-mode . lsp-deferred)
           ((js2-mode rjsx-mode typescript-mode) . lsp-deferred)
           (clojure-mode . lsp-deferred)
+          (rust-mode . lsp-deferred)
+          ;; (sql-mode . lsp-deferred)
   )
   :init
   (setq lsp-auto-guess-root t
@@ -206,6 +208,19 @@
   :defer t
   :diminish prettier-js-mode
   :hook (((js2-mode rjsx-mode) . prettier-js-mode)))
+
+;;;;;;;;;;;;;;;;;;
+;; rust
+;;;;;;;;;;;;;;;;;;
+;; https://rust-analyzer.github.io/manual.html#installation
+(use-package rust-mode
+  :ensure t
+  :mode ("\\.rs\\'" . rust-mode)
+  :diminish eldoc-mode
+  :config
+  (setq company-tooltip-align-annotations t)
+  (setq rust-format-on-save t))
+
 
 ;;;;;;;;;;;;;;;;;;
 ;; clojure

@@ -8,24 +8,6 @@
 
 (package-initialize)
 
-(use-package exec-path-from-shell
-  :ensure t
-  :config
-  (setq exec-path-from-shell-arguments '("-l"))
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-envs
-   '("GOPATH" "GO111MODULE" "GOPROXY" ;; golang
-     "LC_ALL" "LANG" "LC_TYPE"
-     "SSH_AGENT_PID" "SSH_AUTH_SOCK" ;; ssh
-     "SHELL"
-     "GPG_TTY" ;; gpg session
-     "NPMBIN"  ;; npm
-     ;; Using x11 the .bashrc or .zshrc could have not been sourcered yet
-     ;; so it may need this symlink:
-     ;; ln -s /home/manu/.nvm/versions/node/v17.5.0/bin/node /usr/bin/node
-     )))
-
-
 (setq package-check-signature nil)
 
 (setq tramp-default-method "ssh")
@@ -42,6 +24,23 @@
   ;; Following line is not needed if use-package.el is in ~/.emacs.d
   ;; (add-to-list 'load-path "~/.emacs.d/local/use-package")
   (require 'use-package))
+
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (setq exec-path-from-shell-arguments '("-l"))
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-envs
+   '("GOPATH" "GO111MODULE" "GOPROXY" ;; golang
+     "LC_ALL" "LANG" "LC_TYPE"
+     "SSH_AGENT_PID" "SSH_AUTH_SOCK" ;; ssh
+     "SHELL"
+     "GPG_TTY" ;; gpg session
+     "NPMBIN"  ;; npm
+     ;; Using x11 the .bashrc or .zshrc could have not been sourcered yet
+     ;; so it may need this symlink:
+     ;; ln -s /home/manu/.nvm/versions/node/v17.5.0/bin/node /usr/bin/node
+     )))
 
 (use-package use-package-ensure-system-package
   :ensure t)
@@ -202,9 +201,6 @@
 (use-package init-lisp
   :load-path "lisp/")
 
-(use-package init-rust
-  :load-path "lisp/")
-
 ;; FILES MODE
 (use-package adoc-mode
   :ensure t
@@ -248,7 +244,6 @@
   :ensure t
   :mode ("\\.rego\\'" . rego-mode))
 
-
 ;; INIT DAEMON SERVER
 (require 'server)
 (unless (server-running-p)
@@ -258,7 +253,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(lsp-ui-doc-background ((t (:background "lightyellow")))))
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (custom-set-variables
@@ -268,4 +263,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(all-the-icons jsonnet-mode xclip terraform-mode moody flycheck-inline modus-operandi-theme modus-themes spaceline spacemacs-theme doom-themes restclient all-the-icons-dired undo-tree nord-theme whole-line-or-region rego-mode mustache-mode graphql-mode toml-mode web-server adoc-mode flycheck-pos-tip clj-refactor cider inf-clojure company-racer flycheck-rust racer rust-mode add-node-modules-path typescript-mode rjsx-mode dockerfile-mode json-mode yaml-mode python-mode exunit alchemist elixir-mode gotest go-eldoc lsp-ui lsp-mode key-chord rainbow-delimiters web-mode org-roam org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-box company-emoji company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package))
+ '(safe-local-variable-values
+   '((setq projectile-project-root-functions
+           '(projectile-root-local projectile-root-top-down projectile-root-top-down-recurring projectile-root-bottom-up))))
  '(warning-suppress-types '((comp) (comp) (comp) undo discard-info)))

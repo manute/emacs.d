@@ -114,12 +114,25 @@
   :defer t
   :config (popwin-mode 1))
 
+;; This is to prevent not needed folders slip into projectile known projects
+(defun projectile-ignore-folders (project-name)
+  (or (s-contains? "vendor" project-name)
+      (s-contains? "npm" project-name)
+      ))
+
 (use-package projectile
   :ensure t
   :bind  (("C-c C-f" . projectile-find-file)
           ("C-c p p" . projectile-switch-project))
   :config
-  (projectile-global-mode))
+  (projectile-global-mode)
+  (setq projectile-ignored-project-function 'projectile-ignore-folders)
+  ;; multiple projects in a repo
+  (setq projectile-project-root-functions
+        '(projectile-root-local
+          projectile-root-top-down
+          projectile-root-bottom-up
+          projectile-root-top-down-recurring)))
 
 
 (use-package grep

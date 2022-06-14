@@ -7,8 +7,8 @@
 ;; Fira Code enabled
 ;; https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs
 (when (member "Fira Code" (font-family-list))
-  (add-to-list 'initial-frame-alist '(font . "Fira Code-12"))
-  (add-to-list 'default-frame-alist '(font . "Fira Code-12")))
+  (add-to-list 'initial-frame-alist '(font . "Fira Code-11"))
+  (add-to-list 'default-frame-alist '(font . "Fira Code-11")))
 
 ;; (if (display-graphic-p)
 ;;     (set-face-attribute 'default nil :height 120)
@@ -22,15 +22,16 @@
 ;;;;;;;;;;;;;;;;;;
 ;; Zero dark theme
 ;;;;;;;;;;;;;;;;;;
-;; (use-package all-the-icons
-;;   :if (display-graphic-p))
+(use-package all-the-icons
+  :if (display-graphic-p))
 
 ;; (all-the-icons-insert-icons-for 'alltheicon)
 
-;; (use-package all-the-icons-dired
-;;   :ensure t
-;;   :after all-the-icons
-;;   :hook (dired-mode . all-the-icons-dired-mode))
+
+(use-package all-the-icons-dired
+  :ensure t
+  :after all-the-icons
+  :hook (dired-mode . all-the-icons-dired-mode))
 
 
 ;; Install all the fonts located in root emacs folder 'fonts'.
@@ -47,6 +48,7 @@
 (load-theme 'zerodark t)
 ;; Optionally setup the modeline
 (zerodark-setup-modeline-format)
+
 
 ;;;;;;;;;;;;;;;;;;
 ;; modus theme
