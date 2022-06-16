@@ -45,6 +45,7 @@
         lsp-pyls-plugins-flake8-enabled t
         lsp-completion-provider :capf
         lsp-gopls-codelens nil
+        lsp-go-env '((GOFLAGS . "-tags=integration"))
         ;; lsp-lens-enable t
         lsp-signature-auto-activate nil
         lsp-clojure-custom-server-command '("bash" "-c" "/usr/local/bin/clojure-lsp")

@@ -198,17 +198,21 @@
 (use-package init-lsp
  :load-path "lisp/")
 
+
 (use-package init-lisp
   :load-path "lisp/")
+
 
 ;; FILES MODE
 (use-package adoc-mode
   :ensure t
   :mode ("\\.asciidoc\\'" . adoc-mode))
 
+
 (use-package web-server
   :ensure t
   :defer t)
+
 
 (use-package markdown-mode
   :ensure t
@@ -228,12 +232,15 @@
 ;;   (add-hook 'markdown-mode-hook (lambda () ( markdown-preview-mode 1 )))
 ;;   (add-hook 'gfm-mode-hook (lambda () ( markdown-preview-mode 1 ))))
 
+
 (use-package toml-mode
   :ensure t
   :mode ("\\.toml\\'" . toml-mode))
 
+
 (use-package graphql-mode
   :ensure t)
+
 
 (use-package mustache-mode
   :ensure t
@@ -243,6 +250,12 @@
 (use-package rego-mode
   :ensure t
   :mode ("\\.rego\\'" . rego-mode))
+
+
+(use-package protobuf-mode
+  :ensure t
+  :mode ("\\.proto\\'" . protobuf-mode))
+
 
 ;; INIT DAEMON SERVER
 (require 'server)
@@ -262,7 +275,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(all-the-icons jsonnet-mode xclip terraform-mode moody flycheck-inline modus-operandi-theme modus-themes spaceline spacemacs-theme doom-themes restclient all-the-icons-dired undo-tree nord-theme whole-line-or-region rego-mode mustache-mode graphql-mode toml-mode web-server adoc-mode flycheck-pos-tip clj-refactor cider inf-clojure company-racer flycheck-rust racer rust-mode add-node-modules-path typescript-mode rjsx-mode dockerfile-mode json-mode yaml-mode python-mode exunit alchemist elixir-mode gotest go-eldoc lsp-ui lsp-mode key-chord rainbow-delimiters web-mode org-roam org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-box company-emoji company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package))
+   '(protobuf-mode all-the-icons jsonnet-mode xclip terraform-mode moody flycheck-inline modus-operandi-theme modus-themes spaceline spacemacs-theme doom-themes restclient all-the-icons-dired undo-tree nord-theme whole-line-or-region rego-mode mustache-mode graphql-mode toml-mode web-server adoc-mode flycheck-pos-tip clj-refactor cider inf-clojure company-racer flycheck-rust racer rust-mode add-node-modules-path typescript-mode rjsx-mode dockerfile-mode json-mode yaml-mode python-mode exunit alchemist elixir-mode gotest go-eldoc lsp-ui lsp-mode key-chord rainbow-delimiters web-mode org-roam org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-box company-emoji company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package))
  '(safe-local-variable-values
    '((setq projectile-project-root-functions
            '(projectile-root-local projectile-root-top-down projectile-root-top-down-recurring projectile-root-bottom-up))))
