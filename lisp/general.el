@@ -120,6 +120,11 @@
       (s-contains? "npm" project-name)
       ))
 
+(defun custom/find-go-dir (dir)
+  (if (equal dir "/") nil
+    (if (member "go.mod" (directory-files dir)) dir
+      (custom/find-go-dir (file-name-directory (string-trim-right dir "/"))))))
+
 (use-package projectile
   :ensure t
   :bind  (("C-c C-f" . projectile-find-file)
@@ -127,12 +132,14 @@
   :config
   (projectile-global-mode)
   (setq projectile-ignored-project-function 'projectile-ignore-folders)
+  (add-to-list 'projectile-project-root-files-functions 'custom/find-go-dir)
   ;; multiple projects in a repo
-  (setq projectile-project-root-functions
-        '(projectile-root-local
-          projectile-root-top-down
-          projectile-root-bottom-up
-          projectile-root-top-down-recurring)))
+  ;; (setq projectile-project-root-functions
+  ;;       '(projectile-root-local
+  ;;         projectile-root-top-down
+  ;;         projectile-root-bottom-up
+  ;;         projectile-root-top-down-recurring))
+  )
 
 
 (use-package grep

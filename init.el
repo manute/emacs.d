@@ -6,6 +6,13 @@
 
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t) ; Org-mode's repository
 
+;; DEBUG errors
+;;(setq max-specpdl-size 5)
+;;(setq max-lisp-eval-depth 10000)
+;;(setq debug-on-error t)
+;;(toggle-debug-on-quit t)
+
+
 (package-initialize)
 
 (setq package-check-signature nil)
@@ -45,6 +52,7 @@
 (use-package use-package-ensure-system-package
   :ensure t)
 
+
 (use-package auto-package-update
   :ensure t
   :bind ("C-x P" . auto-package-update-now)
@@ -74,12 +82,6 @@
 
 (eval-after-load "term"
   '(define-key term-raw-map (kbd "C-c C-y") 'term-paste))
-
-;; DEBUG errors
-;; (setq max-specpdl-size 5)
-;; (setq max-lisp-eval-depth 10000)
-;; (setq debug-on-error t)
-;; (toggle-debug-on-quit t)
 
 (use-package eyebrowse
   :ensure t
@@ -150,7 +152,7 @@
 
 (use-package smartparens
   :ensure t
-  :init (smartparens-global-mode 1)
+  ;; :config (smartparens-global- mode 1)  
   :diminish smartparens-mode)
 
 (use-package custom-org
@@ -236,10 +238,6 @@
 (use-package toml-mode
   :ensure t
   :mode ("\\.toml\\'" . toml-mode))
-
-
-(use-package graphql-mode
-  :ensure t)
 
 
 (use-package mustache-mode

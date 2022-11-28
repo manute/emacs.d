@@ -16,6 +16,7 @@
   ;;  (terraform-mode . "go install github.com/juliosueiras/terraform-lsp@latest")
   ;;  (python-mode . "pip install python-lsp-server")
   ;;  (clojure-mode . "brew install clojure-lsp/brew/clojure-lsp-native")
+  ;;  (graphql-mode . "npm i -g graphql-language-service-cli")
   ;;  )
 
   ;; If there're errors, download the lastest tag i.e https://github.com/emacs-lsp/lsp-mode/releases/tag/7.0.1
@@ -32,8 +33,9 @@
           (json-mode . lsp-deferred)
           (terraform-mode . lsp-deferred)
           ((js2-mode rjsx-mode typescript-mode) . lsp-deferred)
-          (clojure-mode . lsp-deferred)
+          ;; (clojure-mode . lsp-deferred)
           (rust-mode . lsp-deferred)
+          ;; (graphql-mode . lsp-deferred)
           ;; (sql-mode . lsp-deferred)
   )
   :init
@@ -223,123 +225,132 @@
   (setq rust-format-on-save t))
 
 
+(use-package graphql-mode
+  :ensure t
+  :defer t
+  :config
+  ;; (add-hook 'before-save-hook #'lsp-format-buffer)  
+  ;; (add-hook 'graphql-mode-hook #'lsp-deferred)
+  )
+
+
 ;;;;;;;;;;;;;;;;;;
 ;; clojure
 ;;;;;;;;;;;;;;;;;;
 
-(use-package clojure-mode
-  :ensure t
-  :mode  (("\\.clj"  . clojure-mode)
-          ("\\.edn"  . clojure-mode)
-          ("\\.cljs" . clojurescript-mode)
-          ("\\.java" . clojure-mode))
-  :config
-  (add-hook 'clojure-mode-hook #'smartparens-mode)
-  (add-hook 'clojurescript-mode-hook #'smartparens-mode)
-  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'clojurescript-mode-hook #'rainbow-delimiters-mode)
-  )
+;; (use-package clojure-mode
+;;   :ensure t
+;;   :mode  (("\\.clj"  . clojure-mode)
+;;           ("\\.edn"  . clojure-mode)
+;;           ("\\.cljs" . clojurescript-mode)
+;;           ("\\.java" . clojure-mode))
+;;   :config
+;;   (add-hook 'clojure-mode-hook #'smartparens-mode)
+;;   (add-hook 'clojurescript-mode-hook #'smartparens-mode)
+;;   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
+;;   (add-hook 'clojurescript-mode-hook #'rainbow-delimiters-mode)
+;;   )
 
-;; lambda and special chars for clojure
+;; ;; lambda and special chars for clojure
 
-(eval-after-load 'clojure-mode
-  '(font-lock-add-keywords
-    'clojure-mode `(("(\\(fn\\)[\[[:space:]]"
-                     (0 (progn (compose-region (match-beginning 1)
-                                               (match-end 1) "λ")
-                               nil))))))
+;; (eval-after-load 'clojure-mode
+;;   '(font-lock-add-keywords
+;;     'clojure-mode `(("(\\(fn\\)[\[[:space:]]"
+;;                      (0 (progn (compose-region (match-beginning 1)
+;;                                                (match-end 1) "λ")
+;;                                nil))))))
 
-(eval-after-load 'clojure-mode
-  '(font-lock-add-keywords
-    'clojure-mode `(("\\(#\\)("
-                     (0 (progn (compose-region (match-beginning 1)
-                                               (match-end 1) "ƒ")
-                               nil))))))
+;; (eval-after-load 'clojure-mode
+;;   '(font-lock-add-keywords
+;;     'clojure-mode `(("\\(#\\)("
+;;                      (0 (progn (compose-region (match-beginning 1)
+;;                                                (match-end 1) "ƒ")
+;;                                nil))))))
 
-(eval-after-load 'clojure-mode
-  '(font-lock-add-keywords
-    'clojure-mode `(("\\(#\\){"
-                     (0 (progn (compose-region (match-beginning 1)
-                                               (match-end 1) "∈")
-                               nil))))))
+;; (eval-after-load 'clojure-mode
+;;   '(font-lock-add-keywords
+;;     'clojure-mode `(("\\(#\\){"
+;;                      (0 (progn (compose-region (match-beginning 1)
+;;                                                (match-end 1) "∈")
+;;                                nil))))))
 
 
-(use-package cider
-  :ensure t
-  :after clojure-mode
-  :config
+;; (use-package cider
+;;   :ensure t
+;;   :after clojure-mode
+;;   :config
 
-  ;; java source paths
-  ;; (setq cider-jdk-src-paths '("/Users/manute/java/openjdk11"
-  ;;                             "/Users/manute/java/sources"))
+;;   ;; java source paths
+;;   ;; (setq cider-jdk-src-paths '("/Users/manute/java/openjdk11"
+;;   ;;                             "/Users/manute/java/sources"))
 
-  ;; lein for now
-  (setq cider-jack-in-default "lein")
+;;   ;; lein for now
+;;   (setq cider-jack-in-default "lein")
 
-  ;; Config CIDER figwheel
-  ;; https://github.com/Day8/re-frame-template#start-cider-from-emacs-if-using-cider
-  (setq cider-cljs-lein-repl
-	"(do (require 'figwheel-sidecar.repl-api)
-         (figwheel-sidecar.repl-api/start-figwheel!)
-         (figwheel-sidecar.repl-api/cljs-repl))")
+;;   ;; Config CIDER figwheel
+;;   ;; https://github.com/Day8/re-frame-template#start-cider-from-emacs-if-using-cider
+;;   (setq cider-cljs-lein-repl
+;; 	"(do (require 'figwheel-sidecar.repl-api)
+;;          (figwheel-sidecar.repl-api/start-figwheel!)
+;;          (figwheel-sidecar.repl-api/cljs-repl))")
 
-  ;; Shortcut keys config
-  (define-key clojure-mode-map (kbd "C-c r") #'cider-jack-in)
-  (define-key clojure-mode-map (kbd "C-c s") #'cider-jack-in-clojurescript)
-  (define-key clojure-mode-map (kbd "C-c t") #'cider-test-run-test)
-  (define-key clojure-mode-map (kbd "C-c C-n") #'cider-pprint-eval-defun-at-point)
-  (define-key cider-mode-map (kbd "C-c C-n") #'cider-pprint-eval-defun-at-point)
+;;   ;; Shortcut keys config
+;;   (define-key clojure-mode-map (kbd "C-c r") #'cider-jack-in)
+;;   (define-key clojure-mode-map (kbd "C-c s") #'cider-jack-in-clojurescript)
+;;   (define-key clojure-mode-map (kbd "C-c t") #'cider-test-run-test)
+;;   (define-key clojure-mode-map (kbd "C-c C-n") #'cider-pprint-eval-defun-at-point)
+;;   (define-key cider-mode-map (kbd "C-c C-n") #'cider-pprint-eval-defun-at-point)
 
-  ;; find file key
-  (define-key clojure-mode-map (kbd "C-c C-f") nil)
-  (define-key cider-mode-map (kbd "C-c C-f") nil)
+;;   ;; find file key
+;;   (define-key clojure-mode-map (kbd "C-c C-f") nil)
+;;   (define-key cider-mode-map (kbd "C-c C-f") nil)
 
-  ;; nrepl
-  (setq nrepl-log-messages t)
-  (setq nrepl-hide-special-buffers t)
+;;   ;; nrepl
+;;   (setq nrepl-log-messages t)
+;;   (setq nrepl-hide-special-buffers t)
 
-  ;; REPL history file
-  (setq cider-repl-history-file "~/.emacs.d/cider-history")
+;;   ;; REPL history file
+;;   (setq cider-repl-history-file "~/.emacs.d/cider-history")
 
-  ;; nice pretty printing
-  (setq cider-repl-use-pretty-printing t)
+;;   ;; nice pretty printing
+;;   (setq cider-repl-use-pretty-printing t)
 
-  ;; go right to the REPL buffer when it's finished connecting
-  (setq cider-repl-pop-to-buffer-on-connect t)
+;;   ;; go right to the REPL buffer when it's finished connecting
+;;   (setq cider-repl-pop-to-buffer-on-connect t)
 
-  ;; When there's a cider error, don't show it
-  (setq cider-show-error-buffer nil)
-  ;; (setq cider-auto-select-error-buffer t)
+;;   ;; When there's a cider error, don't show it
+;;   (setq cider-show-error-buffer nil)
+;;   ;; (setq cider-auto-select-error-buffer t)
 
-  ;; nicer font lock in REPL
-  (setq cider-repl-use-clojure-font-lock t)
+;;   ;; nicer font lock in REPL
+;;   (setq cider-repl-use-clojure-font-lock t)
 
-  ;; result prefix for the REPL
-  (setq cider-repl-result-prefix " - ")
+;;   ;; result prefix for the REPL
+;;   (setq cider-repl-result-prefix " - ")
 
-  ;; never ending REPL history
-  (setq cider-repl-wrap-history t)
+;;   ;; never ending REPL history
+;;   (setq cider-repl-wrap-history t)
 
-  ;; looong history
-  (setq cider-repl-history-size 3000)
+;;   ;; looong history
+;;   (setq cider-repl-history-size 3000)
 
-  (setq cider-repl-display-help-banner nil)
+;;   (setq cider-repl-display-help-banner nil)
 
-  (setq cider-ns-refresh-show-log-buffer t)
+;;   (setq cider-ns-refresh-show-log-buffer t)
 
-  (setq cider-prefer-local-resources t)
-  (setq nrepl-hide-special-buffers t)
+;;   (setq cider-prefer-local-resources t)
+;;   (setq nrepl-hide-special-buffers t)
 
-  ;; (add-hook 'cider-mode-hook #'company-mode)
-  (add-hook 'cider-mode-hook #'smartparens-mode)
-  ;; (add-hook 'cider-mode-hook #'eldoc-mode)
-  ;; (add-hook 'cider-repl-mode-hook #'company-mode)
-  (add-hook 'cider-mode-hook #'rainbow-delimiters-mode)
+;;   ;; (add-hook 'cider-mode-hook #'company-mode)
+;;   (add-hook 'cider-mode-hook #'smartparens-mode)
+;;   ;; (add-hook 'cider-mode-hook #'eldoc-mode)
+;;   ;; (add-hook 'cider-repl-mode-hook #'company-mode)
+;;   (add-hook 'cider-mode-hook #'rainbow-delimiters-mode)
 
-  ;; Fuzzy candidate matching
-  ;; (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
-  ;; (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
-  )
+;;   ;; Fuzzy candidate matching
+;;   ;; (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
+;;   ;; (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
+;;   )
 
 
 
