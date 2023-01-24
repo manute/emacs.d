@@ -152,7 +152,7 @@
 
 (use-package smartparens
   :ensure t
-  ;; :config (smartparens-global- mode 1)  
+  :config (smartparens-global-mode 1)
   :diminish smartparens-mode)
 
 (use-package custom-org
