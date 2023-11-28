@@ -1,4 +1,4 @@
-.cask/
+rsr.cask/
 elpa/*
 eshell/
 auto-save-list/
