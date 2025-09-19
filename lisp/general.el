@@ -176,6 +176,23 @@
   :config (setq warning-suppress-types '(undo discard-info)))
 
 
+(use-package vterm
+  :ensure t
+  :config
+  ;; Only affect vterm
+  (add-hook 'vterm-mode-hook
+            (lambda ()
+              (display-line-numbers-mode -1)
+              (setq-local global-hl-line-mode nil)
+              (setq-local bidi-display-reordering nil)
+              (setq-local bidi-inhibit-bpa t))))
+
+;; Global perf tweaks
+(setq comp-deferred-compilation t)       ;; if using native-comp
+(setq vterm-disable-bold-font t)         ;; vterm-specific anyway
+(setq fast-but-imprecise-scrolling t
+      redisplay-skip-fontification-on-input t
+      inhibit-compacting-font-caches t)
 
 (use-package which-key
   :ensure t
