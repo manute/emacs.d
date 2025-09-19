@@ -187,6 +187,11 @@
               (setq-local bidi-display-reordering nil)
               (setq-local bidi-inhibit-bpa t))))
 
+(use-package vterm-toggle
+  :ensure t
+  :bind (("C-`" . vterm-toggle)))
+;; `C-u C-`` → open vterm in another window
+
 ;; Global perf tweaks
 (setq comp-deferred-compilation t)       ;; if using native-comp
 (setq vterm-disable-bold-font t)         ;; vterm-specific anyway

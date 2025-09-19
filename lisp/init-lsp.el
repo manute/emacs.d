@@ -25,11 +25,11 @@
 
   ;; languages
   :hook  (
-          (go-mode . lsp-deferred) 
+          (go-mode . lsp-deferred)
           (sh-mode . lsp-deferred)
-          (dockerfile-mode . lsp-deferred) 
+          (dockerfile-mode . lsp-deferred)
           (yaml-mode . lsp-deferred)
-          (python-mode . lsp-deferred) 
+          (python-mode . lsp-deferred)
           (json-mode . lsp-deferred)
           (terraform-mode . lsp-deferred)
           ((js2-mode rjsx-mode typescript-mode) . lsp-deferred)
@@ -66,6 +66,25 @@
      ("pyls.plugins.pyls_mypy.live_mode" nil t)
      ("pyls.plugins.pyls_black.enabled" t t)
      ("pyls.plugins.pyls_isort.enabled" t t)))
+
+ ;; Explicitly enable only these clients
+  ;; (setq lsp-enabled-clients '(pyright
+  ;;                             rust-analyzer
+  ;;                             gopls
+  ;;                             ts-ls
+  ;;                             dockerfile-ls
+  ;;                             yaml-ls
+  ;;                             terraform-ls
+  ;;                             ))
+
+  ;; And disable noisy/unwanted ones like semgrep
+  (setq lsp-disabled-clients '(semgrep-ls))
+
+  ;; (setq lsp-prefer-capf t
+  ;;       lsp-enable-snippet t
+  ;;       lsp-idle-delay 0.6
+  ;;       lsp-log-io nil     ;; set to t if you want debug logs
+  ;;       lsp-headerline-breadcrumb-enable t)
   )
 
 
@@ -86,8 +105,14 @@
   (setq lsp-ui-doc-border (face-foreground 'default))
   :config
   (setq lsp-ui-sideline-enable nil)
-  (setq lsp-ui-doc-enable nil)
-  (setq lsp-eldoc-enable-hover t)
+  (setq lsp-eldoc-enable-hover nil)
+  (setq lsp-ui-doc-enable t
+        lsp-ui-flycheck-enable t)
+  ;; (setq lsp-ui-doc-enable t
+  ;;       lsp-ui-doc-position 'at-point
+  ;;       lsp-ui-sideline-enable t
+  ;;       lsp-ui-sideline-show-hover t
+  ;;       lsp-ui-sideline-show-code-actions t)
   )
 
 ;;;;;;;;;;;;;;;;;;
@@ -103,6 +128,8 @@
 (use-package go-mode
   :ensure t
   :config
+  ;; Use gofumpt instead of gofmt
+  (setq gofmt-command "gofumpt")
   (add-hook 'before-save-hook #'lsp-organize-imports)
   (add-hook 'before-save-hook #'lsp-format-buffer)
   (add-hook 'go-mode-hook #'lsp-deferred))
@@ -130,7 +157,7 @@
          ("\\.python\\'" . python-mode))
   :config
   (add-hook 'before-save-hook #'lsp-organize-imports)
-  (add-hook 'before-save-hook #'lsp-format-buffer)  
+  (add-hook 'before-save-hook #'lsp-format-buffer)
   (add-hook 'python-mode-hook #'lsp-deferred))
 
 ;;;;;;;;;;;;;;;;;;
@@ -155,7 +182,7 @@
   ;; :config
   ;; (add-hook 'jsonnet-mode-hook
   ;;           (lambda () (add-hook 'before-save-hook  #'jsonnet-reformat-buffer)))
-  
+
 
 (use-package json-reformat
   :ensure t
@@ -190,7 +217,7 @@
         js-indent-level 2)
   (setq-local flycheck-disabled-checkers (cl-union flycheck-disabled-checkers
                                                    '(javascript-jshint))) ; jshint doesn't work for JSX
-  (add-hook 'js2-mode-hook #'lsp-format-onsave-hook)
+  ;; (add-hook 'js2-mode-hook #'lsp-format-onsave-hook)
 
   (electric-pair-mode 1))
 
@@ -200,7 +227,8 @@
          ("\\.tsx\\'" . typescript-mode))
   :config
   (setq-default typescript-indent-level 2)
-  (add-hook 'typescript-mode-hook #'lsp-format-onsave-hook))
+  ;; (add-hook 'typescript-mode-hook #'lsp-format-onsave-hook)
+  )
 
 (use-package add-node-modules-path
   :ensure t
@@ -210,7 +238,10 @@
 (use-package prettier-js
   :defer t
   :diminish prettier-js-mode
-  :hook (((js2-mode rjsx-mode) . prettier-js-mode)))
+  :hook ((typescript-mode . prettier-js-mode)
+         (js-mode . prettier-js-mode)
+         (json-mode . prettier-js-mode)
+         (web-mode . prettier-js-mode)))
 
 ;;;;;;;;;;;;;;;;;;
 ;; rust
@@ -229,7 +260,7 @@
   :ensure t
   :defer t
   :config
-  ;; (add-hook 'before-save-hook #'lsp-format-buffer)  
+  ;; (add-hook 'before-save-hook #'lsp-format-buffer)
   ;; (add-hook 'graphql-mode-hook #'lsp-deferred)
   )
 
