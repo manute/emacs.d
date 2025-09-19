@@ -176,28 +176,117 @@
   :config (setq warning-suppress-types '(undo discard-info)))
 
 
+;; ==========================
+;; VTerm + vterm-toggle setup
+;; ==========================
+
 (use-package vterm
   :ensure t
   :config
-  ;; Only affect vterm
+  (setq vterm-disable-bold-font t
+        vterm-max-scrollback 5000
+        comp-deferred-compilation t
+        fast-but-imprecise-scrolling t
+        redisplay-skip-fontification-on-input t
+        inhibit-compacting-font-caches t)
+
   (add-hook 'vterm-mode-hook
             (lambda ()
               (display-line-numbers-mode -1)
               (setq-local global-hl-line-mode nil)
               (setq-local bidi-display-reordering nil)
-              (setq-local bidi-inhibit-bpa t))))
+              (setq-local bidi-inhibit-bpa t)))
+
+  ;; Auto-named vterms: vterm-1, vterm-2, ...
+  (defvar my/vterm-buffer-counter 0
+    "Counter for naming vterm buffers.")
+
+  (defun my/vterm-new (&optional name)
+    "Create a new vterm buffer with a unique name or given NAME."
+    (interactive)
+    (setq my/vterm-buffer-counter (1+ my/vterm-buffer-counter))
+    (let ((buffer-name (or name (format "vterm-%d" my/vterm-buffer-counter))))
+      (vterm buffer-name)))
+
+  ;; Open vterm in split
+  (defun my/vterm-split-below ()
+    "Open a new vterm in a horizontal split."
+    (interactive)
+    (split-window-below)
+    (other-window 1)
+    (my/vterm-new))
+
+  (defun my/vterm-split-right ()
+    "Open a new vterm in a vertical split."
+    (interactive)
+    (split-window-right)
+    (other-window 1)
+    (my/vterm-new))
+
+  ;; Project-root vterm
+  (defun my/vterm-project ()
+    "Open a vterm in the current project's root."
+    (interactive)
+    (let ((default-directory (if (fboundp 'project-root)
+                                 (project-root (project-current t))
+                               default-directory)))
+      (my/vterm-new))))
+
+;; ==========================
+;; VTerm buffer cycling
+;; ==========================
+
+(defun my/vterm-buffers ()
+  "Return a list of all vterm buffers."
+  (seq-filter (lambda (b)
+                (string-prefix-p "vterm-" (buffer-name b)))
+              (buffer-list)))
+
+(defun my/vterm-next ()
+  "Switch to the next vterm buffer."
+  (interactive)
+  (let* ((buffers (my/vterm-buffers))
+         (current (current-buffer))
+         (pos (cl-position current buffers)))
+    (if pos
+        (switch-to-buffer (nth (mod (1+ pos) (length buffers)) buffers))
+      (when buffers
+        (switch-to-buffer (car buffers))))))
+
+(defun my/vterm-prev ()
+  "Switch to the previous vterm buffer."
+  (interactive)
+  (let* ((buffers (my/vterm-buffers))
+         (current (current-buffer))
+         (pos (cl-position current buffers)))
+    (if pos
+        (switch-to-buffer (nth (mod (1- pos) (length buffers)) buffers))
+      (when buffers
+        (switch-to-buffer (car buffers))))))
+
+;; ==========================
+;; vterm-toggle
+;; ==========================
 
 (use-package vterm-toggle
   :ensure t
-  :bind (("C-`" . vterm-toggle)))
-;; `C-u C-`` → open vterm in another window
+  :bind (("C-`" . vterm-toggle))
+  :config
+  (setq vterm-toggle-fullscreen-p nil)  ;; toggle in split, not fullscreen
+  (setq vterm-toggle-scope 'project)   ;; separate per project
+  (setq vterm-toggle-cd-auto-create-buffer t))  ;; auto-name buffer
 
-;; Global perf tweaks
-(setq comp-deferred-compilation t)       ;; if using native-comp
-(setq vterm-disable-bold-font t)         ;; vterm-specific anyway
-(setq fast-but-imprecise-scrolling t
-      redisplay-skip-fontification-on-input t
-      inhibit-compacting-font-caches t)
+;; ==========================
+;; Keybindings for manual control
+;; ==========================
+
+(global-set-key (kbd "C-c t n") 'my/vterm-new)          ;; new vterm
+(global-set-key (kbd "C-c t b") 'my/vterm-split-below)  ;; split below
+(global-set-key (kbd "C-c t r") 'my/vterm-split-right)  ;; split right
+(global-set-key (kbd "C-c t p") 'my/vterm-project)      ;; project root vterm
+(global-set-key (kbd "C-c t <right>") 'my/vterm-next)   ;; next vterm
+(global-set-key (kbd "C-c t <left>") 'my/vterm-prev)    ;; previous vterm
+
 
 (use-package which-key
   :ensure t
