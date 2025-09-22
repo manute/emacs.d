@@ -23,7 +23,10 @@
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 ;; Spaces Indent
-(set-default 'indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil)  ;; use spaces instead of tabs
+(setq-default tab-width 4)           ;; width of tab if it exists
+
+(setq tab-bar-show t) ;; show only the current tab
 
 ;; Show empty lines
 (toggle-indicate-empty-lines)
