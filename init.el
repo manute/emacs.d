@@ -211,20 +211,17 @@
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("CONTRIBUTING\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
+  :mode  ("\\.md\\'" . markdown-mode))
 
-;; (use-package markdown-preview-mode
-;;   :ensure t
-;;   :after markdown-mode
-;;   :bind (("C-c m p" . markdown-preview-mode);;
-;;          ("C-c m o" . markdown-preview-open-browser))
-;;   :config
-;;   (add-hook 'markdown-mode-hook (lambda () ( markdown-preview-mode 1 )))
-;;   (add-hook 'gfm-mode-hook (lambda () ( markdown-preview-mode 1 ))))
+;; go install github.com/chrishrb/go-grip@latest
+(use-package grip-mode
+  :ensure t
+  :bind (:map markdown-mode-command-map
+         ("g" . grip-mode))
+  :init
+  (setq grip-update-after-change t)     ;; auto-refresh
+  (setq grip-preview-use-webkit nil)    ;; nil = use EWW, t = use external browser
+  :config (setq grip-command 'go-grip)) ;; auto, grip, go-grip or mdopen
 
 
 (use-package toml-mode
@@ -265,7 +262,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(vterm-toggle vterm prettier-js protobuf-mode all-the-icons jsonnet-mode xclip terraform-mode moody flycheck-inline modus-operandi-theme modus-themes spaceline spacemacs-theme doom-themes restclient all-the-icons-dired undo-tree nord-theme whole-line-or-region rego-mode mustache-mode graphql-mode toml-mode web-server adoc-mode flycheck-pos-tip clj-refactor cider inf-clojure company-racer flycheck-rust racer rust-mode add-node-modules-path typescript-mode rjsx-mode dockerfile-mode json-mode yaml-mode python-mode exunit alchemist elixir-mode gotest go-eldoc lsp-ui lsp-mode key-chord rainbow-delimiters web-mode org-roam org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-box company-emoji company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package))
+   '(grip-mode pandoc-mode markdown-preview-mode vterm-toggle vterm prettier-js protobuf-mode all-the-icons jsonnet-mode xclip terraform-mode moody flycheck-inline modus-operandi-theme modus-themes spaceline spacemacs-theme doom-themes restclient all-the-icons-dired undo-tree nord-theme whole-line-or-region rego-mode mustache-mode graphql-mode toml-mode web-server adoc-mode flycheck-pos-tip clj-refactor cider inf-clojure company-racer flycheck-rust racer rust-mode add-node-modules-path typescript-mode rjsx-mode dockerfile-mode json-mode yaml-mode python-mode exunit alchemist elixir-mode gotest go-eldoc lsp-ui lsp-mode key-chord rainbow-delimiters web-mode org-roam org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-box company-emoji company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package))
  '(safe-local-variable-values
    '((setq projectile-project-root-functions
            '(projectile-root-local projectile-root-top-down projectile-root-top-down-recurring projectile-root-bottom-up))))
