@@ -4,11 +4,18 @@
   (set-fontset-font t 'symbol (font-spec :family "Apple Symbols") nil 'prepend)
   (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend))
 
-;; Fira Code enabled
-;; https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs
-(when (member "Fira Code" (font-family-list))
-  (add-to-list 'initial-frame-alist '(font . "Fira Code-11"))
-  (add-to-list 'default-frame-alist '(font . "Fira Code-11")))
+;; On Linux
+;; Download from: https://www.nerdfonts.com/font-downloads
+;; Install one (e.g., FiraCode Nerd Font).
+;; Restart Emacs after selecting it as your font.
+
+;; On Macos
+;; brew tap homebrew/cask-fonts
+;; brew install --cask font-fira-code-nerd-font
+
+(when (member "FiraCode Nerd Font" (font-family-list))
+  (add-to-list 'initial-frame-alist '(font . "FiraCode Nerd Font-11"))
+  (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-11")))
 
 ;; (if (display-graphic-p)
 ;;     (set-face-attribute 'default nil :height 120)
@@ -18,159 +25,46 @@
 (use-package memoize
   :ensure t)
 
-
-;;;;;;;;;;;;;;;;;;
-;; Zero dark theme
-;;;;;;;;;;;;;;;;;;
-(use-package all-the-icons
-  :if (display-graphic-p))
-
-;; (all-the-icons-insert-icons-for 'alltheicon)
-
-
-(use-package all-the-icons-dired
-  :ensure t
-  :after all-the-icons
-  :hook (dired-mode . all-the-icons-dired-mode))
-
-
 ;; Install all the fonts located in root emacs folder 'fonts'.
 ;; This package installs also all-the-icons.
 ;; https://github.com/NicolasPetton/zerodark-theme
+;; Load Zerodark theme first
 (use-package zerodark-theme
   :ensure t
   :config
-  (zerodark-setup-modeline-format)
-  (zerodark--active-window-p)
-  (setq zerodark-use-paddings-in-mode-line nil)
-  (zerodark-modeline-flycheck-status))
+  (load-theme 'zerodark t))
 
-(load-theme 'zerodark t)
-;; Optionally setup the modeline
-(zerodark-setup-modeline-format)
+(use-package nerd-icons
+  :ensure t)
 
+;; Doom modeline integrated with Zerodark
+(use-package doom-modeline
+  :ensure t
+  :after zerodark-theme
+  :init
+  (doom-modeline-mode 1)
+  (setq doom-modeline-height 27
+        doom-modeline-bar-width 3
+        doom-modeline-icon t
+        doom-modeline-major-mode-icon t
+        doom-modeline-buffer-file-name-style 'truncate-upto-project
+        doom-modeline-minor-modes nil))
 
-;;;;;;;;;;;;;;;;;;
-;; modus theme
-;;;;;;;;;;;;;;;;;;
-
-;; (info "(modus-themes) Customization Options")
-
-;; (use-package modus-themes
-;;   :ensure t
-;;   :init
-;;   (setq modus-themes-italic-constructs t
-;;         modus-themes-bold-constructs nil
-;;         modus-themes-mixed-fonts nil
-;;         modus-themes-subtle-line-numbers nil
-;;         modus-themes-deuteranopia t
-;;         modus-themes-tabs-accented t
-;;         modus-themes-variable-pitch-ui nil
-;;         modus-themes-inhibit-reload t ; only applies to `customize-set-variable' and related
-
-;;         modus-themes-fringes nil ; {nil,'subtle,'intense}
-
-;;         ;; Options for `modus-themes-lang-checkers' are either nil (the
-;;         ;; default), or a list of properties that may include any of those
-;;         ;; symbols: `straight-underline', `text-also', `background',
-;;         ;; `intense' OR `faint'.
-;;         modus-themes-lang-checkers nil
-
-;;         ;; Options for `modus-themes-mode-line' are either nil, or a list
-;;         ;; that can combine any of `3d' OR `moody', `borderless',
-;;         ;; `accented', and a natural number for extra padding
-;;         modus-themes-mode-line '(4 accented borderless)
-
-;;         ;; Options for `modus-themes-markup' are either nil, or a list
-;;         ;; that can combine any of `bold', `italic', `background',
-;;         ;; `intense'.
-;;         modus-themes-markup '(background italic)
-
-;;         ;; Options for `modus-themes-syntax' are either nil (the default),
-;;         ;; or a list of properties that may include any of those symbols:
-;;         ;; `faint', `yellow-comments', `green-strings', `alt-syntax'
-;;         modus-themes-syntax nil
-
-;;         ;; Options for `modus-themes-hl-line' are either nil (the default),
-;;         ;; or a list of properties that may include any of those symbols:
-;;         ;; `accented', `underline', `intense'
-;;         modus-themes-hl-line '(underline accented)
-
-;;         ;; Options for `modus-themes-paren-match' are either nil (the
-;;         ;; default), or a list of properties that may include any of those
-;;         ;; symbols: `bold', `intense', `underline'
-;;         modus-themes-paren-match '(bold intense)
-
-;;         ;; Options for `modus-themes-links' are either nil (the default),
-;;         ;; or a list of properties that may include any of those symbols:
-;;         ;; `neutral-underline' OR `no-underline', `faint' OR `no-color',
-;;         ;; `bold', `italic', `background'
-;;         modus-themes-links '(neutral-underline background)
-
-;;         ;; Options for `modus-themes-prompts' are either nil (the
-;;         ;; default), or a list of properties that may include any of those
-;;         ;; symbols: `background', `bold', `gray', `intense', `italic'
-;;         modus-themes-prompts '(intense bold)
-
-;;         modus-themes-completions 'moderate ; {nil,'moderate,'opinionated}
-
-;;         modus-themes-mail-citations nil ; {nil,'intense,'faint,'monochrome}
-
-;;         ;; Options for `modus-themes-region' are either nil (the default),
-;;         ;; or a list of properties that may include any of those symbols:
-;;         ;; `no-extend', `bg-only', `accented'
-;;         modus-themes-region '(bg-only no-extend)
-
-;;         ;; Options for `modus-themes-diffs': nil, 'desaturated, 'bg-only
-;;         modus-themes-diffs 'desaturated
-
-;;         modus-themes-org-blocks 'gray-background ; {nil,'gray-background,'tinted-background}
-
-;;         modus-themes-org-agenda ; this is an alist: read the manual or its doc string
-;;         '((header-block . (variable-pitch 1.3))
-;;           (header-date . (grayscale workaholic bold-today 1.1))
-;;           (event . (accented varied))
-;;           (scheduled . uniform)
-;;           (habit . traffic-light))
-
-;;         modus-themes-headings ; this is an alist: read the manual or its doc string
-;;         '((1 . (overline background variable-pitch 1.3))
-;;           (2 . (rainbow overline 1.1))
-;;           (t . (semibold))))
-
-;;   ;; Load the theme files before enabling a theme (else you get an error).
-;;   (modus-themes-load-themes)
-;;   :config
-;;   ;; Load the theme of your choice:
-;;   ;; (modus-themes-load-operandi) ;; light
-;;   (modus-themes-load-vivendi) ;; dark
-;;   :bind ("<f5>" . modus-themes-toggle)
-;; )
-
-
-
-;; (use-package doom-themes
-;;   :ensure t
-;;   :config
-;;   ;; Global settings (defaults)
-;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-;;         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-;;   (load-theme 'doom-tomorrow-day t)
-
-;;   ;; Enable flashing mode-line on errors
-;;   (doom-themes-visual-bell-config)
-;;   ;; Corrects (and improves) org-mode's native fontification.
-;;   (doom-themes-org-config))
+;; Optional: adjust modeline faces for Zerodark
+(with-eval-after-load 'doom-modeline
+  (set-face-attribute 'mode-line nil
+                      :background (face-attribute 'default :background)
+                      :foreground (face-attribute 'default :foreground)
+                      :box nil)
+  (set-face-attribute 'mode-line-inactive nil
+                      :background (face-attribute 'default :background)
+                      :foreground "gray40"
+                      :box nil))
 
 (use-package ns-auto-titlebar
   :ensure t
   :if (display-graphic-p)
   :config (ns-auto-titlebar-mode))
-
-
-;; (defun manu/set-font-height (h)
-;;   (set-face-attribute 'default nil :height h))
-
 
 ;; Fira Code ligatures
 ;; https://github.com/tonsky/FiraCode/wiki/Emacs-instructions
@@ -206,5 +100,7 @@
 (setq-default truncate-lines 1)  ;; no word wrap
 (setq-default line-spacing 4)
 (set-face-attribute 'default nil :height 110)
+(setq nerd-icons-scale-factor 1.0)  ;; adjust size globally
+(setq doom-modeline-icon t)         ;; ensure icons are enabled
 
 (provide 'appearance)
