@@ -47,10 +47,11 @@
         lsp-pyls-plugins-flake8-enabled t
         lsp-completion-provider :capf
         lsp-gopls-codelens nil
-        lsp-go-env '((GOFLAGS . "-tags=integration"))
+        ;; lsp-go-env '((GOFLAGS . "-tags=integration"))
         ;; lsp-lens-enable t
         lsp-signature-auto-activate nil
         lsp-clojure-custom-server-command '("bash" "-c" "/usr/local/bin/clojure-lsp")
+        lsp-headerline-breadcrumb-enable nil
         )
 
   :bind (:map lsp-mode-map
@@ -104,15 +105,14 @@
   :init
   (setq lsp-ui-doc-border (face-foreground 'default))
   :config
-  (setq lsp-ui-sideline-enable nil)
-  (setq lsp-eldoc-enable-hover nil)
-  (setq lsp-ui-doc-enable t
-        lsp-ui-flycheck-enable t)
-  ;; (setq lsp-ui-doc-enable t
-  ;;       lsp-ui-doc-position 'at-point
-  ;;       lsp-ui-sideline-enable t
-  ;;       lsp-ui-sideline-show-hover t
-  ;;       lsp-ui-sideline-show-code-actions t)
+  (setq lsp-ui-sideline-enable nil
+        lsp-ui-sideline-show-hover nil
+        lsp-ui-sideline-show-code-actions nil
+        lsp-ui-sideline-show-diagnostics nil
+        lsp-eldoc-enable-hover nil
+        lsp-ui-doc-enable t
+        lsp-ui-flycheck-enable t
+        )
   )
 
 ;;;;;;;;;;;;;;;;;;

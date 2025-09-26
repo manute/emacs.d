@@ -17,10 +17,6 @@
   (add-to-list 'initial-frame-alist '(font . "FiraCode Nerd Font-11"))
   (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-11")))
 
-;; (if (display-graphic-p)
-;;     (set-face-attribute 'default nil :height 120)
-;; (set-face-attribute 'default nil :height 120))
-;; (ignore-errors (set-frame-font "Menlo-14"))
 
 (use-package memoize
   :ensure t)
@@ -47,19 +43,19 @@
         doom-modeline-bar-width 3
         doom-modeline-icon t
         doom-modeline-major-mode-icon t
-        doom-modeline-buffer-file-name-style 'truncate-upto-project
-        doom-modeline-minor-modes nil))
-
-;; Optional: adjust modeline faces for Zerodark
-(with-eval-after-load 'doom-modeline
-  (set-face-attribute 'mode-line nil
-                      :background (face-attribute 'default :background)
-                      :foreground (face-attribute 'default :foreground)
-                      :box nil)
-  (set-face-attribute 'mode-line-inactive nil
-                      :background (face-attribute 'default :background)
-                      :foreground "gray40"
-                      :box nil))
+        doom-modeline-buffer-file-name-style 'relative-to-project
+        doom-modeline-minor-modes nil
+        doom-modeline-project-detection 'auto
+        doom-modeline-buffer-file-name-style 'auto
+        doom-modeline-enable-word-count nil
+        doom-modeline-indent-info nil
+        doom-modeline-project-name t
+        doom-modeline-workspace-name t
+        doom-modeline-lsp t
+        doom-modeline-lsp-icon t
+        doom-modeline-major-mode-color-icon nil
+        doom-modeline-major-mode-color-light nil
+        ))
 
 (use-package ns-auto-titlebar
   :ensure t

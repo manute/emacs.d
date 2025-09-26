@@ -33,3 +33,4 @@ eln-cache/
 .org-id-locations
 ido.last
 /projectile.cache
+/tramp

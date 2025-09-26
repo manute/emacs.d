@@ -80,6 +80,14 @@
 (eval-after-load "term"
   '(define-key term-raw-map (kbd "C-c C-y") 'term-paste))
 
+
+;; Automatically bury the *Warnings* buffer so it doesn't pop up
+(defun my/bury-warnings-buffer ()
+  (when (get-buffer "*Warnings*")
+    (bury-buffer "*Warnings*")))
+
+(add-hook 'emacs-startup-hook #'my/bury-warnings-buffer)
+
 (use-package eyebrowse
   :ensure t
   :init (eyebrowse-mode t))
@@ -262,8 +270,27 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(nerd-icons punch-line grip-mode pandoc-mode markdown-preview-mode vterm-toggle vterm prettier-js protobuf-mode all-the-icons jsonnet-mode xclip terraform-mode moody flycheck-inline modus-operandi-theme modus-themes spaceline spacemacs-theme doom-themes restclient all-the-icons-dired undo-tree nord-theme whole-line-or-region rego-mode mustache-mode graphql-mode toml-mode web-server adoc-mode flycheck-pos-tip clj-refactor cider inf-clojure company-racer flycheck-rust racer rust-mode add-node-modules-path typescript-mode rjsx-mode dockerfile-mode json-mode yaml-mode python-mode exunit alchemist elixir-mode gotest go-eldoc lsp-ui lsp-mode key-chord rainbow-delimiters web-mode org-roam org-bullets org-beautify-theme htmlize smartparens flycheck-color-mode-line flycheck company-box company-emoji company-statistics company-quickhelp company ns-auto-titlebar zerodark-theme base16-theme memoize which-key projectile-ripgrep ripgrep projectile popwin anzu ido-vertical-mode smex yasnippet hydra keychain-environment eyebrowse exec-path-from-shell auto-package-update use-package-ensure-system-package use-package))
+   '(add-node-modules-path adoc-mode anzu auto-package-update company-box
+                           company-emoji company-quickhelp
+                           company-statistics dockerfile-mode
+                           doom-modeline exec-path-from-shell
+                           eyebrowse flycheck-color-mode-line go-eldoc
+                           gotest graphql-mode grip-mode htmlize hydra
+                           ido-vertical-mode json-mode json-reformat
+                           jsonnet-mode key-chord keychain-environment
+                           lsp-ui magit memoize mustache-mode
+                           ns-auto-titlebar org-beautify-theme
+                           org-bullets org-roam popwin
+                           projectile-ripgrep protobuf-mode
+                           python-mode rainbow-delimiters rego-mode
+                           restclient rjsx-mode rust-mode smartparens
+                           smex terraform-mode toml-mode
+                           typescript-mode vterm-toggle web-mode
+                           web-server whole-line-or-region yaml-mode
+                           yasnippet zerodark-theme))
  '(safe-local-variable-values
    '((setq projectile-project-root-functions
-           '(projectile-root-local projectile-root-top-down projectile-root-top-down-recurring projectile-root-bottom-up))))
+           '(projectile-root-local projectile-root-top-down
+                                   projectile-root-top-down-recurring
+                                   projectile-root-bottom-up))))
  '(warning-suppress-types '((comp) (comp) (comp) undo discard-info)))
