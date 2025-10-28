@@ -275,10 +275,11 @@
                            company-statistics dockerfile-mode
                            doom-modeline exec-path-from-shell
                            eyebrowse flycheck-color-mode-line go-eldoc
-                           gotest graphql-mode grip-mode htmlize hydra
-                           ido-vertical-mode json-mode json-reformat
+                           gorepl-mode gotest graphql-mode grip-mode
+                           groovy-mode htmlize hydra ido-vertical-mode
+                           java-mode json-mode json-reformat
                            jsonnet-mode key-chord keychain-environment
-                           lsp-ui magit memoize mustache-mode
+                           lsp-java lsp-ui magit memoize mustache-mode
                            ns-auto-titlebar org-beautify-theme
                            org-bullets org-roam popwin
                            projectile-ripgrep protobuf-mode

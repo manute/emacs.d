@@ -35,6 +35,8 @@
           ((js2-mode rjsx-mode typescript-mode) . lsp-deferred)
           ;; (clojure-mode . lsp-deferred)
           (rust-mode . lsp-deferred)
+          (java-mode . lsp-deferred)
+          (groovy-mode . lsp-deferred)
           ;; (graphql-mode . lsp-deferred)
           ;; (sql-mode . lsp-deferred)
   )
@@ -132,7 +134,9 @@
   (setq gofmt-command "gofumpt")
   (add-hook 'before-save-hook #'lsp-organize-imports)
   (add-hook 'before-save-hook #'lsp-format-buffer)
-  (add-hook 'go-mode-hook #'lsp-deferred))
+  (add-hook 'go-mode-hook #'lsp-deferred)
+  (add-hook 'go-mode-hook #'gorepl-mode)
+  )
 
 
 (use-package gotest
@@ -264,6 +268,41 @@
   ;; (add-hook 'graphql-mode-hook #'lsp-deferred)
   )
 
+;;;;;;;;;;;;;;;;;;
+;; Java
+;;;;;;;;;;;;;;;;;;
+
+(use-package lsp-java
+  :ensure t
+  :mode ("\\.java\\'" . java-mode)
+  :after lsp
+  :config
+  (add-hook 'java-mode-hook #'lsp)
+  (add-hook 'java-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook #'lsp-format-buffer nil t)))
+  )
+
+(use-package dap-mode
+  :ensure t
+  :after lsp-mode
+  :config
+  (dap-auto-configure-mode)
+  (require 'dap-java))
+
+;; git clone git@github.com:GroovyLanguageServer/groovy-language-server.git and gradle build
+;; and move jar to ~/.emacs.d/.cache/lsp/
+(use-package groovy-mode
+  :ensure t
+  :defer t
+  :mode ("\\.gradle\\'" "\\.groovy\\'")
+  :config
+  (setq groovy-indent-offset 4)
+  (add-hook 'groovy-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook #'lsp-format-buffer nil t)))
+
+  )
 
 ;;;;;;;;;;;;;;;;;;
 ;; clojure
