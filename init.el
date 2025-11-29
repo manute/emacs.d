@@ -252,6 +252,18 @@
   :mode ("\\.proto\\'" . protobuf-mode))
 
 
+(use-package quelpa :ensure t)
+
+(quelpa
+ '(quelpa-use-package
+   :fetcher git
+   :url "https://github.com/quelpa/quelpa-use-package.git"))
+(require 'quelpa-use-package)
+
+;; AI https://github.com/karthink/gptel
+(use-package gptel
+  :quelpa (gptel :fetcher github :repo "karthink/gptel"))
+
 ;; INIT DAEMON SERVER
 (require 'server)
 (unless (server-running-p)
@@ -275,7 +287,7 @@
                            company-statistics dockerfile-mode
                            doom-modeline exec-path-from-shell
                            eyebrowse flycheck-color-mode-line go-eldoc
-                           gorepl-mode gotest graphql-mode grip-mode
+                           gotest gptel graphql-mode grip-mode
                            groovy-mode htmlize hydra ido-vertical-mode
                            java-mode json-mode json-reformat
                            jsonnet-mode key-chord keychain-environment
@@ -283,12 +295,13 @@
                            ns-auto-titlebar org-beautify-theme
                            org-bullets org-roam popwin
                            projectile-ripgrep protobuf-mode
-                           python-mode rainbow-delimiters rego-mode
-                           restclient rjsx-mode rust-mode smartparens
-                           smex terraform-mode toml-mode
-                           typescript-mode vterm-toggle web-mode
-                           web-server whole-line-or-region yaml-mode
-                           yasnippet zerodark-theme))
+                           python-mode quelpa quelpa-use-package
+                           rainbow-delimiters rego-mode restclient
+                           rjsx-mode rust-mode smartparens smex
+                           terraform-mode toml-mode typescript-mode
+                           vterm-toggle web-mode web-server
+                           whole-line-or-region yaml-mode yasnippet
+                           zerodark-theme))
  '(safe-local-variable-values
    '((setq projectile-project-root-functions
            '(projectile-root-local projectile-root-top-down
