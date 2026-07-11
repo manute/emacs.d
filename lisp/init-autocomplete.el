@@ -11,19 +11,20 @@
   :defer t
   :diminish company-mode
   :init
-  (setq completion-at-point-functions '(company-complete-common))
-  (add-hook 'after-init-hook 'global-company-mode)
+  ;; Enable company globally
+  (add-hook 'after-init-hook #'global-company-mode)
   :config
-  (setq company-idle-delay nil) ; never start completions automatically
-  (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
-
-  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
-
-  (setq company-minimum-prefix-length 2
+  (setq company-idle-delay nil           ; manual trigger only
+        company-minimum-prefix-length 2
         company-selection-wrap-around t
         company-show-numbers t
         company-tooltip-align-annotations t
-        company-require-match nil))
+        company-require-match nil)
+
+  ;; Better TAB integration
+  (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+)
 
 
 (use-package company-quickhelp          ; Show help in tooltip

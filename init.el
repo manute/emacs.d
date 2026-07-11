@@ -293,7 +293,7 @@
                            jsonnet-mode key-chord keychain-environment
                            lsp-java lsp-ui magit memoize mustache-mode
                            ns-auto-titlebar org-beautify-theme
-                           org-bullets org-roam popwin
+                           org-bullets org-roam popwin prettier-js
                            projectile-ripgrep protobuf-mode
                            python-mode quelpa quelpa-use-package
                            rainbow-delimiters rego-mode restclient

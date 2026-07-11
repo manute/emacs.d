@@ -127,6 +127,7 @@
   ;; :ensure-system-package (godoc . "go get -u golang.org/x/tools/cmd/godoc"))
 
 
+
 (use-package go-mode
   :ensure t
   :config
@@ -134,9 +135,7 @@
   (setq gofmt-command "gofumpt")
   (add-hook 'before-save-hook #'lsp-organize-imports)
   (add-hook 'before-save-hook #'lsp-format-buffer)
-  (add-hook 'go-mode-hook #'lsp-deferred)
-  (add-hook 'go-mode-hook #'gorepl-mode)
-  )
+  (add-hook 'go-mode-hook #'lsp-deferred))
 
 
 (use-package gotest
@@ -148,6 +147,17 @@
   (define-key go-mode-map (kbd "C-c C-t p") 'go-test-current-project)
   (define-key go-mode-map (kbd "C-c C-t b") 'go-test-current-benchmark)
   (define-key go-mode-map (kbd "C-c C-t x") 'go-run))
+
+
+;; Custom config for gorepl-mode
+;; (add-to-list 'load-path "~/go/src/github.com/manute/gorepl-mode")
+;; (use-package gorepl-mode
+;;   ;; Ensure the package is loaded from the specified path
+;;   :load-path "~/go/src/github.com/manute/gorepl-mode"
+;;   :after go-mode
+;;   ;; :config
+;;   )
+
 
 ;;;;;;;;;;;;;;;;;;
 ;; python
@@ -212,17 +222,14 @@
 ;;;;;;;;;;;;;;;;;;
 (use-package rjsx-mode
   :ensure t
-  :mode ("\\.js\\'"
-         "\\.jsx\\'")
+  :mode (("\\.js\\'" . rjsx-mode)
+         ("\\.jsx\\'" . rjsx-mode)
+         ("\\.mjs\\'" . rjsx-mode))
   :config
   (setq js2-mode-show-parse-errors nil
         js2-mode-show-strict-warnings nil
         js2-basic-offset 2
         js-indent-level 2)
-  (setq-local flycheck-disabled-checkers (cl-union flycheck-disabled-checkers
-                                                   '(javascript-jshint))) ; jshint doesn't work for JSX
-  ;; (add-hook 'js2-mode-hook #'lsp-format-onsave-hook)
-
   (electric-pair-mode 1))
 
 (use-package typescript-mode
@@ -236,14 +243,14 @@
 
 (use-package add-node-modules-path
   :ensure t
-  :defer t
-  :hook (((js2-mode rjsx-mode) . add-node-modules-path)))
+  :hook ((rjsx-mode . add-node-modules-path)
+         (typescript-mode . add-node-modules-path)))
 
 (use-package prettier-js
+  :ensure t
   :defer t
-  :diminish prettier-js-mode
-  :hook ((typescript-mode . prettier-js-mode)
-         (js-mode . prettier-js-mode)
+  :hook ((rjsx-mode . prettier-js-mode)
+         (typescript-mode . prettier-js-mode)
          (json-mode . prettier-js-mode)
          (web-mode . prettier-js-mode)))
 
