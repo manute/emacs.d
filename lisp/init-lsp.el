@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (use-package lsp-mode
   :commands lsp
   :ensure t
@@ -133,8 +135,12 @@
   :config
   ;; Use gofumpt instead of gofmt
   (setq gofmt-command "gofumpt")
-  (add-hook 'before-save-hook #'lsp-organize-imports)
-  (add-hook 'before-save-hook #'lsp-format-buffer)
+  (add-hook 'lsp-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook
+                      #'lsp-organize-imports nil t)
+            (add-hook 'before-save-hook
+                      #'lsp-format-buffer nil t)))
   (add-hook 'go-mode-hook #'lsp-deferred))
 
 

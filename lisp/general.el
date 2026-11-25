@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 ;; No splash screen please
 (setq inhibit-startup-message t)
 
@@ -130,18 +132,17 @@
 
 (use-package projectile
   :ensure t
-  :bind  (("C-c C-f" . projectile-find-file)
-          ("C-c p p" . projectile-switch-project))
+  :demand t
+  :bind (("C-c C-f" . projectile-find-file)
+         ("C-c p p" . projectile-switch-project))
   :config
-  (projectile-global-mode)
-  (setq projectile-ignored-project-function 'projectile-ignore-folders)
-  (add-to-list 'projectile-project-root-files-functions 'custom/find-go-dir)
-  ;; multiple projects in a repo
-  ;; (setq projectile-project-root-functions
-  ;;       '(projectile-root-local
-  ;;         projectile-root-top-down
-  ;;         projectile-root-bottom-up
-  ;;         projectile-root-top-down-recurring))
+  (projectile-mode 1)
+
+  (setq projectile-ignored-project-function
+        'projectile-ignore-folders)
+
+  ;; (add-to-list 'projectile-project-root-files-functions
+  ;;              'custom/find-go-dir)
   )
 
 

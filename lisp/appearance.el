@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (when (eq system-type 'darwin)
   (setq mac-allow-anti-aliasing t)  ;; nice fonts in OS X
   ;; Emoji

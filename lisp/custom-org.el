@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 ;; THANKS to these files
 ;; http://www.brool.com/post/using-org-mode-with-gtd/
 ;; https://github.com/kostajh/.emacs.d/blob/master/customizations/09-org.el

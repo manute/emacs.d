@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; package-refresh-contents if fails
 (require 'package)
 ;; (setq package-enable-at-startup nil)
@@ -9,7 +10,7 @@
 ;; DEBUG errors
 ;;(setq max-specpdl-size 5)
 ;;(setq max-lisp-eval-depth 10000)
-;;(setq debug-on-error t)
+(setq debug-on-error t)
 ;;(toggle-debug-on-quit t)
 
 
@@ -307,4 +308,5 @@
            '(projectile-root-local projectile-root-top-down
                                    projectile-root-top-down-recurring
                                    projectile-root-bottom-up))))
- '(warning-suppress-types '((comp) (comp) (comp) undo discard-info)))
+ '(warninrg-suppress-types '((comp) (comp) (comp) undo discard-info)))
+

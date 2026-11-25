@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 
 (defun company-mode/backend-with-yas (backend)
   (if (and (listp backend) (member 'company-yasnippet backend))

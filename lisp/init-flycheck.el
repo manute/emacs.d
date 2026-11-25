@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (use-package flycheck
   :ensure t
   :defer t

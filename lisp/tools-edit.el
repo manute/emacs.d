@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 ;; THANKS tuxicity-> http://rejeep.github.io/emacs/elisp/2010/03/11/duplicate-current-line-or-region-in-emacs.html
 (defun manu/duplicate-current-line-or-region (arg)
   "Duplicates the current line or region ARG times.
