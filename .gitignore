@@ -38,3 +38,6 @@ ido.last
 /eclipse.jdt.ls/
 /quelpa/
 /.dap-breakpoints
+/org-persist
+/ielm-history.eld
+/projectile-frecency.eld

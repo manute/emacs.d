@@ -117,33 +117,27 @@
   :defer t
   :config (popwin-mode 1))
 
-;; This is to prevent not needed folders slip into projectile known projects
-(defun projectile-ignore-folders (project-name)
-  (or (s-contains? "vendor" project-name)
-      (s-contains? "npm" project-name)
-      ))
+(defun projectile-ignore-folders (project-root)
+  "Ignore projects containing specific folders."
+  (or (string-match-p "vendor" project-root)
+      (string-match-p "npm" project-root)
+      (string-match-p "org-persist" project-root)))
 
 (defun custom/find-go-dir (dir)
-  (if (equal dir "/") nil
-    (if (member "go.mod" (directory-files dir)) dir
-      (custom/find-go-dir (file-name-directory (string-trim-right dir "/"))))))
+  "Find the Go project root by looking for go.mod."
+  (locate-dominating-file dir "go.mod"))
 
 (use-package projectile
   :ensure t
   :bind  (("C-c C-f" . projectile-find-file)
           ("C-c p p" . projectile-switch-project))
   :config
-  (projectile-global-mode)
-  (setq projectile-ignored-project-function 'projectile-ignore-folders)
-  (add-to-list 'projectile-project-root-files-functions 'custom/find-go-dir)
-  ;; multiple projects in a repo
-  ;; (setq projectile-project-root-functions
-  ;;       '(projectile-root-local
-  ;;         projectile-root-top-down
-  ;;         projectile-root-bottom-up
-  ;;         projectile-root-top-down-recurring))
-  )
-
+  (projectile-mode +1)
+  ;; Tell Projectile where your code lives!
+  ;; (Change "~/Projects" to your actual coding directory)
+  (setq projectile-project-search-path '("~/Projects" "~/go/src/github.com/"))
+  (setq projectile-ignored-project-function #'projectile-ignore-folders)
+  (add-to-list 'projectile-project-root-functions #'custom/find-go-dir))
 
 (use-package grep
   :config
@@ -156,53 +150,92 @@
   (add-to-list 'grep-find-ignored-directories "vendor"))
 
 
-(use-package ripgrep
-  :if (executable-find "rg")
-  :commands (ripgrep-regexp)
-  :ensure t
-  :bind (:map ripgrep-search-mode-map
-              ("n" . next-error-no-select)
-              ("p" . previous-error-no-select)))
+;; (use-package ripgrep
+;;   :if (executable-find "rg")
+;;   :commands (ripgrep-regexp)
+;;   :ensure t
+;;   :bind (:map ripgrep-search-mode-map
+;;               ("n" . next-error-no-select)
+;;               ("p" . previous-error-no-select)))
 
-(use-package projectile-ripgrep
-  :if (executable-find "rg")
+;; (use-package projectile-ripgrep
+;;   :if (executable-find "rg")
+;;   :ensure t
+;;   :after (projectile)
+;;   :commands (projectile-ripgrep)
+;;   :bind (:map projectile-mode-map
+;;               ("C-c p s r" . projectile-ripgrep)))
+
+
+(use-package rg
   :ensure t
-  :after (projectile)
-  :commands (projectile-ripgrep)
-  :bind (:map projectile-mode-map
-              ("C-c p s r" . projectile-ripgrep)))
+  :defer t
+  :config
+  ;; Enables a fantastic default keybinding map under the "C-c s" prefix.
+  ;; For example, C-c s p searches the project, C-c s d searches a directory.
+  (rg-enable-default-bindings)
+
+  :bind
+  ;; Keeps your exact Projectile muscle memory intact!
+  ;; rg-project automatically detects the root of your current project.
+  (("C-c p s r" . rg-project)))
 
 
 (use-package warnings
-  :ensure t
   :defer t
-  :config (setq warning-suppress-types '(undo discard-info)))
-
+  :config (setq warning-suppress-types '((undo) (discard-info) (files))))
 
 ;; ==========================
 ;; VTerm + vterm-toggle setup
 ;; ==========================
 
+(defvar my/vterm-font "SF Mono"
+  "Monospace font for vterm buffers; ligatures/icons are unnecessary overhead.")
+
+(defvar my/vterm-buffer-counter 0
+  "Counter for naming vterm buffers.")
+
+(defun my/vterm-mac-key-fixes ()
+  "Force vterm to send the correct delete signal for macOS keys."
+  (local-set-key (kbd "<delete>") #'vterm-send-delete)
+  (local-set-key [delete] #'vterm-send-delete)
+  (local-set-key (kbd "<kp-delete>") #'vterm-send-delete))
+
+(defun my/vterm-mode-setup ()
+  "Strip UI overhead from vterm buffers for typing and flood output."
+  (display-line-numbers-mode -1)
+  (setq-local line-spacing 0)
+  (setq-local global-hl-line-mode nil)
+  (setq-local bidi-display-reordering nil)
+  (setq-local bidi-inhibit-bpa t)
+  (setq-local auto-composition-mode nil)
+  ;; Reduce GC pauses during large build/log output.
+  (setq-local gc-cons-threshold (* 128 1024 1024))
+  (when (featurep 'doom-modeline)
+    (doom-modeline-mode -1))
+  (when (member my/vterm-font (font-family-list))
+    (set-face-attribute 'default nil
+                        :font my/vterm-font
+                        :height my-font-size)))
+
 (use-package vterm
   :ensure t
+  :defer t
   :config
   (setq vterm-disable-bold-font t
-        vterm-max-scrollback 5000
+        vterm-disable-underline t
+        vterm-disable-inverse-video t
+        vterm-max-scrollback 1500
+        vterm-clear-scrollback-when-clearing t
+        ;; Low delay keeps typing/echo snappy; raise to 0.15–0.2 if flood output stutters.
+        vterm-timer-delay 0.08
         comp-deferred-compilation t
         fast-but-imprecise-scrolling t
         redisplay-skip-fontification-on-input t
         inhibit-compacting-font-caches t)
 
-  (add-hook 'vterm-mode-hook
-            (lambda ()
-              (display-line-numbers-mode -1)
-              (setq-local global-hl-line-mode nil)
-              (setq-local bidi-display-reordering nil)
-              (setq-local bidi-inhibit-bpa t)))
-
-  ;; Auto-named vterms: vterm-1, vterm-2, ...
-  (defvar my/vterm-buffer-counter 0
-    "Counter for naming vterm buffers.")
+  ;; (add-hook 'vterm-mode-hook #'my/vterm-mode-setup)
+  (add-hook 'vterm-mode-hook #'my/vterm-mac-key-fixes)
 
   (defun my/vterm-new (&optional name)
     "Create a new vterm buffer with a unique name or given NAME."
@@ -211,7 +244,6 @@
     (let ((buffer-name (or name (format "vterm-%d" my/vterm-buffer-counter))))
       (vterm buffer-name)))
 
-  ;; Open vterm in split
   (defun my/vterm-split-below ()
     "Open a new vterm in a horizontal split."
     (interactive)
@@ -226,14 +258,18 @@
     (other-window 1)
     (my/vterm-new))
 
-  ;; Project-root vterm
   (defun my/vterm-project ()
     "Open a vterm in the current project's root."
     (interactive)
     (let ((default-directory (if (fboundp 'project-root)
                                  (project-root (project-current t))
                                default-directory)))
-      (my/vterm-new))))
+      (my/vterm-new)))
+
+  :bind (("C-c t n" . my/vterm-new)
+         ("C-c t b" . my/vterm-split-below)
+         ("C-c t r" . my/vterm-split-right)
+         ("C-c t p" . my/vterm-project)))
 
 ;; ==========================
 ;; VTerm buffer cycling
@@ -273,22 +309,16 @@
 
 (use-package vterm-toggle
   :ensure t
+  :after vterm
+  :defer t
   :bind (("C-`" . vterm-toggle))
   :config
-  (setq vterm-toggle-fullscreen-p nil)  ;; toggle in split, not fullscreen
-  (setq vterm-toggle-scope 'project)   ;; separate per project
-  (setq vterm-toggle-cd-auto-create-buffer t))  ;; auto-name buffer
+  (setq vterm-toggle-fullscreen-p nil)
+  (setq vterm-toggle-scope 'project)
+  (setq vterm-toggle-cd-auto-create-buffer t))
 
-;; ==========================
-;; Keybindings for manual control
-;; ==========================
-
-(global-set-key (kbd "C-c t n") 'my/vterm-new)          ;; new vterm
-(global-set-key (kbd "C-c t b") 'my/vterm-split-below)  ;; split below
-(global-set-key (kbd "C-c t r") 'my/vterm-split-right)  ;; split right
-(global-set-key (kbd "C-c t p") 'my/vterm-project)      ;; project root vterm
-(global-set-key (kbd "C-c t <right>") 'my/vterm-next)   ;; next vterm
-(global-set-key (kbd "C-c t <left>") 'my/vterm-prev)    ;; previous vterm
+(global-set-key (kbd "C-c t <right>") #'my/vterm-next)
+(global-set-key (kbd "C-c t <left>") #'my/vterm-prev)
 
 
 (use-package which-key
@@ -314,5 +344,41 @@
 
 (show-paren-mode 1)
 
+
+(use-package yaml-mode
+  :ensure t
+  :mode (("\\.yml\\'" . yaml-mode)
+         ("\\.yaml\\'" . yaml-mode)
+         ("\\.yaml.tmpl\\'" . yaml-mode))
+  :init
+  ;; Set the indent size (usually 2 spaces for YAML)
+  (setq yaml-indent-offset 2)
+  :hook (yaml-mode . (lambda ()
+                       ;; 1. Disable "Electric Indent" locally
+                       ;; This stops Emacs from automatically indenting new lines
+                       ;; when you press Enter, giving you full manual control.
+                       (electric-indent-local-mode -1)
+
+                       ;; 2. Ensure NO format-on-save hooks run in this buffer
+                       ;; (These lines protect you if you have global formatters enabled)
+                       (remove-hook 'before-save-hook 'lsp-format-buffer t)
+                       (remove-hook 'before-save-hook 'eglot-format-buffer t)
+                       (remove-hook 'before-save-hook 'apheleia-format-buffer-hook t)
+                       (remove-hook 'before-save-hook 'prettier-js-mode-save-hook t))))
+
+
+;; (use-package copilot
+;;   ;; :ensure t
+;;   :vc (:url "https://github.com/copilot-emacs/copilot.el"
+;;             :rev :newest
+;;             :branch "main")
+;;   :hook (prog-mode . copilot-mode)
+;;   :bind (:map copilot-completion-map
+;;               ("<tab>" . copilot-accept-completion)
+;;               ("TAB" . copilot-accept-completion)
+;;               ("C-<tab>" . copilot-accept-completion-by-word)
+;;               ("C-TAB" . copilot-accept-completion-by-word)
+;;               ("C-n" . copilot-next-completion)
+;;               ("C-p" . copilot-previous-completion)))
 
 (provide 'general)

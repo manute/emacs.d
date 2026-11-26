@@ -12,12 +12,17 @@
 ;;(setq debug-on-error t)
 ;;(toggle-debug-on-quit t)
 
+;; Set a valid macOS deployment target for native-compilation
+(setenv "MACOSX_DEPLOYMENT_TARGET"
+        (car (split-string (shell-command-to-string "sw_vers -productVersion"))))
 
 (package-initialize)
 
 (setq package-check-signature nil)
 
 (setq tramp-default-method "ssh")
+
+(setq native-comp-async-report-warnings-errors 'silent)
 
 ;; If this fails , use local version of use-package
 ;;
@@ -35,19 +40,20 @@
 (use-package exec-path-from-shell
   :ensure t
   :config
-  (setq exec-path-from-shell-arguments '("-l"))
-  (exec-path-from-shell-copy-envs
-   '("PATH"
-     "GOPATH" "GO111MODULE" "GOPROXY" ;; golang
-     "LC_ALL" "LANG" "LC_TYPE"
-     "SSH_AGENT_PID" "SSH_AUTH_SOCK" ;; ssh
-     "SHELL"
-     "GPG_TTY" ;; gpg session
-     "NVM_BIN" ;; npm
-     ;; Using x11 the .bashrc or .zshrc could have not been sourcered yet
-     ;; so it may need this symlink:
-     ;; ln -s /home/manu/.nvm/versions/node/v17.5.0/bin/node /usr/bin/node
-     ))
+  ;; (setq exec-path-from-shell-arguments '("-l"))
+  ;; (exec-path-from-shell-copy-envs
+  ;;  '("PATH"
+  ;;    "GOPATH" "GO111MODULE" "GOPROXY" ;; golang
+  ;;    "LC_ALL" "LANG" "LC_TYPE"
+  ;;    "SSH_AGENT_PID" "SSH_AUTH_SOCK" ;; ssh
+  ;;    "SHELL"
+  ;;    "GPG_TTY" ;; gpg session
+  ;;    "NVM_BIN" ;; npm
+  ;;    "JAVA_HOME"
+  ;;    ;; Using x11 the .bashrc or .zshrc could have not been sourcered yet
+  ;;    ;; so it may need this symlink:
+  ;;    ;; ln -s /home/manu/.nvm/versions/node/v17.5.0/bin/node /usr/bin/node
+  ;;    ))
   (exec-path-from-shell-initialize))
 
 (use-package auto-package-update
@@ -114,10 +120,29 @@
   :diminish auto-revert-mode
   :bind (("C-x g" . #'magit-status))
   :config
-  ;; perfomance tips
-  (setq magit-commit-show-diff nil)
-  (setq magit-refresh-status-buffer nil)
-  (setq magit-git-executable "/usr/bin/git"))
+  ;; Performance tips
+  (setq magit-commit-show-diff nil
+        magit-revert-buffers 'silent
+        magit-git-executable "/usr/bin/git"
+        ;; mac os: Use pipes instead of PTYs to speed up process communication
+        magit-process-connection-type nil
+        ;; Disable checking for unpushed/unpulled commits on branches other than HEAD
+        magit-revision-insert-related-refs nil
+        ;; Turn off character-by-character diff refinement (very slow on huge diffs)
+        magit-diff-refine-hunk nil)
+
+  ;; Stop Magit from auto-refreshing the status buffer on every file save
+  (remove-hook 'after-save-hook 'magit-after-save-refresh-status)
+
+  ;; Remove the heaviest sections from the status buffer
+  (remove-hook 'magit-status-sections-hook 'magit-insert-tags-header)
+  (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream)
+  (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-pushremote)
+  (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-upstream)
+  (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-pushremote)
+
+  ;; If you don't use submodules, remove them too
+  (remove-hook 'magit-status-sections-hook 'magit-insert-modules))
 
 ;; M-x package-install RET xclip RET
 ;; (xclip-mode 1)
@@ -252,17 +277,39 @@
   :mode ("\\.proto\\'" . protobuf-mode))
 
 
-(use-package quelpa :ensure t)
+;; (define-derived-mode gsx-mode go-mode "GSX"
+;;   "Major mode for editing go-tui GSX files."
+;;   :group 'go)
 
-(quelpa
- '(quelpa-use-package
-   :fetcher git
-   :url "https://github.com/quelpa/quelpa-use-package.git"))
-(require 'quelpa-use-package)
+;; ;; Associate .gsx files with the new mode
+;; (add-to-list 'auto-mode-alist '("\\.gsx\\'" . gsx-mode))
 
-;; AI https://github.com/karthink/gptel
-(use-package gptel
-  :quelpa (gptel :fetcher github :repo "karthink/gptel"))
+;; (with-eval-after-load 'eglot
+;;   (add-to-list 'eglot-server-programs
+;;                '(gsx-mode . ("tui-lsp" "serve"))))
+
+;; ;; Auto-start eglot when opening a .gsx file
+;; (add-hook 'gsx-mode-hook 'eglot-ensure)
+;; (with-eval-after-load 'lsp-mode
+;;   (lsp-register-client
+;;    (make-lsp-client :new-connection (lsp-stdio-connection '("tui-lsp" "serve"))
+;;                     :major-modes '(gsx-mode)
+;;                     :priority 1
+;;                     :server-id 'tui-lsp))
+
+;;   (add-hook 'gsx-mode-hook #'lsp))
+
+;; (use-package quelpa :ensure t)
+
+ ;; (quelpa
+;;  '(quelpa-use-package
+;;    :fetcher git
+;;    :url "https://github.com/quelpa/quelpa-use-package.git"))
+;; (require 'quelpa-use-package)
+
+;; ;; AI https://github.com/karthink/gptel
+;; (use-package gptel
+;;   :quelpa (gptel :fetcher github :repo "karthink/gptel"))
 
 ;; INIT DAEMON SERVER
 (require 'server)
@@ -281,30 +328,34 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+   '("/Users/m.alonso/org/gtd.org" "/Users/m.alonso/org/work.org"
+     "/Users/m.alonso/org/personal.org" "/Users/m.alonso/org/eod.org"))
  '(package-selected-packages
    '(add-node-modules-path adoc-mode anzu auto-package-update company-box
                            company-emoji company-quickhelp
                            company-statistics dockerfile-mode
                            doom-modeline exec-path-from-shell
                            eyebrowse flycheck-color-mode-line go-eldoc
-                           gotest gptel graphql-mode grip-mode
-                           groovy-mode htmlize hydra ido-vertical-mode
-                           java-mode json-mode json-reformat
-                           jsonnet-mode key-chord keychain-environment
-                           lsp-java lsp-ui magit memoize mustache-mode
-                           ns-auto-titlebar org-beautify-theme
-                           org-bullets org-roam popwin
-                           projectile-ripgrep protobuf-mode
-                           python-mode quelpa quelpa-use-package
-                           rainbow-delimiters rego-mode restclient
+                           gotest graphql-mode grip-mode groovy-mode
+                           htmlize ido-vertical-mode json-mode
+                           json-reformat jsonnet-mode key-chord
+                           keychain-environment lsp-java lsp-ui magit
+                           memoize mustache-mode ns-auto-titlebar
+                           org-beautify-theme org-roam org-superstar
+                           popwin prettier-js projectile-ripgrep
+                           protobuf-mode python-mode
+                           rainbow-delimiters rego-mode restclient rg
                            rjsx-mode rust-mode smartparens smex
                            terraform-mode toml-mode typescript-mode
                            vterm-toggle web-mode web-server
                            whole-line-or-region yaml-mode yasnippet
                            zerodark-theme))
+ '(package-vc-selected-packages
+   '((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
+              "main")))
  '(safe-local-variable-values
    '((setq projectile-project-root-functions
            '(projectile-root-local projectile-root-top-down
                                    projectile-root-top-down-recurring
-                                   projectile-root-bottom-up))))
- '(warning-suppress-types '((comp) (comp) (comp) undo discard-info)))
+                                   projectile-root-bottom-up)))))

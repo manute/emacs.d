@@ -1,8 +1,9 @@
 (when (eq system-type 'darwin)
   (setq mac-allow-anti-aliasing t)  ;; nice fonts in OS X
   ;; Emoji
-  (set-fontset-font t 'symbol (font-spec :family "Apple Symbols") nil 'prepend)
-  (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend))
+  ;; (set-fontset-font t 'symbol (font-spec :family "Apple Symbols") nil 'prepend)
+  ;; (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend)
+)
 
 ;; On Linux
 ;; Download from: https://www.nerdfonts.com/font-downloads
@@ -13,11 +14,33 @@
 ;; brew tap homebrew/cask-fonts
 ;; brew install --cask font-fira-code-nerd-font
 
-(when (member "FiraCode Nerd Font" (font-family-list))
-  (add-to-list 'initial-frame-alist '(font . "FiraCode Nerd Font-11"))
-  (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-11")))
+;; Basic UI config
+(setq-default truncate-lines 1)
+(setq-default line-spacing 4)
 
+;; Define the font name variable for easy changing
+(defvar my-font-name "FiraCode Nerd Font")
+(defvar my-font-size 135) ;; 130 = 13pt, 120 = 12pt
 
+;; Check if font exists, then set it globally
+(when (member my-font-name (font-family-list))
+  (set-face-attribute 'default nil
+                      :font my-font-name
+                      :height my-font-size))
+
+;; Basic UI config
+(setq-default truncate-lines 1)
+(setq-default line-spacing 4)
+
+;; Define the font name variable for easy changing
+(defvar my-font-name "FiraCode Nerd Font")
+(defvar my-font-size 130) ;; 130 = 13pt, 120 = 12pt
+
+;; Check if font exists, then set it globally
+(when (member my-font-name (font-family-list))
+  (set-face-attribute 'default nil
+                      :font my-font-name
+                      :height my-font-size))
 (use-package memoize
   :ensure t)
 
@@ -93,9 +116,8 @@
     (set-char-table-range composition-function-table (car char-regexp)
                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
 
-(setq-default truncate-lines 1)  ;; no word wrap
-(setq-default line-spacing 4)
-(set-face-attribute 'default nil :height 110)
+;; Tell nerd-icons to use your main font instead of looking for "Symbols Nerd Font Mono"
+(setq nerd-icons-font-family "FiraCode Nerd Font")
 (setq nerd-icons-scale-factor 1.0)  ;; adjust size globally
 (setq doom-modeline-icon t)         ;; ensure icons are enabled
 

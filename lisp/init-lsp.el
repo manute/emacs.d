@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (use-package lsp-mode
   :commands lsp
   :ensure t
@@ -28,7 +29,7 @@
           (go-mode . lsp-deferred)
           (sh-mode . lsp-deferred)
           (dockerfile-mode . lsp-deferred)
-          (yaml-mode . lsp-deferred)
+          ;; (yaml-mode . lsp-deferred)
           (python-mode . lsp-deferred)
           (json-mode . lsp-deferred)
           (terraform-mode . lsp-deferred)
@@ -132,12 +133,11 @@
   :config
   ;; Use gofumpt instead of gofmt
   (setq gofmt-command "gofumpt")
-  (add-hook 'before-save-hook #'lsp-organize-imports)
-  (add-hook 'before-save-hook #'lsp-format-buffer)
   (add-hook 'go-mode-hook #'lsp-deferred)
-  (add-hook 'go-mode-hook #'gorepl-mode)
-  )
-
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook #'lsp-organize-imports nil t)
+              (add-hook 'before-save-hook #'lsp-format-buffer nil t))))
 
 (use-package gotest
   :ensure t
@@ -160,25 +160,40 @@
   :mode (("\\.py\\'" . python-mode)
          ("\\.python\\'" . python-mode))
   :config
-  (add-hook 'before-save-hook #'lsp-organize-imports)
-  (add-hook 'before-save-hook #'lsp-format-buffer)
-  (add-hook 'python-mode-hook #'lsp-deferred))
-
+  (add-hook 'python-mode-hook #'lsp-deferred)
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook #'lsp-organize-imports nil t)
+              (add-hook 'before-save-hook #'lsp-format-buffer nil t))))
 ;;;;;;;;;;;;;;;;;;
 ;; extensions
 ;;;;;;;;;;;;;;;;;;
 
-(use-package yaml-mode
-  :ensure t
-  :mode (("\\.yml\\'" . yaml-mode)
-         ("\\.yaml\\'" . yaml-mode)))
+;; (use-package yaml-mode
+;;   :ensure t
+;;   :mode (("\\.yml\\'" . yaml-mode)
+;;          ("\\.yaml\\'" . yaml-mode))
+;;   :config (setq-default yaml-indent-offset 1))
+
 
 (use-package json-mode
   :ensure t
   :mode (("\\.json\\'" . json-mode)
          ("\\.tmpl\\'" . json-mode)
          ("\\.eslintrc\\'" . json-mode))
-  :config (setq-default js-indent-level 2))
+  :config (setq-default js-indent-level 2)
+  :hook (json-mode . (lambda ()
+                       ;; 1. Disable "Electric Indent" locally
+                       ;; This stops Emacs from automatically indenting new lines
+                       ;; when you press Enter, giving you full manual control.
+                       (electric-indent-local-mode -1)
+
+                       ;; 2. Ensure NO format-on-save hooks run in this buffer
+                       ;; (These lines protect you if you have global formatters enabled)
+                       (remove-hook 'before-save-hook 'lsp-format-buffer t)
+                       (remove-hook 'before-save-hook 'eglot-format-buffer t)
+                       (remove-hook 'before-save-hook 'apheleia-format-buffer-hook t)
+                       (remove-hook 'before-save-hook 'prettier-js-mode-save-hook t))))
 
 (use-package jsonnet-mode
   :ensure t
@@ -200,13 +215,11 @@
 (use-package terraform-mode
   :ensure t
   :defer t
-  :mode (
-         ("\\.tf\\'" . terraform-mode)
-         )
+  :mode ("\\.tf\\'" . terraform-mode)
   :config
   (add-hook 'terraform-mode-hook
-            (lambda () (add-hook 'before-save-hook  #'terraform-format-buffer))))
-
+            (lambda ()
+              (add-hook 'before-save-hook #'terraform-format-buffer nil t))))
 ;;;;;;;;;;;;;;;;;;
 ;; javascript
 ;;;;;;;;;;;;;;;;;;
@@ -240,9 +253,11 @@
   :hook (((js2-mode rjsx-mode) . add-node-modules-path)))
 
 (use-package prettier-js
+  :ensure t
   :defer t
   :diminish prettier-js-mode
-  :hook ((typescript-mode . prettier-js-mode)
+  :hook (
+         ;; (typescript-mode . prettier-js-mode)
          (js-mode . prettier-js-mode)
          (json-mode . prettier-js-mode)
          (web-mode . prettier-js-mode)))
@@ -277,6 +292,7 @@
   :mode ("\\.java\\'" . java-mode)
   :after lsp
   :config
+  (setq lsp-java-java-path "/Users/m.alonso/.sdkman/candidates/java/current/bin/java")
   (add-hook 'java-mode-hook #'lsp)
   (add-hook 'java-mode-hook
           (lambda ()

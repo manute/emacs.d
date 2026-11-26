@@ -9,7 +9,10 @@
 
 
 (use-package org
-  :mode ("\\.org\\'" . org-mode)
+  :mode (
+         ("\\.org\\'" . org-mode)
+         ("\\.notes\\'" . org-mode)
+         )
   :bind (("C-c c" . org-capture)
          ("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
@@ -19,9 +22,11 @@
   (visual-line-mode)
   (setq org-directory "~/org")
 
+  ;; (setq org-agenda-files
+  ;;       (list "~/org/gtd.org" "~/org/work.org" "~/org/personal.org" "~/org/eod.org"))
   (setq org-agenda-files
-        (list "~/org/gtd.org" "~/org/work.org" "~/org/personal.org" "~/org/eod.org"))
-
+        (directory-files-recursively "~/org" "\\.org$"))
+  
   (setq org-todo-keywords
         '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 
@@ -30,6 +35,7 @@
         org-return-follows-link t
         org-enforce-todo-dependencies t
         org-use-fast-todo-selection t
+        org-support-shift-select t
         org-confirm-babel-evaluate nil)
 
   ;; Colors.
@@ -73,11 +79,7 @@
                                   `(org-level-1 ((t (,@headline ,@sans-font :height 1.75  :box ,padding))))
                                   `(org-document-title ((t (,@headline ,@sans-font :height 1.5 :underline nil)))))))))
 
-  (use-package org-bullets
-    :ensure t
-    :commands org-bullets-mode)
-
-  (add-hook 'org-mode-hook #'org-bullets-mode 1))
+  )
 
 (setq org-roam-v2-ack t)
 
@@ -92,8 +94,17 @@
          ("C-c o r t" . org-roam-dailies-capture-today))
   :custom
   (org-roam-directory "~/org/roam")
-  :config
+  ;; :config
   ;; (org-roam-db-autosync-mode)
   )
+
+
+(use-package org-superstar  ;; Improved version of org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+  
+(setq org-startup-indented t)           ;; Indent according to section
+(setq org-startup-with-inline-images t) ;; Display images in-buffer by default
 
 (provide 'custom-org)
